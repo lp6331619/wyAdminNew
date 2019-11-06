@@ -3,13 +3,13 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getToken, getName } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+// 权限路由
+import { screenRoutes } from './router/asyncRoutes'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
-
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start()
@@ -18,22 +18,24 @@ router.beforeEach(async (to, from, next) => {
   document.title = getPageTitle(to.meta.title)
 
   // determine whether the user has logged in
-  const hasToken = getToken()
-  const info = getName() || ''
 
-  if (hasToken && info) {
+  if (store.getters.token && store.getters.name) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserData = store.getters.data
-      if (hasGetUserData && hasToken) {
+      if (store.getters.data) {
         next()
       } else {
         try {
           // get user info
           await store.dispatch('user/getInfo')
+          const asyncRoutes = screenRoutes(store.getters.data.privileges)
+          console.log(asyncRoutes, 123)
+          // router.options.routes.push(...asyncRoutes)
+          // router.addRoutes(asyncRoutes)
+          // next({ ...to, replace: true })
           next()
         } catch (error) {
           // remove token and go to login page to re-login
@@ -46,15 +48,12 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     /* has no token*/
-
-    if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
+    if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
-      NProgress.done()
+      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
     }
+    NProgress.done()
   }
 })
 

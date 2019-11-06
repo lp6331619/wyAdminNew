@@ -101,15 +101,7 @@ export default {
     }
   },
   created() {
-    this.loading = true
-    this.$store
-      .dispatch('user/loginSchema')
-      .then(() => {
-        this.loading = false
-      })
-      .catch(() => {
-        this.loading = false
-      })
+    this.getToken()
   },
   methods: {
     showPwd() {
@@ -121,6 +113,18 @@ export default {
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
+    },
+    // 获取token
+    getToken() {
+      this.loading = true
+      this.$store
+        .dispatch('user/loginSchema')
+        .then(() => {
+          this.loading = false
+        })
+        .catch(() => {
+          this.loading = false
+        })
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {

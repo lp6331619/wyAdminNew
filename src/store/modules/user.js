@@ -7,7 +7,6 @@ const state = {
   name: getName(),
   data: ''
 }
-
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
@@ -32,7 +31,7 @@ const actions = {
         }
         const { loginName } = data.data
         commit('SET_NAME', loginName)
-        commit('SET_DATA', data.data)
+        // commit('SET_DATA', data.data)
         setName(loginName)
         resolve(data.data)
       }).catch(error => {
@@ -55,7 +54,7 @@ const actions = {
     })
   },
   // get user info
-  getInfo({ commit, state }) {
+  getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo({}).then(response => {
         const { data } = response
@@ -79,6 +78,7 @@ const actions = {
         commit('SET_TOKEN', '')
         removeToken()
         removeName()
+        commit('SET_DATA', {})
         resetRouter()
         resolve()
       }).catch(error => {
