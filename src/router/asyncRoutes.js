@@ -16,6 +16,7 @@ title: 'title'                    侧边栏和面包屑中显示的名称（推�
 icon: 'svg-name'                  图标显示在侧栏中
 breadcrumb: false                 如果设置为false，则该项将隐藏在breadcrumb中（默认为true）
 activeMenu: '/example/list'       如果设置路径，侧边栏将突出显示您设置的路径
+tabs:{}                           权限列表所用
 }
 */
 
@@ -31,22 +32,23 @@ export const asyncRoutes = [
     path: '/member',
     component: Layout,
     redirect: '/member/list',
-    name: 'Member',
+    name: 'member',
     priv: '_menu:member', // 会员列表
     meta: { title: '会员管理', icon: 'example' },
     children: [
       {
         path: 'list',
-        name: 'MemberList',
+        name: 'memberList',
         priv: 'user:member:list',
         component: () => import('@/views/member/list/list'),
         meta: { title: '会员列表', icon: 'table' },
         children: [{
           path: 'detail',
           hidden: true,
-          name: 'MemberDetail',
-          component: () => import('@/views/member/list/detail'),
-          meta: { title: '会员详情' }
+          name: 'memberDetail',
+          priv: 'user:member:list',
+          meta: { title: '会员详情', icon: 'table' },
+          component: () => import('@/views/member/list/detail')
         }],
         tabs: {
           'member.member.list': {
@@ -257,8 +259,7 @@ export const asyncRoutes = [
             }
           }
         }
-      },
-      {
+      }, {
         path: 'realinfo',
         name: 'realinfo',
         priv: 'user:member:realinfo_list',
@@ -266,18 +267,68 @@ export const asyncRoutes = [
         meta: { title: '实名审核', icon: 'tree' }
       }
     ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/priv',
+    name: 'system',
+    priv: '_menu:system',
+    meta: { title: '系统设置', icon: 'example' },
+    children: [
+      {
+        path: 'priv',
+        name: 'priv',
+        priv: 'system:privilege:detail',
+        component: () => import('@/views/system/priv/index'),
+        meta: { title: '权限管理', icon: 'table' },
+        actions: {
+          'system.priv:detail': {
+            title: '权限信息',
+            priv: 'system:privilege:detail'
+          },
+          'system.priv:config': {
+            title: '设置权限',
+            priv: 'system:privilege:set'
+          }
+        }
+      },
+      {
+        path: 'setting',
+        name: 'setting',
+        priv: 'system:setting:detail',
+        component: () => import('@/views/system/setting/index'),
+        meta: { title: '参数设置', icon: 'table' },
+        actions: {
+          'system.setting:detail': {
+            title: '参数信息',
+            priv: 'system:setting:detail'
+          },
+          'system.setting:config': {
+            title: '设置参数',
+            priv: 'system:setting:set'
+          }
+        }
+      }
+    ]
   }
 ]
+
+// 递归获取有权限的子菜单
+function recursion(item, role) {
+  if (item.children && item.children.length > 0) {
+    item.children = item.children.filter(child => {
+      recursion(child, role)
+      return role[child.priv]
+    })
+  }
+  return role[item.priv]
+}
 // 筛选有权限的路由
 export function screenRoutes(role) {
-  const routeBox = []
-  asyncRoutes.forEach((item, index) => {
-    role[item.priv] ? routeBox.push(item) : ''
-    if (item.children) {
-      item.children.forEach((child, childIndex) => {
-        role[item.priv] ? routeBox[index].children.push(item) : ''
-      })
-    }
+  let routeBox = []
+  routeBox = asyncRoutes.filter(item => {
+    return recursion(item, role)
   })
   routeBox.push({ path: '*', redirect: '/404', hidden: true })
   return routeBox

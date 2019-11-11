@@ -32,11 +32,9 @@ router.beforeEach(async (to, from, next) => {
           // get user info
           await store.dispatch('user/getInfo')
           const asyncRoutes = screenRoutes(store.getters.data.privileges)
-          console.log(asyncRoutes, 123)
-          // router.options.routes.push(...asyncRoutes)
-          // router.addRoutes(asyncRoutes)
-          // next({ ...to, replace: true })
-          next()
+          router.options.routes.push(...asyncRoutes)
+          router.addRoutes(asyncRoutes)
+          next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

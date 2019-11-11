@@ -26,14 +26,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password, seccode: seccode }).then(response => {
         const { data } = response
-        if (!data.data) {
+        if (!data) {
           reject('Verification failed, please Login again.')
         }
-        const { loginName } = data.data
+        const { loginName } = data
         commit('SET_NAME', loginName)
         // commit('SET_DATA', data.data)
         setName(loginName)
-        resolve(data.data)
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
@@ -58,14 +58,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo({}).then(response => {
         const { data } = response
-        if (!data.data) {
+        if (!data) {
           reject('Verification failed, please Login again.')
         }
-        const { loginName } = data.data
+        const { loginName } = data
         commit('SET_NAME', loginName)
-        commit('SET_DATA', data.data)
+        commit('SET_DATA', data)
         setName(loginName)
-        resolve(data.data)
+        resolve(data)
       }).catch(error => {
         reject(error)
       })

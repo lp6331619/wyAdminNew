@@ -62,7 +62,8 @@ service.interceptors.response.use(
       return Promise.reject(new Error(res.result.message || 'Error'))
     } else {
       if (res.result.isSuccess) {
-        return response
+        // 如果是获取 token 的接口就返回整个response 否者 返回 data
+        return response.config.url.includes('login?_schema=1') ? response : res
       } else {
         Message({
           message: res.result.message || '请求错误!',
