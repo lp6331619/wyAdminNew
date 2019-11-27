@@ -320,7 +320,7 @@ export const asyncRoutes = [
                   priv: 'user:passport:list'
                 },
                 'member.passport.list:export': {
-                  hidePriv: true,
+                  hidden: true,
                   title: '导出Excel',
                   priv: '_special:export_csv'
                 },
@@ -393,7 +393,7 @@ export const asyncRoutes = [
             priv: 'log:op_log'
           },
           'member.oplog:export': {
-            hidePriv: true,
+            hidden: true,
             title: '导出Excel',
             priv: '_special:export_csv'
           }
