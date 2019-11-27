@@ -6,3 +6,11 @@ export function getPrivilegeDetail() {
     method: 'post'
   })
 }
+
+export function setPriv(data) {
+  return request({
+    url: '/system/privilege/config',
+    method: 'post',
+    data: data
+  })
+}

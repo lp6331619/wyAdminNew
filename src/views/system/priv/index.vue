@@ -5,11 +5,11 @@
         权限设置
         <el-tag class="ml10" type="danger">完成权限勾选后，请点页面底部的 "保存" 按钮完成设置 ！</el-tag>
       </div>
-      <div v-if="privBox.roles">
+      <div v-if="privBoxAll.roles">
         角色选择:
         <el-select v-model="roles" filterable placeholder="请选择角色名称" @change="selectPriv">
           <el-option
-            v-for="(val, key, index) in privBox.roles"
+            v-for="(val, key, index) in privBoxAll.roles"
             :key="index"
             :label="val.name"
             :value="key"
@@ -19,34 +19,17 @@
     </el-card>
 
     <div class="mt20 privList">
-      <!-- 第一层 -->
-      <el-collapse v-model="activeName" accordion>
-        <el-collapse-item v-for="(item,index) in privilegeList" :key="index" :name="index">
-          <template slot="title">
-            <div class="title">
-              <i class="el-icon-share" />
-              {{ item.meta.title }}
-            </div>
-            <el-checkbox
-              v-model="item.status"
-              :indeterminate="item.indeterminate"
-              class="allSelect"
-              @click.stop.native
-              @change="checkBox(item)"
-            >全选</el-checkbox>
-            <div v-if="item.actions" class="specialSelect">
-              <el-checkbox-group v-model="item.checked" @change="handleCheckedCitiesChange(item)">
-                <el-checkbox
-                  v-for="(val,key,actionsIndex) in item.actions"
-                  :key="actionsIndex"
-                  :label="key"
-                >{{ val.title }}</el-checkbox>
-              </el-checkbox-group>
-            </div>
-          </template>
-          <!-- <collapseItem :item="item" /> -->
-        </el-collapse-item>
-      </el-collapse>
+      <template>
+        <!-- 第一层 -->
+        <el-collapse v-model="activeName" accordion>
+          <div v-for="(item,index) in privilegeList" :key="index" :status="index">
+            <collapseItem :item="item" :index="index" :level="1" @statusMonitor="backStatus" />
+          </div>
+        </el-collapse>
+      </template>
+    </div>
+    <div class="text-center mt20">
+      <el-button type="primary" @click="subimt()">提交</el-button>
     </div>
   </div>
 </template>
@@ -58,9 +41,6 @@ export default privJs
 
 <style lang="scss" >
 .privList {
-  .specialSelect {
-    margin: 5px 0 0 60px;
-  }
   .el-collapse {
     border: none;
   }
@@ -94,7 +74,7 @@ export default privJs
     }
   }
   .el-collapse-item__content {
-    padding: 0 10px;
+    padding: 0;
   }
   .childBox {
     .el-collapse {
@@ -111,5 +91,8 @@ export default privJs
       }
     }
   }
+}
+.text-center {
+  text-align: center;
 }
 </style>

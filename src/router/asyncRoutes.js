@@ -51,7 +51,7 @@ export const asyncRoutes = [
           component: () => import('@/views/member/list/detail')
         }],
         tabs: {
-          'member.member.list': {
+          child: [{
             title: '列表页',
             actions: {
               'member.member.list:search': {
@@ -67,7 +67,7 @@ export const asyncRoutes = [
                 priv: 'user:member:sale_info'
               },
               'member.member.list:export': {
-                hidePriv: true,
+                hidden: true,
                 title: '导出Excel',
                 priv: '_special:export_csv'
               },
@@ -97,7 +97,7 @@ export const asyncRoutes = [
               }
             }
           },
-          'member.member.info': {
+          {
             title: '账号信息',
             actions: {
               'member.member.info:detail': {
@@ -182,7 +182,7 @@ export const asyncRoutes = [
               }
             }
           },
-          'member.member.contact': {
+          {
             title: '联系信息',
             actions: {
               'member.member.contact:detail': {
@@ -195,7 +195,7 @@ export const asyncRoutes = [
               }
             }
           },
-          'member.member.realinfo': {
+          {
             title: '实名认证',
             actions: {
               'member.member.realinfo:detail': {
@@ -212,7 +212,7 @@ export const asyncRoutes = [
               }
             }
           },
-          'member.member.product_count': {
+          {
             title: '产品统计',
             actions: {
               'member.member.product_count:detail': {
@@ -221,7 +221,7 @@ export const asyncRoutes = [
               }
             }
           },
-          'member.member.finance': {
+          {
             title: '财务信息',
             actions: {
               'member.member.finance:detail': {
@@ -230,7 +230,7 @@ export const asyncRoutes = [
               }
             }
           },
-          'member.member.login_log': {
+          {
             title: '登录日志',
             actions: {
               'member.member.login_log:search': {
@@ -238,13 +238,13 @@ export const asyncRoutes = [
                 priv: 'log:member_login_log'
               },
               'member.member.login_log:export': {
-                hidePriv: true,
+                hidden: true,
                 title: '导出Excel',
                 priv: '_special:export_csv'
               }
             }
           },
-          'member.member.operational_log': {
+          {
             title: '操作日志',
             actions: {
               'member.member.operational_log:search': {
@@ -252,19 +252,152 @@ export const asyncRoutes = [
                 priv: 'log:op_log'
               },
               'member.member.oplog:export': {
-                hidePriv: true,
+                hidden: true,
                 title: '导出Excel',
                 priv: '_special:export_csv'
               }
             }
-          }
+          }]
         }
       }, {
         path: 'realinfo',
         name: 'realinfo',
         priv: 'user:member:realinfo_list',
         component: () => import('@/views/tree/index'),
-        meta: { title: '实名审核', icon: 'tree' }
+        meta: { title: '实名审核', icon: 'tree' },
+        tabs: {
+          child: [
+            {
+              title: '列表页',
+              actions: {
+                'member.realinfo.list:search': {
+                  title: '列表/查询',
+                  priv: 'user:member:realinfo_list'
+                },
+                'member.realinfo.list:export': {
+                  hidden: true,
+                  title: '导出Excel',
+                  priv: '_special:export_csv'
+                },
+                'member.realinfo.list:detail': {
+                  title: '查看',
+                  priv: 'user:member:realinfo_detail'
+                }
+              }
+            },
+            {
+              title: '详情页',
+              actions: {
+                'member.realinfo.info:detail': {
+                  title: '实名认证详情',
+                  priv: 'user:member:realinfo_detail'
+                },
+                'member.realinfo.info:audit': {
+                  title: '实名审核',
+                  priv: 'user:member:realInfo_audit'
+                },
+                'member.realinfo.info:log': {
+                  title: '实名日志',
+                  priv: 'user:member:realinfo_log'
+                }
+              }
+            }
+          ]
+        }
+      }, {
+        path: 'passport',
+        name: 'passport',
+        priv: 'user:passport:list',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '通行证', icon: 'tree' },
+        tabs: {
+          child: [
+            {
+              title: '列表页',
+              actions: {
+                'member.passport.list:search': {
+                  title: '列表/查询',
+                  priv: 'user:passport:list'
+                },
+                'member.passport.list:export': {
+                  hidePriv: true,
+                  title: '导出Excel',
+                  priv: '_special:export_csv'
+                },
+                'member.passport.list:create': {
+                  title: '创建',
+                  priv: 'user:passport:create'
+                },
+                'member.passport.list:detail': {
+                  title: '详情',
+                  priv: 'user:passport:detail'
+                }
+              }
+            },
+            {
+              title: '详情页',
+              actions: {
+                'member.passport.info:detail': {
+                  title: '查看详情',
+                  priv: 'user:passport:detail'
+                },
+                'member.realinfo.info:update': {
+                  title: '修改通行证',
+                  priv: 'user:passport:update'
+                }
+              }
+            }
+          ]
+        }
+      }, {
+        path: 'level',
+        name: 'level',
+        priv: 'user:level:discount_detail',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '会员等级管理', icon: 'tree' },
+        actions: {
+          'member.level:detail': {
+            title: '等级/折扣详情',
+            priv: 'user:level:discount_detail'
+          },
+          'member.level:update_discount': {
+            title: '编辑折扣',
+            priv: 'user:level:update_discount'
+          },
+          'member.level:create': {
+            title: '创建会员等级',
+            priv: 'user:level:create'
+          },
+          'member.level:update': {
+            title: '修改会员等级',
+            priv: 'user:level:update'
+          },
+          'member.level:delete': {
+            title: '删除会员等级',
+            priv: 'user:level:delete'
+          },
+          'member.level:change_level': {
+            title: '迁移会员',
+            priv: 'user:level:move'
+          }
+        }
+      }, {
+        path: 'oplog',
+        name: 'oplog',
+        priv: 'log:op_log',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '操作日志', icon: 'tree' },
+        actions: {
+          'member.oplog:search': {
+            title: '列表/查询',
+            priv: 'log:op_log'
+          },
+          'member.oplog:export': {
+            hidePriv: true,
+            title: '导出Excel',
+            priv: '_special:export_csv'
+          }
+        }
       }
     ]
   },
