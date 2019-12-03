@@ -16,6 +16,9 @@ const mutations = {
   },
   SET_DATA: (state, data) => {
     state.data = data
+  },
+  SET_PRIV: (state, data) => {
+    state.privileges = data
   }
 }
 

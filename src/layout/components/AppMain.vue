@@ -9,6 +9,9 @@
 <script>
 export default {
   name: 'AppMain',
+  data() {
+    return {}
+  },
   computed: {
     key() {
       return this.$route.path

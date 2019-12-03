@@ -10,6 +10,7 @@ import request from '@/utils/request'
 import App from './App'
 import store from './store'
 import router from './router'
+import operatePriv from '@/public/js/btnPermissions.js'
 
 import '@/icons' // icon
 import '@/permission' // permission control
@@ -33,5 +34,6 @@ new Vue({
   store,
   request,
   router,
+  operatePriv,
   render: h => h(App)
 })

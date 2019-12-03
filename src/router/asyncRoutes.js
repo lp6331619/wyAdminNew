@@ -40,7 +40,7 @@ export const asyncRoutes = [
         path: 'list',
         name: 'memberList',
         priv: 'user:member:list',
-        component: () => import('@/views/member/list/list'),
+        component: () => import('@/views/member/list/list/list.vue'),
         meta: { title: '会员列表', icon: 'table' },
         children: [{
           path: 'detail',
@@ -48,7 +48,7 @@ export const asyncRoutes = [
           name: 'memberDetail',
           priv: 'user:member:list',
           meta: { title: '会员详情', icon: 'table' },
-          component: () => import('@/views/member/list/detail')
+          component: () => import('@/views/member/list/detail/detail.vue')
         }],
         tabs: {
           child: [{

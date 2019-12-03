@@ -48,6 +48,14 @@ div:focus {
   outline: none;
 }
 
+ul {
+  padding: 0;
+
+  li {
+    list-style-type: none;
+  }
+}
+
 .clearfix {
   &:after {
     visibility: hidden;
@@ -62,6 +70,14 @@ div:focus {
 // main-container global css
 .app-container {
   padding: 20px;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right
 }
 
 .ml10 {
@@ -86,4 +102,22 @@ div:focus {
 
 .mt20 {
   margin-top: 20px !important;
+}
+
+.app-main {
+  padding: 20px
+}
+
+.box-card {
+  overflow: visible;
+  margin-bottom: 20px;
+}
+
+.fiex {
+  display: flex;
+}
+
+.search-item {
+  width: 280px;
+  margin-right: 20px;
 }
