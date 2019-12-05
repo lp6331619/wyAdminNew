@@ -2,9 +2,10 @@ import Vue from 'vue'
 import store from '@/store'
 /**权限指令**/
 const operatePriv = Vue.directive('operatePriv', {
-  bind: function (el, binding, vnode) {
+  bind: function (el, binding) {
     // 获取按钮权限
     let btnPermissions = binding.value;
+    console.log(btnPermissions, 99)
     if (!Vue.prototype.$_operatePriv(btnPermissions)) {
       Vue.nextTick(() => {
         el.parentNode.remove(el);
@@ -18,4 +19,4 @@ Vue.prototype.$_operatePriv = function (value) {
   return btnPermissionsStr[value];
 }
 
-export { operatePriv };
+export default { operatePriv };

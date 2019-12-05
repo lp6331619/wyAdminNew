@@ -10,7 +10,8 @@ import request from '@/utils/request'
 import App from './App'
 import store from './store'
 import router from './router'
-import operatePriv from '@/public/js/btnPermissions.js'
+import operatePriv from '@/public/js/btnPermissions.js' // 权限判断
+console.log(operatePriv, 44)
 
 import '@/icons' // icon
 import '@/permission' // permission control

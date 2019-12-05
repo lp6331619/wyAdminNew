@@ -1,7 +1,13 @@
 <template>
   <div>
     <el-card class="box-card">
-      <SearchList :prepare-data="prepare" :search-data="searchForm" :search-list-data="formType" />
+      <SearchList
+        :prepare-data="prepare"
+        :search-data="searchForm"
+        :search-list-data="formType"
+        :operate-priv="operatePrivBox"
+        @emitData="emitData($event)"
+      />
     </el-card>
     <el-card class="box-card">
       <div slot="header" class="clearfix">

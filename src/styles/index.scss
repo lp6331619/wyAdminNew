@@ -104,6 +104,14 @@ ul {
   margin-top: 20px !important;
 }
 
+.mb10 {
+  margin-bottom: 10px !important;
+}
+
+.mb20 {
+  margin-bottom: 20px !important;
+}
+
 .app-main {
   padding: 20px
 }
@@ -113,11 +121,10 @@ ul {
   margin-bottom: 20px;
 }
 
-.fiex {
+.flex {
   display: flex;
 }
 
-.search-item {
-  width: 280px;
-  margin-right: 20px;
+.text-center {
+  text-align: center;
 }
