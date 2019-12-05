@@ -1,21 +1,11 @@
 <template>
-  <div v-if="prepareData && searchType">
+  <div v-if="initData && searchType">
     <div class="rankBox">
-      <input
-        v-model="searchData[0]"
-        :keyup="outData()"
-        :placeholder="`${searchName}开始`"
-        type="number"
-      />
+      <!-- eslint-disable-next-line-->
+      <input v-model="searchData.start" :keyup="outData()" :placeholder="searchName" type="number" />
       <span>至</span>
-      <!-- eslint-disable-line [vue/html-self-closing]-->
-      <input
-        v-model="searchData[1]"
-        :keyup="outData()"
-        :placeholder="`${searchName}结束`"
-        type="number"
-      />
-      <!-- eslint-disable-line [vue/html-self-closing]-->
+      <!-- eslint-disable-next-line-->
+      <input v-model="searchData.end" :keyup="outData()" :placeholder="searchName" type="number" />
     </div>
   </div>
 </template>
@@ -35,41 +25,27 @@ export default {
     searchName: {
       type: String,
       default: ''
-    },
-    prepareData: {
-      type: Object,
-      default: () => {
-        return {}
-      }
     }
   },
   data() {
     return {
       // 搜索的数据
-      searchData: [],
-      prepareBox: {} // prepareBox数据
+      searchData: {
+        start: '',
+        end: ''
+      }
     }
   },
-  computed: {},
   mounted() {
-    this.searchData[0] = this.initData.start
-    this.searchData[1] = this.initData.end
-    console.log(
-      this.searchType,
-      this.searchName,
-      this.initData,
-      this.prepareData
-    )
+    this.searchData = this.initData
   },
   methods: {
     // 导出数据
     outData() {
-      if (this.searchData.length > 1) {
-        this.$emit('emitData', {
-          data: { start: this.searchData[0], end: this.searchData[1] },
-          type: this.searchType
-        })
-      }
+      this.$emit('emitData', {
+        data: this.searchData,
+        type: this.searchType
+      })
     }
   }
 }

@@ -1,14 +1,14 @@
 <template>
-  <div v-if="prepareData && searchType">
+  <div v-if="initData && searchType">
     <div class="timeBox">
       <el-date-picker
         v-model="searchData"
         type="daterange"
         range-separator="至"
         value-format="yyyy/MM/dd"
-        :start-placeholder="`${searchName}开始`"
-        :end-placeholder="`${searchName}结束`"
-        @change="outData"
+        :start-placeholder="searchName"
+        :end-placeholder="searchName"
+        @change="outData()"
       />
     </div>
   </div>
@@ -29,35 +29,36 @@ export default {
     searchName: {
       type: String,
       default: ''
-    },
-    prepareData: {
-      type: Object,
-      default: () => {
-        return {}
-      }
     }
   },
   data() {
     return {
-      // 搜索的数据
-      searchData: [],
-      prepareBox: {} // prepareBox数据
+      searchData: []
     }
   },
-  computed: {},
+  watch: {
+    initData: {
+      handler(newValue, oldValue) {
+        this.searchData = [
+          newValue.start ? newValue.start : '',
+          newValue.end ? newValue.end : ''
+        ]
+        newValue.start === '' && newValue.end === ''
+          ? (this.searchData = [])
+          : ''
+      },
+      deep: true
+    }
+  },
   mounted() {
-    this.searchData[0] = this.initData.start
-    this.searchData[1] = this.initData.end
-    console.log(
-      this.searchType,
-      this.searchName,
-      this.initData,
-      this.prepareData
-    )
+    this.searchData = [this.initData.start, this.initData.end]
+    this.initData.start === '' && this.initData.end === ''
+      ? (this.searchData = [])
+      : ''
   },
   methods: {
     // 导出数据
-    outData() {
+    outData(data) {
       if (this.searchData.length > 1) {
         this.$emit('emitData', {
           data: { start: this.searchData[0], end: this.searchData[1] },
@@ -71,6 +72,9 @@ export default {
 
 <style scoped lang="scss">
 .timeBox {
-  width: 350px;
+  width: 280px;
+  .el-date-editor {
+    width: 280px;
+  }
 }
 </style>

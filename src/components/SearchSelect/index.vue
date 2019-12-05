@@ -35,8 +35,15 @@ export default {
       prepareBox: {} // prepareBox数据
     }
   },
-  computed: {},
-  mounted() {
+  watch: {
+    initData: {
+      handler(newValue, oldValue) {
+        this.searchData = newValue
+      },
+      deep: true
+    }
+  },
+  beforeUpdate() {
     this.searchData = this.initData
   },
   methods: {

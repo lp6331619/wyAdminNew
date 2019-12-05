@@ -1,56 +1,26 @@
 <template>
-  <div v-if="prepareData" v-clickoutside="closePrepare">
-    <div class="selectBox">
+  <div v-if="prepareData">
+    <el-dropdown class="selectBox" trigger="click" placement="bottom-start" @command="selectData">
       <el-input
         v-model="searchData.search"
+        class="el-dropdown-link"
         :placeholder="getPlaceholder"
         type="text"
         @blur="outData()"
-        @focus="prepareBool=true"
       />
       <span class="strict" @click="changeStrict()">{{ searchData.strict==='0'?'模糊' :'精确' }}</span>
-      <div v-if="prepareData && searchType && prepareBool">
-        <ul class="prepareData">
-          <li
-            v-for="(name,key,index) in getPrepare()"
-            :key="index"
-            @click="selectData(key)"
-          >{{ name }}</li>
-        </ul>
-      </div>
-    </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item
+          v-for="(name,key,index) in getPrepare()"
+          :key="index"
+          :command="key"
+        >{{ name }}</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 <script>
-// 点击 空白处关闭弹窗
-const clickoutside = {
-  // 初始化指令
-  bind(el, binding, vnode) {
-    function documentHandler(e) {
-      // 这里判断点击的元素是否是本身，是本身，则返回
-      if (el.contains(e.target)) {
-        return false
-      }
-      // 判断指令中是否绑定了函数
-      if (binding.expression) {
-        // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
-        binding.value(e)
-      }
-    }
-    // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
-    el.__vueClickOutside__ = documentHandler
-    document.addEventListener('click', documentHandler)
-  },
-  update() {},
-  unbind(el, binding) {
-    // 解除事件监听
-    document.removeEventListener('click', el.__vueClickOutside__)
-    delete el.__vueClickOutside__
-  }
-}
-
 export default {
-  directives: { clickoutside },
   props: {
     searchType: {
       type: String,
@@ -80,9 +50,7 @@ export default {
         search: '',
         strict: '0'
       }, // 搜索的数据
-      prepareBool: false, // 下拉框状态
-      prepareBox: {}, // prepareBox数据
-      searchKey: '' // 选中的搜索类型
+      prepareBox: {} // prepareBox数据
     }
   },
   computed: {
@@ -90,7 +58,7 @@ export default {
     getPlaceholder() {
       let str = ''
       if (this.prepareData && this.searchName) {
-        if (!this.searchKey || this.searchKey === '') {
+        if (!this.searchData.field || this.searchData.field === '') {
           let lastkey
           for (const keyname in this.prepareData[this.searchType]) {
             lastkey = keyname
@@ -103,21 +71,19 @@ export default {
             }
           }
         } else {
-          str += this.prepareData[this.searchType][this.searchKey]
+          str += this.prepareData[this.searchType][this.searchData.field]
         }
       }
       return this.searchName + ':' + str
     }
   },
-  created() {
+  beforeUpdate() {
     this.searchData = this.initData
   },
   methods: {
     // 选择搜索类型
     selectData(data) {
-      this.searchKey = data === 'all' ? '' : data
-      this.searchData.field = this.searchKey
-      this.prepareBool = false
+      this.searchData.field = data === 'all' ? '' : data
       this.outData()
     },
     // 获取 prepare
@@ -139,10 +105,6 @@ export default {
       this.searchData.strict = this.searchData.strict === '0' ? '1' : '0'
       this.outData()
     },
-    // 关闭下拉
-    closePrepare() {
-      this.prepareBool = false
-    },
     // 导出数据
     outData() {
       this.$emit('emitData', { data: this.searchData, type: this.searchType })
@@ -154,6 +116,7 @@ export default {
 <style scoped lang="scss">
 .selectBox {
   position: relative;
+  width: 100%;
   .strict {
     position: absolute;
     right: 2px;

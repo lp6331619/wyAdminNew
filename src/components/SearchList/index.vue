@@ -34,7 +34,6 @@
                 :search-type="item.type"
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
-                :prepare-data="prepareData"
                 @emitData="emitData($event)"
               />
             </div>
@@ -46,7 +45,6 @@
                 :search-type="item.type"
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
-                :prepare-data="prepareData"
                 @emitData="emitData($event)"
               />
             </div>
@@ -60,9 +58,9 @@
       >{{ heightBool ? '关闭':'展开' }}</div>
     </div>
     <div class="text-center mt20">
-      <el-button :operate-priv="-['search']" type="primary" @click="outData()">查询</el-button>
-      <el-button :operate-priv="operatePriv['search']" @click="outData()">清空</el-button>
-      <el-button :operate-priv="operatePriv['excel']" type="danger" @click="outData()">导出Excel</el-button>
+      <el-button v-operatePriv="operatePriv['search']" type="primary" @click="outData()">查询</el-button>
+      <el-button v-operatePriv="operatePriv['search']" @click="clear()">清空</el-button>
+      <el-button v-operatePriv="operatePriv['excel']" type="danger" @click="excelOut()">导出Excel</el-button>
     </div>
   </div>
 </template>
@@ -116,20 +114,40 @@ export default {
     }
   },
   computed: {},
-  created() {
-    // console.log(this.searchData, 123)
-  },
+  created() {},
   methods: {
     emitData(e) {
       this.searchData[e.type] = e.data
     },
+    // 更多
     more() {
       this.heightBool = !this.heightBool
       this.height = this.heightBool ? this.$refs.searchData.offsetHeight : 40
     },
+    // 导出数据
     outData() {
       this.$emit('emitData', this.searchData)
-    }
+    },
+    // 清空
+    clear() {
+      this.searchListData.forEach(item => {
+        const type = typeof this.searchData[item.type]
+        this.searchData[item.type] =
+          type === 'string' ? '' : this.objectBack(this.searchData[item.type])
+      })
+      this.outData()
+    },
+    // 清空 object
+    objectBack(data) {
+      if (data) {
+        for (const i in data) {
+          i !== 'strict' ? (data[i] = '') : (data[i] = '0')
+        }
+        return data
+      }
+    },
+    // 导出 excel
+    excelOut() {}
   }
 }
 </script>
@@ -169,13 +187,13 @@ export default {
       top: 7px;
     }
   }
-}
-.searchData {
-  display: flex;
-  flex-wrap: wrap;
-  .searchInput {
-    width: 280px;
-    margin-right: 20px;
+  .searchData {
+    display: flex;
+    flex-wrap: wrap;
+    .searchInput {
+      width: 280px;
+      margin-right: 20px;
+    }
   }
 }
 </style>

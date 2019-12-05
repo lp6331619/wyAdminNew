@@ -40,8 +40,8 @@ export default {
       },
       // 权限
       operatePrivBox: {
-        search: 'member.member.list:search',
-        excel: 'member.member.list:export'
+        search: 'user:member:list',
+        excel: '_special:export_csv'
       },
       // 搜索的列表数据类型格式
       formType: [{
