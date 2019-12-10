@@ -38,18 +38,10 @@ export const asyncRoutes = [
     children: [
       {
         path: 'list',
-        name: 'memberList',
+        name: 'list',
         priv: 'user:member:list',
         component: () => import('@/views/member/list/list/list.vue'),
         meta: { title: '会员列表', icon: 'table' },
-        children: [{
-          path: 'detail',
-          hidden: true,
-          name: 'memberDetail',
-          priv: 'user:member:list',
-          meta: { title: '会员详情', icon: 'table' },
-          component: () => import('@/views/member/list/detail/detail.vue')
-        }],
         tabs: {
           child: [{
             title: '列表页',
@@ -259,7 +251,16 @@ export const asyncRoutes = [
             }
           }]
         }
-      }, {
+      },
+      {
+        path: 'list/detail',
+        hidden: true,
+        name: 'memberListDetail',
+        priv: 'user:member:detail',
+        meta: { title: '会员详情' },
+        component: () => import('@/views/member/list/detail/detail.vue')
+      },
+      {
         path: 'realinfo',
         name: 'realinfo',
         priv: 'user:member:realinfo_list',

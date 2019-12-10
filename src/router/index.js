@@ -43,7 +43,7 @@ const constantRoutesFixed = [
   },
 
   {
-    path: '/',
+    path: '/home',
     component: Layout,
     redirect: '/home',
     children: [{
@@ -66,5 +66,4 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-
 export default router

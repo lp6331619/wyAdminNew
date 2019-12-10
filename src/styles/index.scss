@@ -3,6 +3,8 @@
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
+@import './color.scss';
+@import './similarTable.scss';
 
 body {
   height: 100%;
@@ -112,6 +114,22 @@ ul {
   margin-bottom: 20px !important;
 }
 
+.pt0 {
+  padding-top: 0 !important;
+}
+
+.pt10 {
+  padding-top: 10px !important;
+}
+
+.pt20 {
+  padding-top: 20px !important;
+}
+
+.p20 {
+  padding: 20px !important;
+}
+
 .app-main {
   padding: 20px
 }
@@ -123,8 +141,47 @@ ul {
 
 .flex {
   display: flex;
+  justify-content: space-between;
+
+  &.header {
+    justify-content: space-between;
+
+    .buttonBox {
+      .actions {
+        color: #409EFF;
+        border-color: #c6e2ff;
+        background-color: #ecf5ff;
+      }
+    }
+  }
 }
 
 .text-center {
   text-align: center;
+}
+
+.el-table-filter {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.tabBox {
+  background: #fff;
+  padding: 0;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+  .el-tabs__header {
+    margin: 0;
+
+    .el-tabs__nav-scroll {
+      padding: 0 20px;
+    }
+
+    .el-tabs__item {
+      padding: 10px 30px !important;
+      height: 60px;
+      width: auto;
+      line-height: 40px;
+    }
+  }
 }

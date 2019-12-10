@@ -23,7 +23,13 @@
     <div v-if="item.children && level===1">
       <el-collapse v-model="item.activeName" accordion class="childBox">
         <div v-for="(child,childIndex) in item.children" :key="childIndex" :name="childIndex">
-          <collapseItem :item="child" :index="childIndex" :level="2" @statusMonitor="backClick" />
+          <collapseItem
+            v-if="!child.hidden"
+            :item="child"
+            :index="childIndex"
+            :level="2"
+            @statusMonitor="backClick"
+          />
         </div>
       </el-collapse>
     </div>

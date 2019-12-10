@@ -60,16 +60,21 @@
     <div class="text-center mt20">
       <el-button v-operatePriv="operatePriv['search']" type="primary" @click="outData()">查询</el-button>
       <el-button v-operatePriv="operatePriv['search']" @click="clear()">清空</el-button>
-      <el-button v-operatePriv="operatePriv['excel']" type="danger" @click="excelOut()">导出Excel</el-button>
+      <el-button
+        v-operatePriv="operatePriv['excel']"
+        type="danger"
+        @click="excelOut(exportExcel)"
+      >导出Excel</el-button>
     </div>
   </div>
 </template>
 <script>
-import SearchInput from '@/components/SearchInput'
-import SearchSelect from '@/components/SearchSelect'
-import SearchTime from '@/components/SearchTime'
-import SearchRank from '@/components/SearchRank'
+import SearchInput from '@/components/SearchBox/SearchInput'
+import SearchSelect from '@/components/SearchBox/SearchSelect'
+import SearchTime from '@/components/SearchBox/SearchTime'
+import SearchRank from '@/components/SearchBox/SearchRank'
 export default {
+  name: 'SearchList',
   components: {
     SearchInput,
     SearchSelect,
@@ -104,6 +109,18 @@ export default {
       default: () => {
         return {}
       }
+    },
+    // 其余的数据
+    otherData: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    // 导出 excel
+    exportExcel: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -126,16 +143,28 @@ export default {
     },
     // 导出数据
     outData() {
-      this.$emit('emitData', this.searchData)
+      const data = Object.assign(this.searchData, this.otherData)
+      this.$emit('emitData', data)
     },
     // 清空
     clear() {
-      this.searchListData.forEach(item => {
-        const type = typeof this.searchData[item.type]
-        this.searchData[item.type] =
-          type === 'string' ? '' : this.objectBack(this.searchData[item.type])
-      })
-      this.outData()
+      if (this.searchData) {
+        for (const i in this.searchData) {
+          const type = typeof this.searchData[i]
+          this.searchData[i] =
+            type === 'object' ? this.objectBack(this.searchData[i]) : ''
+        }
+      }
+      if (this.otherData) {
+        for (const i in this.otherData) {
+          const type = typeof this.otherData[i]
+          this.otherData[i] =
+            type === 'object' ? this.objectBack(this.otherData[i]) : ''
+        }
+      }
+      const data = Object.assign(this.searchData, this.otherData)
+      data.clear = true
+      this.$emit('emitData', data)
     },
     // 清空 object
     objectBack(data) {
@@ -147,7 +176,46 @@ export default {
       }
     },
     // 导出 excel
-    excelOut() {}
+    excelOut(url) {
+      const object = Object.assign(this.searchData, this.otherData)
+      this.upExcel(url, object)
+    },
+    upExcel(URL, PARAMS) {
+      var temp = document.createElement('form')
+      temp.action = process.env.VUE_APP_BASE_API + URL
+      temp.method = 'post'
+      temp.enctype = 'application/json'
+      temp.style.display = 'none'
+      for (var x in PARAMS) {
+        var opt
+        if (this.IsJsonString(JSON.stringify(PARAMS[x]))) {
+          for (const a in PARAMS[x]) {
+            const chenOpt = document.createElement('textarea')
+            chenOpt.name = x + '[' + a + ']'
+            chenOpt.value = PARAMS[x][a]
+            temp.appendChild(chenOpt)
+          }
+        } else {
+          opt = document.createElement('textarea')
+          opt.name = x
+          opt.value = PARAMS[x]
+          temp.appendChild(opt)
+        }
+      }
+      document.body.appendChild(temp)
+      temp.submit()
+      return temp
+    },
+    IsJsonString(str) {
+      try {
+        if (typeof JSON.parse(str) === 'object') {
+          return true
+        }
+      } catch (e) {
+        console.log(e)
+      }
+      return false
+    }
   }
 }
 </script>
