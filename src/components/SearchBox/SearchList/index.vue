@@ -134,6 +134,7 @@ export default {
   created() {},
   methods: {
     emitData(e) {
+      console.log(e, 11)
       this.searchData[e.type] = e.data
     },
     // 更多
@@ -143,7 +144,7 @@ export default {
     },
     // 导出数据
     outData() {
-      const data = Object.assign(this.searchData, this.otherData)
+      const data = { searchData: this.searchData, otherData: this.otherData }
       this.$emit('emitData', data)
     },
     // 清空
@@ -162,7 +163,7 @@ export default {
             type === 'object' ? this.objectBack(this.otherData[i]) : ''
         }
       }
-      const data = Object.assign(this.searchData, this.otherData)
+      const data = { searchData: this.searchData, otherData: this.otherData }
       data.clear = true
       this.$emit('emitData', data)
     },

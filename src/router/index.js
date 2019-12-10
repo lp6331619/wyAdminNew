@@ -43,13 +43,13 @@ const constantRoutesFixed = [
   },
 
   {
-    path: '/home',
+    path: '/',
     component: Layout,
     redirect: '/home',
     children: [{
       path: 'home',
-      name: 'Home',
-      component: () => import('@/views/dashboard/index'),
+      name: '首页',
+      component: () => import('@/views/home/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
   }]

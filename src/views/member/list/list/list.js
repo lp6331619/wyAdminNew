@@ -90,7 +90,6 @@ export default {
         pageSize: this.$route.query.pageSize ? JSON.parse(this.$route.query.pageSize) : 10,
         page: this.$route.query.page ? this.$route.query.page : 1,
         status: this.$route.query.status ? JSON.parse(this.$route.query.status) : '',
-        stat: this.$route.query.stat ? JSON.parse(this.$route.query.stat) : '',
         realInfoStatus: this.$route.query.realInfoStatus ? JSON.parse(this.$route.query.realInfoStatus) : '',
         level: this.$route.query.level ? JSON.parse(this.$route.query.level) : ''
       },
@@ -143,7 +142,7 @@ export default {
     },
     getList() {
       this.loading = true
-      const parse = Object.assign(this.searchForm, this.otherData)
+      const parse = Object.assign({}, this.searchForm, this.otherData)
       getMemberList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
@@ -165,7 +164,7 @@ export default {
         this.$refs.multipleTable.clearSort()
         this.$refs.multipleTable.clearFilter()
       } else {
-        this.searchForm = data.searchForm
+        this.searchForm = data.searchData
         this.otherData = data.otherData
       }
       this.toList()
@@ -173,7 +172,7 @@ export default {
     // 赋值 url 参数
     toList() {
       const query = {}
-      const box = Object.assign(this.searchForm, this.otherData)
+      const box = Object.assign({}, this.searchForm, this.otherData)
       for (const i in box) {
         query[i] = this.getType(box[i]) ? JSON.stringify(box[i]) : ''
       }
