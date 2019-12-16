@@ -11,11 +11,11 @@
  * priv :'_menu:member'           该路由的权限
  * tabs :{}                       权限映射表
  * meta : {
-roles: ['admin','editor']         控制页面角色（可以设置多个角色）
-title: 'title'                    侧边栏和面包屑中显示的名称（推荐设置)
-icon: 'svg-name'                  图标显示在侧栏中
-breadcrumb: false                 如果设置为false，则该项将隐藏在breadcrumb中（默认为true）
-activeMenu: '/example/list'       如果设置路径，侧边栏将突出显示您设置的路径
+    title: 'title'                    侧边栏和面包屑中显示的名称（推荐设置)
+    icon: 'svg-name'                  图标显示在侧栏中
+    breadcrumb: false                 如果设置为false，则该项将隐藏在breadcrumb中（默认为true）
+    activeMenu: '/example/list'       如果设置路径，侧边栏将突出显示您设置的路径
+ *}
 tabs:{}                           权限列表所用
 }
 */
@@ -42,6 +42,14 @@ export const asyncRoutes = [
         priv: 'user:member:list',
         component: () => import('@/views/member/list/list/list.vue'),
         meta: { title: '会员列表', icon: 'table' },
+        children: [{
+          path: 'detail/:id',
+          hidden: true,
+          name: 'detail',
+          priv: 'user:member:detail',
+          meta: { title: '会员详情', activeMenu: '/member/list' },
+          component: () => import('@/views/member/list/detail/detail.vue')
+        }],
         tabs: {
           child: [{
             title: '列表页',
@@ -251,14 +259,6 @@ export const asyncRoutes = [
             }
           }]
         }
-      },
-      {
-        path: 'list/detail',
-        hidden: true,
-        name: 'memberListDetail',
-        priv: 'user:member:detail',
-        meta: { title: '会员详情' },
-        component: () => import('@/views/member/list/detail/detail.vue')
       },
       {
         path: 'realinfo',

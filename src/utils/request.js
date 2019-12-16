@@ -65,6 +65,10 @@ service.interceptors.response.use(
         // 如果是获取 token 的接口就返回整个response 否者 返回 data
         return response.config.url.includes('login?_schema=1') ? response : res
       } else {
+        if (res.result.errCode === 'LOGIN_REQUIRE') {
+          console.log(res)
+          // this.$router.push()
+        }
         Message({
           message: res.result.message || '请求错误!',
           type: 'error',

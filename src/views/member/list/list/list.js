@@ -107,12 +107,21 @@ export default {
       indeterminate: false // 是否有选中
     }
   },
-  created() {
-    this.getRule('prepare')
-    this.getRule('schema')
-    this.getList()
-    this.getCount()
+  computed: {
+    isDetail() {
+      return this.$route.params.id
+    }
   },
+  created() {
+    // 是否是详情页
+    if (!this.isDetail) {
+      this.getRule('prepare')
+      this.getRule('schema')
+      this.getList()
+      this.getCount()
+    }
+  },
+
   methods: {
     // 获取 schema prepare
     getRule(type) {

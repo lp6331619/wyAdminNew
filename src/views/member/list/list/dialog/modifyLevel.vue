@@ -3,13 +3,16 @@
     <el-button
       size="mini"
       type="primary"
+      :plain="plain"
       :disabled="selectTable.length <=0"
       @click="displayBox=true"
-    >修改会员等级</el-button>
-    <el-dialog title="修改会员等级" :visible.sync="displayBox" width="500px">
+    >
+      <slot>修改会员等级</slot>
+    </el-button>
+    <el-dialog title="修改会员等级" :visible.sync="displayBox" width="500px" append-to-body>
       <div class="el-message el-message--warning tip">
         <p class="el-message__content">
-          <strong>请谨慎操作！</strong> 批量选中的会员将修改为以下等级：
+          <strong>请谨慎操作！</strong> 选中的会员将修改为以下等级：
         </p>
       </div>
       <el-form
@@ -22,12 +25,7 @@
       >
         <el-form-item v-if="prepare" label="会员等级:" prop="level" :label-width="formLabelWidth">
           <el-select v-model="form.level" placeholder="请选择">
-            <el-option
-              v-for="item in prepare.level"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+            <el-option v-for="item in prepare" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -54,6 +52,10 @@ export default {
       default: () => {
         return []
       }
+    },
+    plain: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

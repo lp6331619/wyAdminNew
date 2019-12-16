@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button size="mini" type="primary" @click="displayBox=true">创建用户</el-button>
-    <el-dialog title="创建会员" :visible.sync="displayBox" width="500px">
+    <el-dialog title="创建会员" :visible.sync="displayBox" width="500px" append-to-body>
       <el-form
         ref="createMember"
         :model="form"

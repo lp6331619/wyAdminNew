@@ -3,17 +3,19 @@
     <el-button
       size="mini"
       type="primary"
+      :plain="plain"
       :disabled="selectTable.length <=0"
       @click="displayBox=true"
-    >修改所属销售</el-button>
-    <el-dialog title="修改所属销售" :visible.sync="displayBox" width="500px">
+    >
+      <slot>修改所属销售</slot>
+    </el-button>
+    <el-dialog title="修改所属销售" :visible.sync="displayBox" width="500px" append-to-body>
       <div class="el-message el-message--warning tip">
         <p class="el-message__content">
-          <strong>请谨慎操作！</strong> 批量选中的会员将修改为以下所属销售：
+          <strong>请谨慎操作！</strong> 选中的会员将修改为以下所属销售：
         </p>
       </div>
       <el-form
-        v-if="prepare"
         ref="createMember"
         class="mt20"
         :model="form"
@@ -27,10 +29,11 @@
             :multiple="false"
             filterable
             remote
-            reserve-keyword
             placeholder="请输入关键词"
+            style="width:100%"
             :remote-method="getUser"
             :loading="loading"
+            @focus="getFocus"
           >
             <el-option v-for="item in list" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
@@ -56,22 +59,20 @@
 import { modifySaler, getUserList } from '@/api/member'
 export default {
   props: {
-    prepare: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
     selectTable: {
       type: Array,
       default: () => {
         return []
       }
+    },
+    plain: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      formLabelWidth: '160px',
+      formLabelWidth: '120px',
       form: {
         saler: '',
         note: ''
@@ -112,11 +113,11 @@ export default {
         }
       })
     },
-    getUser(query) {
+    getUser(key) {
       this.loading = true
       const data = {
         saler: 1,
-        search: query
+        search: key
       }
       getUserList(data).then(res => {
         if (res.result.isSuccess) {
@@ -124,6 +125,9 @@ export default {
         }
         this.loading = false
       })
+    },
+    getFocus(e) {
+      this.getUser('')
     }
   }
 }

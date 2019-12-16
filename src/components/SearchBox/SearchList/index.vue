@@ -134,7 +134,6 @@ export default {
   created() {},
   methods: {
     emitData(e) {
-      console.log(e, 11)
       this.searchData[e.type] = e.data
     },
     // 更多

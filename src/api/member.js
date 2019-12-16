@@ -94,3 +94,60 @@ export function updateimportance(data, schema) {
     data: data
   })
 }
+// 修改商业类型
+export function updatebusinesstype(data, schema) {
+  return request({
+    url: `/user/member/updatebusinesstype${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改账号状态
+export function updateStatus(data, schema) {
+  return request({
+    url: `/user/member/updateStatus${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改所属行业
+export function updateindustry(data, schema) {
+  return request({
+    url: `/user/member/updateindustry${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改电话
+export function updateMobile(data, schema) {
+  return request({
+    url: `/user/member/updateMobile${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改邮箱
+export function updateEmail(data, schema) {
+  return request({
+    url: `/user/member/updateEmail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改密码
+export function setPassword(data, schema) {
+  return request({
+    url: `/user/member/setPassword${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改所属地区
+export function updateregion(data, schema) {
+  return request({
+    url: `/user/member/updateregion${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+

@@ -10,10 +10,14 @@
         <el-tab-pane label="操作日志" name="5"></el-tab-pane>
       </el-tabs>
     </div>
-    <el-card v-if="activeName==='0'" class="box-card">
-      <div slot="header" class="header flex">会员列表</div>
-      <account :detail-data="detailBox" />
-    </el-card>
+    <div v-if="activeName==='0'">
+      <el-card class="box-card">
+        <div slot="header" class="header flex">会员列表</div>
+        <account :detail-data="detailBox" @getData="assemblyGetData" @tabsClick="tabsClick" />
+      </el-card>
+
+      <RemarkCard />
+    </div>
   </div>
 </template>
 
