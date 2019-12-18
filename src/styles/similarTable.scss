@@ -6,6 +6,7 @@
     text-align: right;
     color: #a5a5a5;
     background: #f5f5f5;
+    height: 100%;
   }
 
   .title,
@@ -15,6 +16,15 @@
     padding: 10px 25px;
     height: 70px;
     line-height: 50px;
+  }
+
+  &.mini {
+
+    .title,
+    .contentBox {
+      height: 50px;
+      line-height: 30px;
+    }
   }
 
   button {

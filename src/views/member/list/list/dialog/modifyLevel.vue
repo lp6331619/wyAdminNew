@@ -42,9 +42,9 @@ import { modifyLevel } from '@/api/member'
 export default {
   props: {
     prepare: {
-      type: Object,
+      type: Array,
       default: () => {
-        return {}
+        return []
       }
     },
     selectTable: {

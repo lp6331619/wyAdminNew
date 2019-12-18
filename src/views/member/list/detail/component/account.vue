@@ -366,7 +366,7 @@ import {
 import { Configurable, Password } from '@/components/Dialog'
 import modifySaler from '../../list/dialog/modifySaler.vue'
 import modifyLevelBox from '../../list/dialog/modifyLevel.vue'
-
+import request from '@/utils/request'
 export default {
   name: 'Account',
   components: {
@@ -466,7 +466,7 @@ export default {
       idArray: [],
       userId: this.$route.params.id ? JSON.parse(this.$route.params.id) : null,
       // 等级 prepare
-      LevelPrepare: {},
+      LevelPrepare: [],
       // 修改密码
       passwordInit: {
         display: false,
@@ -485,7 +485,11 @@ export default {
     // 获取会员等级
     modifyLevel({}, 'prepare').then(res => {
       if (res.result.isSuccess) {
-        this.LevelPrepare = res.data.userLevels
+        const box = []
+        for (const i in res.data.userLevels) {
+          box.push(res.data.userLevels[i])
+        }
+        this.LevelPrepare = box
       }
     })
   },
@@ -646,52 +650,37 @@ export default {
     emitOut(e) {
       if (!e.close) {
         this.loading = true
+        e.form.id = this.detailData.id
+        let url = ''
         switch (e.type) {
           // 重要程度
           case 'importance':
-            e.form.id = this.detailData.id
-            updateimportance(e.form).then(res => {
-              if (res.result.isSuccess) {
-                this.$message.success(res.result.message)
-                this.getData()
-              }
-              this.loading = false
-            })
+            url = '/user/member/updateimportance'
             break
           // 商业类型
           case 'businessType':
-            e.form.id = this.detailData.id
-            updatebusinesstype(e.form).then(res => {
-              if (res.result.isSuccess) {
-                this.$message.success(res.result.message)
-                this.getData()
-              }
-              this.loading = false
-            })
+            url = '/user/member/updatebusinesstype'
             break
           // 行业类型
           case 'industry':
-            e.form.id = this.detailData.id
-            updateindustry(e.form).then(res => {
-              if (res.result.isSuccess) {
-                this.$message.success(res.result.message)
-                this.getData()
-              }
-              this.loading = false
-            })
+            url = '/user/member/updateindustry'
             break
           // 客户所属地区
           case 'region':
-            e.form.id = String(this.detailData.id)
-            updateregion(e.form).then(res => {
-              if (res.result.isSuccess) {
-                this.$message.success(res.result.message)
-                this.getData()
-              }
-              this.loading = false
-            })
+            url = '/user/member/updateregion'
             break
         }
+        request({
+          url: url,
+          method: 'post',
+          data: e.form
+        }).then(res => {
+          if (res.result.isSuccess) {
+            this.$message.success(res.result.message)
+            this.getData()
+          }
+          this.loading = false
+        })
       }
     },
     // 获取数据

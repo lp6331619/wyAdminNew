@@ -174,7 +174,7 @@
               @change="checkAll"
             />
             <modifyLevel
-              v-if="prepare"
+              v-if="prepare.level"
               class="fl ml10"
               :select-table="selectTable"
               :prepare="prepare.level"

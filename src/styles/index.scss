@@ -134,6 +134,10 @@ ul {
   padding: 20px !important;
 }
 
+.pb0 {
+  padding-bottom: 0 !important;
+}
+
 .app-main {
   padding: 20px
 }
@@ -149,6 +153,7 @@ ul {
 
   &.header {
     justify-content: space-between;
+    position: relative;
 
     .buttonBox {
       .actions {
@@ -156,6 +161,12 @@ ul {
         border-color: #c6e2ff;
         background-color: #ecf5ff;
       }
+    }
+
+    .absolute {
+      position: absolute;
+      right: 0;
+      top: -5px;
     }
   }
 }

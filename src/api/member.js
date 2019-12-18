@@ -150,4 +150,19 @@ export function updateregion(data, schema) {
     data: data
   })
 }
-
+// 会员产品统计
+export function productCounter(data, schema) {
+  return request({
+    url: `/user/member/productCounter${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改用户联系人
+export function updateContact(data, schema) {
+  return request({
+    url: `/user/member/updateContact${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
