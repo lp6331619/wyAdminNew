@@ -4,7 +4,8 @@ export default {
   },
   data() {
     return {
-      memberData: {}
+      dataInfo: {},
+      detailData: {}
     }
   },
   computed: {
@@ -20,8 +21,9 @@ export default {
     getDetail() {
       realInfoMemberDetail({ memberId: this.userId }).then(res => {
         if (res.result.isSuccess) {
-          this.memberData = res.data
-          console.log(this.memberData, 123)
+          this.dataInfo = res.data
+          this.detailData = res.data.realInfo
+          console.log(this.dataInfo, 123)
         }
       })
     }
