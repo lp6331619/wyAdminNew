@@ -66,8 +66,7 @@ service.interceptors.response.use(
         return response.config.url.includes('login?_schema=1') ? response : res
       } else {
         if (res.result.errCode === 'LOGIN_REQUIRE') {
-          console.log(res)
-          // this.$router.push()
+          this.$router.push('/login')
         }
         Message({
           message: res.result.message || '请求错误!',

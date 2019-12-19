@@ -83,12 +83,12 @@ export default {
         mode: 'SearchRank'
       }],
       // 导出 excel 链接
-      exportExcel: '/user/member/list?_csv=1',
+      exportExcel: '/user/member/list',
       // 其余的数据
       otherData: {
         sort: this.$route.query.sort ? JSON.parse(this.$route.query.sort) : {},
         pageSize: this.$route.query.pageSize ? JSON.parse(this.$route.query.pageSize) : 10,
-        page: this.$route.query.page ? this.$route.query.page : 1,
+        page: this.$route.query.page ? JSON.parse(this.$route.query.page) : 1,
         status: this.$route.query.status ? JSON.parse(this.$route.query.status) : '',
         realInfoStatus: this.$route.query.realInfoStatus ? JSON.parse(this.$route.query.realInfoStatus) : '',
         level: this.$route.query.level ? JSON.parse(this.$route.query.level) : ''

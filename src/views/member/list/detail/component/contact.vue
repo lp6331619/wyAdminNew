@@ -165,25 +165,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.tableBox {
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-width: 0 0 1px 1px;
-  td {
-    text-align: center;
-    padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-width: 1px 1px 0 0;
-  }
-  .title {
-    width: 150px;
-    background: #f5f5f5;
-    color: #a5a5a5;
-  }
-  .el-form-item {
-    margin-bottom: 0;
-  }
-}
-</style>

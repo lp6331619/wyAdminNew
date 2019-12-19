@@ -5,7 +5,7 @@
         <template v-for="(item,index) in searchListData">
           <!--selectInput 类型-->
           <template v-if="item.mode==='SearchInput'">
-            <div :key="index" class="searchInput mb10">
+            <div :key="index" class="searchInput mb10" :style="`width:${item.width || ''}`">
               <SearchInput
                 :search-type="item.type"
                 :init-data="searchData[item.type]"
@@ -17,9 +17,10 @@
           </template>
           <!--select 类型-->
           <template v-if="item.mode==='SearchSelect'">
-            <div :key="index" class="mr20 mb10">
+            <div :key="index" class="mr20 mb10" :style="`width:${item.width || ''}`">
               <SearchSelect
                 :search-type="item.type"
+                :prepare-type="item.prepareType"
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
                 :prepare-data="prepareData"
@@ -29,7 +30,7 @@
           </template>
           <!--时间段 类型-->
           <template v-if="item.mode==='SearchTime'">
-            <div :key="index" class="mr20 mb10">
+            <div :key="index" class="mr20 mb10" :style="`width:${item.width || ''}`">
               <SearchTime
                 :search-type="item.type"
                 :init-data="searchData[item.type]"
@@ -40,13 +41,19 @@
           </template>
           <!--值段 类型-->
           <template v-if="item.mode==='SearchRank'">
-            <div :key="index" class="mr20 mb10">
+            <div :key="index" class="mr20 mb10" :style="`width:${item.width || ''}`">
               <SearchRank
                 :search-type="item.type"
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
                 @emitData="emitData($event)"
               />
+            </div>
+          </template>
+          <!-- input类型 -->
+          <template v-if="item.mode==='Input'">
+            <div :key="index" class="mr20 mb10" :style="`width:${item.width || ''}`">
+              <el-input v-model="searchData[item.type]" :placeholder="item.typeName" />
             </div>
           </template>
         </template>
@@ -178,7 +185,7 @@ export default {
     // 导出 excel
     excelOut(url) {
       const object = Object.assign(this.searchData, this.otherData)
-      this.upExcel(url, object)
+      this.upExcel(url + '?_csv=1', object)
     },
     upExcel(URL, PARAMS) {
       var temp = document.createElement('form')

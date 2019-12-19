@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <el-card class="box-card">
+    <div slot="header" class="header flex">产品统计列表</div>
     <table v-if="list && list.items" class="generalTab" border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
@@ -26,7 +27,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </el-card>
 </template>
 
 <script>

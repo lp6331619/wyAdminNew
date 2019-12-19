@@ -151,6 +151,10 @@ ul {
   display: flex;
   justify-content: space-between;
 
+  &.flexStart {
+    justify-content: flex-start;
+  }
+
   &.header {
     justify-content: space-between;
     position: relative;
@@ -173,6 +177,10 @@ ul {
 
 .text-center {
   text-align: center;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .el-table-filter {

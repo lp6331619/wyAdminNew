@@ -1,354 +1,370 @@
 <template>
-  <div v-if="detailBool" v-loading="loading" class="account">
-    <el-row class="SimilarTable">
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">ID</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <div>
-              {{ detailData.id }}
+  <el-card v-if="detailBool" v-loading="loading" class="box-card">
+    <div slot="header" class="header flex">会员列表</div>
+    <div class="account">
+      <el-row class="SimilarTable">
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">ID</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <div>
+                {{ detailData.id }}
+                <span
+                  v-if="detailData.passport"
+                >( WYID: {{ detailData.passport.wyId }} )</span>
+              </div>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:admin_login'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="toMember()"
+                >登入账号</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">注册时间</el-col>
+            <el-col
+              :span="18"
+              class="contentBox flex"
+            >{{ detailData.stat?detailData.stat.createDateTime:'暂无数据' }}</el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">重要程度</el-col>
+            <el-col :span="18" class="contentBox flex">
               <span
-                v-if="detailData.passport"
-              >( WYID: {{ detailData.passport.wyId }} )</span>
-            </div>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:admin_login'"
-                size="mini"
-                type="primary"
-                plain
-                @click="toMember()"
-              >登入账号</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">注册时间</el-col>
-          <el-col :span="18" class="contentBox flex">{{ detailData.stat.createDateTime }}</el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">重要程度</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span :class="getLevelColor(detailData.importance.key)">{{ detailData.importance.name }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:update_importance'"
-                size="mini"
-                type="primary"
-                plain
-                @click="updateLevel()"
-              >修改</el-button>
-              <Configurable
-                v-if="importanceInitData.display"
-                :init-data="importanceInitData"
-                @emitOut="emitOut"
-              />
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">商业类型</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span
-              :class="getLevelColor(detailData.businessType.key)"
-            >{{ detailData.businessType.name }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:update_business_type'"
-                size="mini"
-                type="primary"
-                plain
-                @click="businessType()"
-              >修改</el-button>
-              <Configurable
-                v-if="businessTypeInitData.display"
-                :init-data="businessTypeInitData"
-                @emitOut="emitOut"
-              />
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">账号状态</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span
-              :class="selectStatusColor('status',detailData.status.isOk)"
-            >{{ detailData.status.name }}</span>
-            <div class="btnBox">
-              <el-button
-                v-if="!detailData.status.isOk"
-                v-operatePriv="'user:member:update_status'"
-                size="mini"
-                type="primary"
-                plain
-                @click="statusDialog('OK')"
-              >开启</el-button>
-              <el-button
-                v-if="detailData.status.isOk"
-                v-operatePriv="'user:member:update_status'"
-                size="mini"
-                type="primary"
-                plain
-                @click="statusDialog('LOCK')"
-              >禁用</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">所属行业</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.industry.name }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:update_industry'"
-                size="mini"
-                type="primary"
-                plain
-                @click="updateindustryBox()"
-              >修改</el-button>
-              <Configurable
-                v-if="updateindustryInitData.display"
-                :init-data="updateindustryInitData"
-                @emitOut="emitOut"
-              />
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">实名认证状态</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span :class="selectStatusColor('realInfoStatus',detailData.realInfoStatus.key)">
-              {{ detailData.realInfoStatus.name }}
+                :class="getLevelColor(detailData.importance.key)"
+              >{{ detailData.importance?detailData.importance.name:'暂无数据' }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:update_importance'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="updateLevel()"
+                >修改</el-button>
+                <Configurable
+                  v-if="importanceInitData.display"
+                  :init-data="importanceInitData"
+                  @emitOut="emitOut"
+                />
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">商业类型</el-col>
+            <el-col :span="18" class="contentBox flex">
               <span
-                v-if="detailData.realInfoStatus.key != 'NO' && detailData.realInfoStatus.key != 'REJECT' && detailData.name"
-              >({{ detailData.name }})</span>
-            </span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:realinfo_detail'"
-                size="mini"
-                type="primary"
-                plain
-                @click="tabsClick('3')"
-              >查看</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">所属销售</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.saler.name }}</span>
-            <div class="btnBox">
-              <modifySaler
-                v-if="idArray.length>0"
-                :select-table="idArray"
-                :plain="true"
-                @refresh="getData"
+                :class="getLevelColor(detailData.businessType.key)"
+              >{{ detailData.businessType.name }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:update_business_type'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="businessType()"
+                >修改</el-button>
+                <Configurable
+                  v-if="businessTypeInitData.display"
+                  :init-data="businessTypeInitData"
+                  @emitOut="emitOut"
+                />
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">账号状态</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span
+                :class="selectStatusColor('status',detailData.status.isOk)"
+              >{{ detailData.status.name }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-if="!detailData.status.isOk"
+                  v-operatePriv="'user:member:update_status'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="statusDialog('OK')"
+                >开启</el-button>
+                <el-button
+                  v-if="detailData.status.isOk"
+                  v-operatePriv="'user:member:update_status'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="statusDialog('LOCK')"
+                >禁用</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">所属行业</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.industry?detailData.industry.name:'暂无数据' }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:update_industry'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="updateindustryBox()"
+                >修改</el-button>
+                <Configurable
+                  v-if="updateindustryInitData.display"
+                  :init-data="updateindustryInitData"
+                  @emitOut="emitOut"
+                />
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">实名认证状态</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span :class="selectStatusColor('realInfoStatus',detailData.realInfoStatus.key)">
+                {{ detailData.realInfoStatus?detailData.realInfoStatus.name:'暂无数据' }}
+                <span
+                  v-if="detailData.realInfoStatus && detailData.realInfoStatus.key != 'NO' && detailData.realInfoStatus.key != 'REJECT' && detailData.name"
+                >({{ detailData.name }})</span>
+              </span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:realinfo_detail'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="tabsClick('3')"
+                >查看</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">所属销售</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.saler?detailData.saler.name:'暂无数据' }}</span>
+              <div class="btnBox">
+                <modifySaler
+                  v-if="idArray.length>0"
+                  :select-table="idArray"
+                  :plain="true"
+                  @refresh="getData"
+                >
+                  <slot>修改</slot>
+                </modifySaler>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">手机号码</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.mobile }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:update_mobile'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="editSimple('mobile',detailData.mobile)"
+                >修改</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">账户余额</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.account?detailData.account.balance.balance:'暂无数据' }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'business:discount:coupon:list'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="getCouponLink()"
+                >查看优惠券</el-button>
+                <el-button
+                  v-operatePriv="'finance:record:list'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="viewFlow()"
+                >查看流水</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">电子邮箱</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.email }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:update_email'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="editSimple('email',detailData.email)"
+                >修改</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">累计消费额</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.account?detailData.account.consume.consume:'暂无数据' }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:update_email'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="viewOrder()"
+                >查看订单</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">会员等级</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.level?detailData.level.name:'暂无数据' }}</span>
+              <div class="btnBox">
+                <modifyLevelBox
+                  v-if="idArray.length>0"
+                  class="fl ml10"
+                  :select-table="idArray"
+                  :prepare="LevelPrepare"
+                  :plain="true"
+                  @refresh="getData"
+                >
+                  <slot>修改</slot>
+                </modifyLevelBox>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">
+              可开票金额
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="统计可开票的未开票账单及余额未开票金额"
+                placement="right"
               >
-                <slot>修改</slot>
-              </modifySaler>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">手机号码</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.mobile }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:update_mobile'"
-                size="mini"
-                type="primary"
-                plain
-                @click="editSimple('mobile',detailData.mobile)"
-              >修改</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">账户余额</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.account.balance.balance }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'business:discount:coupon:list'"
-                size="mini"
-                type="primary"
-                plain
-                @click="getCouponLink()"
-              >查看优惠券</el-button>
-              <el-button
-                v-operatePriv="'finance:record:list'"
-                size="mini"
-                type="primary"
-                plain
-                @click="viewFlow()"
-              >查看流水</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">电子邮箱</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.email }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:update_email'"
-                size="mini"
-                type="primary"
-                plain
-                @click="editSimple('email',detailData.email)"
-              >修改</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">累计消费额</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.account.consume.consume }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:update_email'"
-                size="mini"
-                type="primary"
-                plain
-                @click="viewOrder()"
-              >查看订单</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">会员等级</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.level.name }}</span>
-            <div class="btnBox">
-              <modifyLevelBox
-                v-if="idArray.length>0"
-                class="fl ml10"
-                :select-table="idArray"
-                :prepare="LevelPrepare"
-                :plain="true"
-                @refresh="getData"
-              >
-                <slot>修改</slot>
-              </modifyLevelBox>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">
-            可开票金额
-            <el-tooltip class="item" effect="dark" content="统计可开票的未开票账单及余额未开票金额" placement="right">
-              <i class="el-icon-warning blue"></i>
-            </el-tooltip>
-          </el-col>
-          <el-col :span="18" class="contentBox flex">{{ detailData.account.invoice.invoice }}</el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">密码</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span></span>
-            <div class="btnBox">
-              <Password
-                v-operatePriv="'user:member:set_password'"
-                :init-data="passwordInit"
-                @reset="getData"
-              />
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">
-            已开票金额
-            <el-tooltip class="item" effect="dark" content="统计历史账单及余额已开票金额" placement="right">
-              <i class="el-icon-warning blue"></i>
-            </el-tooltip>
-          </el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.account.invoice.out.amount }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'finance:invoice:list'"
-                size="mini"
-                type="primary"
-                plain
-                @click="viewInvoice"
-              >查看</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">客户所属区域</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.region.name }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'user:member:update_region'"
-                size="mini"
-                type="primary"
-                plain
-                @click="updateregion"
-              >修改</el-button>
-              <Configurable
-                v-if="updateregionInitData.display"
-                :init-data="updateregionInitData"
-                @emitOut="emitOut"
-              />
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          <el-col :span="6" class="title">即将到期产品</el-col>
-          <el-col :span="18" class="contentBox flex">
-            <span>{{ detailData.willExpireProduct }}</span>
-            <div class="btnBox">
-              <el-button
-                v-operatePriv="'product:cloud_vm:list'"
-                size="mini"
-                type="primary"
-                plain
-                @click="viewProduct"
-              >查看</el-button>
-            </div>
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-  </div>
+                <i class="el-icon-warning blue"></i>
+              </el-tooltip>
+            </el-col>
+            <el-col
+              :span="18"
+              class="contentBox flex"
+            >{{ detailData.account?detailData.account.invoice.invoice:'暂无数据' }}</el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">密码</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span></span>
+              <div class="btnBox">
+                <Password
+                  v-operatePriv="'user:member:set_password'"
+                  :init-data="passwordInit"
+                  @reset="getData"
+                />
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">
+              已开票金额
+              <el-tooltip class="item" effect="dark" content="统计历史账单及余额已开票金额" placement="right">
+                <i class="el-icon-warning blue"></i>
+              </el-tooltip>
+            </el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.account?detailData.account.invoice.out.amount:'暂无数据' }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'finance:invoice:list'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="viewInvoice"
+                >查看</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">客户所属区域</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.region?detailData.region.name : '暂无数据' }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'user:member:update_region'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="updateregion"
+                >修改</el-button>
+                <Configurable
+                  v-if="updateregionInitData.display"
+                  :init-data="updateregionInitData"
+                  @emitOut="emitOut"
+                />
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col :span="6" class="title">即将到期产品</el-col>
+            <el-col :span="18" class="contentBox flex">
+              <span>{{ detailData.willExpireProduct || '暂无数据' }}</span>
+              <div class="btnBox">
+                <el-button
+                  v-operatePriv="'product:cloud_vm:list'"
+                  size="mini"
+                  type="primary"
+                  plain
+                  @click="viewProduct"
+                >查看</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </el-col>
+      </el-row>
+    </div>
+  </el-card>
 </template>
 
 <script>

@@ -14,6 +14,10 @@ export default {
       type: String,
       default: ''
     },
+    prepareType: {
+      type: String,
+      default: ''
+    },
     initData: {
       type: String,
       default: ''
@@ -54,13 +58,16 @@ export default {
     },
     // 获取 prepare
     getPrepare() {
-      if (this.prepareData && this.searchType) {
+      if (this.prepareData && (this.searchType || this.prepareType)) {
         const box = Object.assign(
           {
             all: '全部'
           },
-          this.prepareData[this.searchType]
+          this.prepareData[
+            this.prepareType ? this.prepareType : this.searchType
+          ]
         )
+        console.log(this.prepareData, this.prepareType, this.searchType)
         return box
       } else {
         return {}

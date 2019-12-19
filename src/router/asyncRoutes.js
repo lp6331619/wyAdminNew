@@ -49,6 +49,13 @@ export const asyncRoutes = [
           priv: 'user:member:detail',
           meta: { title: '会员详情', activeMenu: '/member/list' },
           component: () => import('@/views/member/list/detail/detail.vue')
+        }, {
+          path: 'realInfo/:id',
+          hidden: true,
+          name: 'realInfo',
+          priv: 'user:member:detail',
+          meta: { title: '实名认证', activeMenu: '/member/list' },
+          component: () => import('@/views/member/list/realinfo/realinfo.vue')
         }],
         tabs: {
           child: [{
@@ -264,8 +271,17 @@ export const asyncRoutes = [
         path: 'realinfo',
         name: 'realinfo',
         priv: 'user:member:realinfo_list',
-        component: () => import('@/views/tree/index'),
         meta: { title: '实名审核', icon: 'tree' },
+        component: () => import('@/views/member/realinfo/list/list.vue'),
+        children: [{
+          path: 'authentication/:id',
+          hidden: true,
+          name: 'detail',
+          priv: 'user:member:detail',
+          meta: { title: '审核详情', activeMenu: '/member/list' },
+          component: () => import('@/views/member/realinfo/list/list.vue')
+        }],
+
         tabs: {
           child: [
             {

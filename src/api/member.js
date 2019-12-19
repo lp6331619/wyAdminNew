@@ -166,3 +166,51 @@ export function updateContact(data, schema) {
     data: data
   })
 }
+// 实名审核
+export function realInfoAudit(data, schema) {
+  return request({
+    url: `/user/member/realInfoAudit${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 实名详情
+export function realInfoMemberDetail(data, schema) {
+  return request({
+    url: `/user/member/realInfoMemberDetail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// 实名列表
+export function realInfoList(data, schema) {
+  return request({
+    url: `/user/member/realInfoList${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// 实名详情
+export function realInfoDetail(data, schema) {
+  return request({
+    url: `/user/member/realInfoDetail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 会员登录日志列表
+export function memberLoginLog(data, schema) {
+  return request({
+    url: `/log/memberLoginLog/list${schema ? schema === 'withSchema' ? `?_withSchema=all&memberId=${data.id}` : '?_prepare=1' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: schema === 'withSchema' ? '' : data
+  })
+}
+// 操作日志列表
+export function opLogList(data, schema) {
+  return request({
+    url: `/log/opLog/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}

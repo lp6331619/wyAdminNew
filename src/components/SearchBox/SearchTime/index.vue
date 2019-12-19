@@ -51,10 +51,10 @@ export default {
     }
   },
   mounted() {
-    this.searchData = [this.initData.start, this.initData.end]
-    this.initData.start === '' && this.initData.end === ''
-      ? (this.searchData = [])
-      : ''
+    this.searchData =
+      this.initData.start && this.initData.end
+        ? [this.initData.start, this.initData.end]
+        : []
   },
   methods: {
     // 导出数据
