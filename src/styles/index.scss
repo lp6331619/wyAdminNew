@@ -208,3 +208,12 @@ ul {
     }
   }
 }
+
+.upload {
+
+  .el-upload--picture-card,
+  .el-upload-list__item {
+    width: 196px;
+    height: 134px;
+  }
+}

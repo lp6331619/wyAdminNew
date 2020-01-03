@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, removeToken, removeName } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
@@ -66,7 +66,11 @@ service.interceptors.response.use(
         return response.config.url.includes('login?_schema=1') ? response : res
       } else {
         if (res.result.errCode === 'LOGIN_REQUIRE') {
-          this.$router.push('/login')
+          removeToken()
+          removeName()
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
         }
         Message({
           message: res.result.message || '请求错误!',

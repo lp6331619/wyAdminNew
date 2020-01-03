@@ -76,7 +76,7 @@
                 class="ml20 text-center"
               >
                 <img
-                  :src="photoUrl +'?type=' +key +'&id=' +detailData.realInfo.id"
+                  :src="imgUrl + photoUrl +'?type=' +key +'&id=' +detailData.realInfo.id"
                   width="250px"
                   height="150px"
                   @click="photoBox(key)"
@@ -186,8 +186,7 @@ export default {
         note: [{ required: true, trigger: 'change', message: '不能为空!' }]
       },
       listLoading: false,
-      photoUrl:
-        'http://admin-maint.dev2.wcloud.me/api/user/member/getRealInfoPicture'
+      photoUrl: '/api/user/member/getRealInfoPicture'
     }
   },
   computed: {
@@ -242,7 +241,7 @@ export default {
     // 打开图片
     photoBox(key) {
       this.$alert(
-        `<img style="max-width:100%;max-height:100%" src="${this.photoUrl}?type= ${key}&id=${this.detailData.realInfo.id}" /><p>${this.detailData.realInfo.certificate.files[key].typeName}</p> `,
+        `<img style="max-width:100%;max-height:100%" src="${this.imgUrl}${this.photoUrl}?type= ${key}&id=${this.detailData.realInfo.id}" /><p>${this.detailData.realInfo.certificate.files[key].typeName}</p> `,
         '',
         {
           dangerouslyUseHTMLString: true,

@@ -214,3 +214,19 @@ export function opLogList(data, schema) {
     data: data
   })
 }
+// 申请实名
+export function applyRealInfo(data, schema) {
+  return request({
+    url: `/user/member/applyRealInfo${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 实名更新
+export function realInfoUpdate(data, schema) {
+  return request({
+    url: `/user/member/realInfoUpdate${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}

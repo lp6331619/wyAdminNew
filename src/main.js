@@ -15,6 +15,8 @@ import operatePriv from '@/public/js/btnPermissions.js' // 权限判断
 import '@/icons' // icon
 import '@/permission' // permission control
 
+// 公用变量图片 url
+Vue.prototype.imgUrl = 'http://admin-maint.dev2.wcloud.me'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
