@@ -241,6 +241,7 @@ export default {
     sortTable(data) {
       const sort = data.order === 'descending' ? 'desc' : 'asc'
       const name = data.prop
+      this.otherData.sort = {}
       this.otherData.sort[name] = sort
       this.toList()
     },

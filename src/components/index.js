@@ -4,4 +4,5 @@ import SvgIcon from './SvgIcon'
 import SearchBox from './SearchBox'
 import Dialog from './Dialog'
 import RemarkCard from './RemarkCard'
-export { Breadcrumb, Hamburger, SvgIcon, SearchBox, Dialog, RemarkCard }
+import Upload from './Upload/Upload.vue'
+export { Breadcrumb, Hamburger, SvgIcon, SearchBox, Dialog, RemarkCard, Upload }

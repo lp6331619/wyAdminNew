@@ -15,7 +15,7 @@
               </div>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:admin_login'"
+                  v-operatePriv="{priv:'user:member:admin_login'}"
                   size="mini"
                   type="primary"
                   plain
@@ -43,7 +43,7 @@
               >{{ detailData.importance?detailData.importance.name:'暂无数据' }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:update_importance'"
+                  v-operatePriv="{priv:'user:member:update_importance'}"
                   size="mini"
                   type="primary"
                   plain
@@ -67,7 +67,7 @@
               >{{ detailData.businessType.name }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:update_business_type'"
+                  v-operatePriv="{priv:'user:member:update_business_type'}"
                   size="mini"
                   type="primary"
                   plain
@@ -92,7 +92,7 @@
               <div class="btnBox">
                 <el-button
                   v-if="!detailData.status.isOk"
-                  v-operatePriv="'user:member:update_status'"
+                  v-operatePriv="{priv:'user:member:update_status'}"
                   size="mini"
                   type="primary"
                   plain
@@ -100,7 +100,7 @@
                 >开启</el-button>
                 <el-button
                   v-if="detailData.status.isOk"
-                  v-operatePriv="'user:member:update_status'"
+                  v-operatePriv="{priv:'user:member:update_status'}"
                   size="mini"
                   type="primary"
                   plain
@@ -117,7 +117,7 @@
               <span>{{ detailData.industry?detailData.industry.name:'暂无数据' }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:update_industry'"
+                  v-operatePriv="{priv:'user:member:update_industry'}"
                   size="mini"
                   type="primary"
                   plain
@@ -144,7 +144,7 @@
               </span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:realinfo_detail'"
+                  v-operatePriv="{priv:'user:member:realinfo_detail'}"
                   size="mini"
                   type="primary"
                   plain
@@ -179,7 +179,7 @@
               <span>{{ detailData.mobile }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:update_mobile'"
+                  v-operatePriv="{priv:'user:member:update_mobile'}"
                   size="mini"
                   type="primary"
                   plain
@@ -196,14 +196,14 @@
               <span>{{ detailData.account?detailData.account.balance.balance:'暂无数据' }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'business:discount:coupon:list'"
+                  v-operatePriv="{priv:'business:discount:coupon:list'}"
                   size="mini"
                   type="primary"
                   plain
                   @click="getCouponLink()"
                 >查看优惠券</el-button>
                 <el-button
-                  v-operatePriv="'finance:record:list'"
+                  v-operatePriv="{priv:'finance:record:list'}"
                   size="mini"
                   type="primary"
                   plain
@@ -220,7 +220,7 @@
               <span>{{ detailData.email }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:update_email'"
+                  v-operatePriv="{priv:'user:member:update_email'}"
                   size="mini"
                   type="primary"
                   plain
@@ -237,7 +237,7 @@
               <span>{{ detailData.account?detailData.account.consume.consume:'暂无数据' }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:update_email'"
+                  v-operatePriv="{priv:'user:member:update_email'}"
                   size="mini"
                   type="primary"
                   plain
@@ -293,7 +293,7 @@
               <span></span>
               <div class="btnBox">
                 <Password
-                  v-operatePriv="'user:member:set_password'"
+                  v-operatePriv="{priv:'user:member:set_password'}"
                   :init-data="passwordInit"
                   @reset="getData"
                 />
@@ -313,7 +313,7 @@
               <span>{{ detailData.account?detailData.account.invoice.out.amount:'暂无数据' }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'finance:invoice:list'"
+                  v-operatePriv="{priv:'finance:invoice:list'}"
                   size="mini"
                   type="primary"
                   plain
@@ -330,7 +330,7 @@
               <span>{{ detailData.region?detailData.region.name : '暂无数据' }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'user:member:update_region'"
+                  v-operatePriv="{priv:'user:member:update_region'}"
                   size="mini"
                   type="primary"
                   plain
@@ -352,7 +352,7 @@
               <span>{{ detailData.willExpireProduct || '暂无数据' }}</span>
               <div class="btnBox">
                 <el-button
-                  v-operatePriv="'product:cloud_vm:list'"
+                  v-operatePriv="{priv:'product:cloud_vm:list'}"
                   size="mini"
                   type="primary"
                   plain

@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataBox">
     <el-button
-      v-operatePriv="'user:member:set_password'"
+      v-operatePriv="{priv:'user:member:set_password'}"
       size="mini"
       type="primary"
       plain

@@ -6,7 +6,7 @@
           <template slot="title" class="p20">
             备注信息
             <el-button
-              v-operatePriv="remarkUrls.addPrive"
+              v-operatePriv="{priv:remarkUrls.addPrive}"
               class="ml20"
               type="primary"
               size="mini"
@@ -16,12 +16,12 @@
               <i class="el-icon-circle-plus blue mr5"></i>添加
             </el-button>
           </template>
-          <div v-operatePriv="remarkUrls.listPrive" class="p20 pb0">
+          <div v-operatePriv="{priv:remarkUrls.listPrive}" class="p20 pb0">
             <template v-if="list.length>0">
               <div v-for="(item,index) in list" :key="index" class="item">
                 {{ item.date +" " +"(" +item.user +")" +" " +item.note }}
                 <el-button
-                  v-operatePriv="remarkUrls.delPrive"
+                  v-operatePriv="{priv:remarkUrls.delPrive}"
                   size="mini"
                   class="ml10"
                   type="danger"

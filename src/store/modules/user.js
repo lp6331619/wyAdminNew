@@ -1,7 +1,7 @@
-import { login, loginSchema, getInfo, logout } from '@/api/user'
+import { login, getJsconfig, loginSchema, getInfo, logout } from '@/api/user'
 import { getToken, setToken, removeToken, getName, setName, removeName } from '@/utils/auth'
 import { resetRouter } from '@/router'
-
+import { JSEncrypt } from 'jsencrypt'
 const state = {
   token: getToken(),
   name: getName(),
@@ -21,13 +21,22 @@ const mutations = {
     state.privileges = data
   }
 }
-
+var publicKey = ''
+// 加密函数
+function encryptedData(publicKey, data) {
+  // 新建JSEncrypt对象
+  const encryptor = new JSEncrypt()
+  // 设置公钥
+  encryptor.setPublicKey(publicKey)
+  // 加密数据
+  return encryptor.encrypt(data)
+}
 const actions = {
   // user login
   login({ commit }, userInfo) {
     const { username, password, seccode } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password, seccode: seccode }).then(response => {
+      login({ username: encryptedData(publicKey, username.trim()), password: encryptedData(publicKey, password), seccode: seccode }).then(response => {
         const { data } = response
         if (!data) {
           reject('Verification failed, please Login again.')
@@ -42,7 +51,8 @@ const actions = {
       })
     })
   },
-  // 奇葩的获取 token 步骤
+
+  // 获取 token 步骤
   loginSchema({ commit }) {
     return new Promise((resolve, reject) => {
       loginSchema({}).then(response => {
@@ -50,7 +60,13 @@ const actions = {
         const token = headers['x-admin-csrf-token']
         commit('SET_TOKEN', token)
         setToken(token)
-        resolve()
+        // 获取公钥
+        getJsconfig().then(res => {
+          publicKey = res.data.jsencryptKey
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
       }).catch(error => {
         reject(error)
       })

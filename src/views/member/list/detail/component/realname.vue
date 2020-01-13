@@ -6,14 +6,14 @@
         <div>
           <el-button
             v-if="!detailData.realInfo"
-            v-operatePriv="'user:member:apply_realinfo'"
+            v-operatePriv="{priv:'user:member:apply_realinfo'}"
             type="primary"
             size="mini"
             @click="toAuthentication"
           >申请实名</el-button>
           <el-button
             v-if="detailData.realInfo && detailData.realInfo.id"
-            v-operatePriv="'user:member:realInfo_update'"
+            v-operatePriv="{priv:'user:member:realInfo_update'}"
             type="primary"
             size="mini"
             @click="toAuthentication"
@@ -90,7 +90,7 @@
     </el-card>
     <el-card
       v-if="detailData.realInfo && detailData.realInfo.canAudit"
-      v-operatePriv="'user:member:realInfo_audit'"
+      v-operatePriv="{priv:'user:member:realInfo_audit'}"
       class="box-card"
     >
       <div slot="header" class="header flex">实名审核</div>
@@ -149,7 +149,7 @@
         <el-button :disabled="loading" type="primary" @click.native.prevent="Submission">确认</el-button>
       </div>
     </el-card>
-    <el-card v-operatePriv="'user:member:realInfo_audit'" class="box-card">
+    <el-card v-operatePriv="{priv:'user:member:realInfo_audit'}" class="box-card">
       <div slot="header" class="header flex">实名记录</div>
       <el-table :loading="listLoading" :data="list" style="width: 100%">
         <el-table-column prop="auditInfo.auditTime" label="审核时间"></el-table-column>
@@ -186,7 +186,7 @@ export default {
         note: [{ required: true, trigger: 'change', message: '不能为空!' }]
       },
       listLoading: false,
-      photoUrl: '/api/user/member/getRealInfoPicture'
+      photoUrl: '/user/member/getRealInfoPicture'
     }
   },
   computed: {

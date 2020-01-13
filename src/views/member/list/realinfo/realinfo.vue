@@ -13,7 +13,7 @@
       :prepare="prepare"
       @emitOut="emitOut"
     />
-    <el-card v-if="!getIsShowInfo()" class="box-card title">
+    <el-card v-if="!getIsShowInfo()" v-loading="loading" class="box-card title">
       <el-form ref="form" :model="form" :rules="formRules" auto-complete="on" label-position="left">
         <table
           v-if="dataInfo"
@@ -30,7 +30,7 @@
               >{{ dataInfo.realInfoStatus.name }}</span>
             </td>
           </tr>
-          <tr v-if="detailData.status.value === 3">
+          <tr v-if="detailData && detailData.status.value === 3">
             <td class="title">失败原因：</td>
             <td>
               <span>{{ detailData.auditInfo.note || "" }}</span>
@@ -39,17 +39,42 @@
           <tr>
             <td class="title">认证类型：</td>
             <td>
-              <el-radio v-model="form.type" :label="1" border>个人</el-radio>
-              <el-radio v-model="form.type" :label="2" border>企业</el-radio>
+              <el-form-item class="w400">
+                <el-radio-group v-model="form.type" @change="changeType">
+                  <el-radio :label="1">个人</el-radio>
+                  <el-radio :label="2">企业</el-radio>
+                </el-radio-group>
+              </el-form-item>
             </td>
           </tr>
           <tr>
             <td class="title">
-              <i class="red">*</i>姓名：
+              <i class="red">*</i>
+              {{ form.type===1?'姓名':'企业名称' }}：
             </td>
             <td>
               <el-form-item prop="name" class="w400">
                 <el-input v-model="form.certificate.name" />
+              </el-form-item>
+            </td>
+          </tr>
+          <tr v-if="form.type===2">
+            <td class="title">
+              <i class="red">*</i>企业联系人：
+            </td>
+            <td>
+              <el-form-item prop="managerCertificate.name" class="w400">
+                <el-input v-model="form.managerCertificate.name" />
+              </el-form-item>
+            </td>
+          </tr>
+          <tr v-if="form.type===2">
+            <td class="title">
+              <i class="red">*</i>联系人身份证号码：
+            </td>
+            <td>
+              <el-form-item prop="managerCertificate.no" class="w400">
+                <el-input v-model="form.managerCertificate.no" />
               </el-form-item>
             </td>
           </tr>
@@ -59,23 +84,23 @@
             </td>
             <td>
               <div class="flex">
-                <el-form-item v-if="provinces" prop="district.province" class="mr10">
+                <el-form-item v-if="provinces" prop="address.province" class="mr10">
                   <el-select
-                    v-model="form.district.province"
+                    v-model="form.address.province"
                     placeholder="请选择省"
                     @change="selectProvinces"
                   >
-                    <el-option v-for="(key,val,i) in provinces" :key="i" :label="key" :value="val" />
+                    <el-option v-for="(val,key,i) in provinces" :key="i" :label="val" :value="key" />
                   </el-select>
                 </el-form-item>
-                <el-form-item v-if="citys" prop="district.city" class="mr10">
-                  <el-select v-model="form.district.city" placeholder="请选择市" @change="selectCitys">
-                    <el-option v-for="(key,val,i) in citys" :key="i" :label="key" :value="val" />
+                <el-form-item v-if="form.address.city || citys" prop="address.city" class="mr10">
+                  <el-select v-model="form.address.city" placeholder="请选择市" @change="selectCitys">
+                    <el-option v-for="(val,key,i) in citys" :key="i" :label="val" :value="key" />
                   </el-select>
                 </el-form-item>
-                <el-form-item v-if="areas" prop="district.area" class="mr10">
-                  <el-select v-model="form.district.area" placeholder="请选择市">
-                    <el-option v-for="(key,val,i) in areas" :key="i" :label="key" :value="val" />
+                <el-form-item v-if="form.address.area || areas" prop="address.area" class="mr10">
+                  <el-select v-model="form.address.area" placeholder="请选择市">
+                    <el-option v-for="(val,key,i) in areas" :key="i" :label="val" :value="key" />
                   </el-select>
                 </el-form-item>
               </div>
@@ -87,7 +112,7 @@
             </td>
             <td>
               <el-form-item prop="name" class="w400">
-                <el-input v-model="form.district.address" />
+                <el-input v-model="form.address.address" />
               </el-form-item>
             </td>
           </tr>
@@ -97,7 +122,11 @@
             </td>
             <td>
               <el-form-item prop="type" class="w400">
-                <el-select v-model="form.certificate.type" placeholder="请选择">
+                <el-select
+                  v-model="form.certificate.type"
+                  placeholder="请选择"
+                  @change="changeCertificateType"
+                >
                   <el-option
                     v-for="(key,val,i) in prepare.certificateType[form.type]"
                     :key="i"
@@ -118,17 +147,65 @@
               </el-form-item>
             </td>
           </tr>
-          <!-- <tr>
+          <tr v-if="form.certificate.type">
             <td class="title">
               <i class="red">*</i> 证件照：
             </td>
             <td>
-              <el-form-item prop="file" class="upload"></el-form-item>
+              <el-form-item prop="files">
+                <Upload
+                  v-if="prepare && form && form.certificate "
+                  :prepare-data="prepare"
+                  :type="{typeChild:form.certificate.type,type:form.type}"
+                  photo-url="/user/member/getRealInfoPicture"
+                  :files="form.certificate.files"
+                  :init-data="certificateImg"
+                  @emitOut="fileOut"
+                />
+              </el-form-item>
+            </td>
+          </tr>
+          <!-- <tr v-if="form.type===2">
+            <td class="title">可选证件类型：</td>
+            <td>
+              <div class="w400 flex">
+                <el-select v-model="moreFileVal" placeholder="请选择" style="width:300px">
+                  <el-option
+                    v-for="(key,val,i) in moreFileType"
+                    :key="i"
+                    :label="key"
+                    :value="val"
+                  />
+                </el-select>
+                <el-button class="ml20" type="primary" :disabled="!moreFileVal" @click="add()">添加</el-button>
+              </div>
+            </td>
+          </tr>
+          <tr v-if="form.certificate.type && form.type===2">
+            <td class="title">可选证件类型</td>
+            <td>
+              <el-form-item prop="files">
+                <Upload
+                  v-if="prepare && form && form.certificate "
+                  :prepare-data="prepare"
+                  :type="{typeChild:form.certificate.type,type:form.type}"
+                  photo-url="/user/member/getRealInfoPicture"
+                  :files="form.certificate.files"
+                  :init-data="detailData"
+                  @emitOut="fileOut"
+                />
+              </el-form-item>
             </td>
           </tr>-->
         </table>
       </el-form>
     </el-card>
+    <div v-if="!getIsShowInfo() && detailData" class="text-center mt20">
+      <el-button
+        type="primary"
+        @click="subForm()"
+      >{{ detailData.status.value === 2 && detailData.type.value === form.type ? "修改" : "提交" }}</el-button>
+    </div>
     <!-- getIsTrue(2) -->
   </div>
 </template>

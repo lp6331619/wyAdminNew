@@ -7,6 +7,14 @@ export function login(data) {
     data
   })
 }
+// 获取加密公钥
+export function getJsconfig() {
+  return request({
+    url: '/jsconfig',
+    method: 'post'
+  })
+}
+
 export function loginSchema() {
   return request({
     url: '/auth/login?_schema=1',

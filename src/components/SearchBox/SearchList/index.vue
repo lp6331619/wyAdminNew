@@ -1,5 +1,5 @@
 <template>
-  <div v-if="prepareData && searchData ">
+  <div v-if="prepareData && searchData " :class="{'flexBox':maxHeight<=50}">
     <div class="searchBox" :style="`height:${height}px`">
       <div ref="searchData" class="searchData">
         <template v-for="(item,index) in searchListData">
@@ -59,16 +59,17 @@
         </template>
       </div>
       <div
+        v-if="maxHeight>50"
         class="moreBtn"
         :class="heightBool?'action':''"
         @click="more()"
       >{{ heightBool ? '关闭':'展开' }}</div>
     </div>
-    <div class="text-center mt20">
-      <el-button v-operatePriv="operatePriv['search']" type="primary" @click="outData()">查询</el-button>
-      <el-button v-operatePriv="operatePriv['search']" @click="clear()">清空</el-button>
+    <div class="text-center mt20" :class="{'ping':maxHeight<=50}">
+      <el-button v-operatePriv="{priv:operatePriv['search']}" type="primary" @click="outData()">查询</el-button>
+      <el-button v-operatePriv="{priv:operatePriv['search']}" @click="clear()">清空</el-button>
       <el-button
-        v-operatePriv="operatePriv['excel']"
+        v-operatePriv="{priv:operatePriv['excel']}"
         type="danger"
         @click="excelOut(exportExcel)"
       >导出Excel</el-button>
@@ -133,12 +134,14 @@ export default {
   data() {
     return {
       height: 40,
-      // height: 'auto',
-      heightBool: false
+      heightBool: false,
+      maxHeight: null
     }
   },
   computed: {},
-  created() {},
+  mounted() {
+    this.maxHeight = this.$refs.searchData.offsetHeight
+  },
   methods: {
     emitData(e) {
       this.searchData[e.type] = e.data
@@ -146,7 +149,7 @@ export default {
     // 更多
     more() {
       this.heightBool = !this.heightBool
-      this.height = this.heightBool ? this.$refs.searchData.offsetHeight : 40
+      this.height = this.heightBool ? this.maxHeight : 40
     },
     // 导出数据
     outData() {
@@ -270,5 +273,15 @@ export default {
       margin-right: 20px;
     }
   }
+}
+.flexBox {
+  display: flex;
+  justify-content: flex-start;
+  .searchBox {
+    padding-right: 0;
+  }
+}
+.ping {
+  margin-top: 0 !important;
 }
 </style>

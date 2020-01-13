@@ -123,7 +123,7 @@ export default {
       type: null,
       moreFiles: [],
       files: [],
-      phoneUrl: '/api/user/member/getRealInfoPicture'
+      phoneUrl: '/user/member/getRealInfoPicture'
     }
   },
   computed: {

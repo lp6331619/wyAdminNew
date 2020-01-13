@@ -278,10 +278,9 @@ export const asyncRoutes = [
           hidden: true,
           name: 'detail',
           priv: 'user:member:detail',
-          meta: { title: '审核详情', activeMenu: '/member/list' },
-          component: () => import('@/views/member/realinfo/list/list.vue')
+          meta: { title: '审核详情', activeMenu: '/member/realinfo' },
+          component: () => import('@/views/member/realinfo/detail/detail.vue')
         }],
-
         tabs: {
           child: [
             {
@@ -325,8 +324,16 @@ export const asyncRoutes = [
         path: 'passport',
         name: 'passport',
         priv: 'user:passport:list',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/member/passport/list/list.vue'),
         meta: { title: '通行证', icon: 'tree' },
+        children: [{
+          path: 'update/:id',
+          hidden: true,
+          name: 'detail',
+          priv: 'user:member:detail',
+          meta: { title: '详情', activeMenu: '/member/passport' },
+          component: () => import('@/views/member/passport/detail/detail.vue')
+        }],
         tabs: {
           child: [
             {
@@ -340,10 +347,6 @@ export const asyncRoutes = [
                   hidden: true,
                   title: '导出Excel',
                   priv: '_special:export_csv'
-                },
-                'member.passport.list:create': {
-                  title: '创建',
-                  priv: 'user:passport:create'
                 },
                 'member.passport.list:detail': {
                   title: '详情',
@@ -370,7 +373,7 @@ export const asyncRoutes = [
         path: 'level',
         name: 'level',
         priv: 'user:level:discount_detail',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/member/level/detail/detail.vue'),
         meta: { title: '会员等级管理', icon: 'tree' },
         actions: {
           'member.level:detail': {

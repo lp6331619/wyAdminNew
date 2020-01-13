@@ -49,8 +49,8 @@
       <el-card class="box-card pt0">
         <div slot="header" class="header flex">
           <div>
-            会员列表
-            <el-button-group class="ml20 buttonBox">
+            {{ schema.title }} ({{ page.totals }})
+            <el-button-group v-if="count" class="ml20 buttonBox">
               <el-button
                 v-for="(item,index) in count"
                 :key="index"
@@ -64,8 +64,16 @@
             </el-button-group>
           </div>
           <div>
-            <relation class="fr ml10" @refresh="getList()"></relation>
-            <createMember class="fr ml10" @refresh="getList()"></createMember>
+            <relation
+              v-operatePriv="{priv:'user:member:add_association'}"
+              class="fr ml10"
+              @refresh="getList()"
+            ></relation>
+            <createMember
+              v-operatePriv="{priv:'user:member:create'}"
+              class="fr ml10"
+              @refresh="getList()"
+            ></createMember>
           </div>
         </div>
         <el-table
@@ -83,6 +91,7 @@
           <el-table-column prop="id" label="会员 ID" sortable="custom" width="100">
             <template slot-scope="scope">
               <el-button
+                v-operatePriv="{priv:'user:member:detail',display:true}"
                 type="text"
                 size="small"
                 @click.native.prevent="$router.push(`/member/list/detail/${scope.row.id }`)"
@@ -153,11 +162,13 @@
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <el-button
+                v-operatePriv="{priv:'user:member:detail'}"
                 type="text"
                 size="small"
                 @click.native.prevent="$router.push(`/member/list/detail/${scope.row.id }`)"
               >管理</el-button>
               <el-button
+                v-operatePriv="{priv:'user:member:admin_login'}"
                 type="text"
                 size="small"
                 @click.native.prevent="toMember(scope.row.id)"
@@ -175,12 +186,18 @@
             />
             <modifyLevel
               v-if="prepare.level"
+              v-operatePriv="{priv:'user:member:update_level'}"
               class="fl ml10"
               :select-table="selectTable"
               :prepare="prepare.level"
               @refresh="getList()"
             />
-            <modifySaler class="fl ml10" :select-table="selectTable" @refresh="getList()" />
+            <modifySaler
+              v-operatePriv="{priv:'user:member:update_saler'}"
+              class="fl ml10"
+              :select-table="selectTable"
+              @refresh="getList()"
+            />
           </div>
           <el-pagination
             v-if="page && page.options"

@@ -1,4 +1,4 @@
-import { realInfoList, realInfoCount } from '@/api/member'
+import { passportList } from '@/api/member'
 import { SearchList } from '@/components/SearchBox'
 
 export default {
@@ -14,19 +14,23 @@ export default {
           search: '',
           strict: '0'
         },
-        realInfo: this.$route.query.realInfo ? JSON.parse(this.$route.query.realInfo) : {
+        passport: this.$route.query.passport ? JSON.parse(this.$route.query.passport) : {
           field: '',
           search: '',
           strict: '0'
         },
-        createDate: this.$route.query.createDate ? JSON.parse(this.$route.query.createDate) : {
+        mergeDate: this.$route.query.mergeDate ? JSON.parse(this.$route.query.mergeDate) : {
+          start: '',
+          end: ''
+        },
+        syncDate: this.$route.query.syncDate ? JSON.parse(this.$route.query.syncDate) : {
           start: '',
           end: ''
         }
       },
       // 权限
       operatePrivBox: {
-        search: 'user:member:realinfo_list',
+        search: 'user:passport:list',
         excel: '_special:export_csv'
       },
       // 搜索的列表数据类型格式
@@ -35,23 +39,25 @@ export default {
         type: 'member',
         mode: 'SearchInput'
       }, {
-        typeName: '实名',
-        type: 'realInfo',
+        typeName: '通行证',
+        type: 'passport',
         mode: 'SearchInput'
       }, {
-        typeName: '提交时间',
-        type: 'createDate',
+        typeName: '合并时间',
+        type: 'mergeDate',
+        mode: 'SearchTime'
+      }, {
+        typeName: '同步时间',
+        type: 'syncDate',
         mode: 'SearchTime'
       }],
       // 导出 excel 链接
-      exportExcel: '/user/member/realInfoList',
+      exportExcel: '/user/passport/list',
       // 其余的数据
       otherData: {
         sort: this.$route.query.sort ? JSON.parse(this.$route.query.sort) : {},
         status: this.$route.query.status ? JSON.parse(this.$route.query.status) : {},
-        type: this.$route.query.type ? JSON.parse(this.$route.query.type) : {},
-        certificateType: this.$route.query.certificateType ? JSON.parse(this.$route.query.certificateType) : {},
-        expireTimeCount: this.$route.query.expireTimeCount ? JSON.parse(this.$route.query.expireTimeCount) : null,
+        mergeStatus: this.$route.query.mergeStatus ? JSON.parse(this.$route.query.mergeStatus) : {},
         pageSize: this.$route.query.pageSize ? JSON.parse(this.$route.query.pageSize) : 10,
         page: this.$route.query.page ? JSON.parse(this.$route.query.page) : 1
       },
@@ -59,10 +65,9 @@ export default {
       prepare: {},
       schema: {},
       listData: {}, // 列表数据
-      count: [], // 统计数据
+      // 表头筛选数据
       status: [], // 实名状态 筛选数据
-      certificateType: [], // 证件类型 筛选数据
-      type: [], // 认证类型 筛选数据
+      mergeStatus: [], // 证件类型 筛选数据
       page: {} // 分页
     }
   },
@@ -83,13 +88,12 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      realInfoList({}, type).then(res => {
+      passportList({}, type).then(res => {
         type === 'prepare'
           ? (this.prepare = res.data)
           : (this.schema = res.schema)
         this.status = this.FilterArray(this.prepare.status)
-        this.certificateType = this.FilterArray(this.prepare.certificateType[''])
-        this.type = this.FilterArray(this.prepare.type)
+        this.mergeStatus = this.FilterArray(this.prepare.mergeStatus)
       })
     },
     // 转换数组
@@ -105,24 +109,11 @@ export default {
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      realInfoList(parse).then(res => {
+      passportList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.loading = false
           this.page = res.pagination
-          this.getCount()
-        }
-      })
-    },
-    // 获取 conut
-    getCount() {
-      realInfoCount().then(res => {
-        if (res.result.isSuccess) {
-          const array = res.data.concat([{ key: 'expireTimeCount', name: '认证已到期', value: this.listData.count.expireTimeCount }])
-          this.count = []
-          array.map(item => {
-            item.key !== 'INVALID' ? this.count.push(item) : ''
-          })
         }
       })
     },
@@ -146,7 +137,7 @@ export default {
         query[i] = this.getType(box[i]) ? JSON.stringify(box[i]) : ''
       }
       this.$router.push({
-        path: '/member/realinfo',
+        path: '/member/passport',
         query: query
       })
       this.getList()
@@ -208,6 +199,24 @@ export default {
         this.otherData.status = key
       }
       this.toList()
+    },
+    statusColor(key, type) {
+      if (type === 'status') {
+        if (key === 'LOCK') {
+          return 'gray'
+        }
+        if (key === 'OK') {
+          return 'adopt'
+        }
+      }
+      if (type === 'mergeStatus') {
+        if (key === 'OK') {
+          return 'adopt'
+        }
+        if (key === 'TEMP') {
+          return 'remind'
+        }
+      }
     }
   }
 }

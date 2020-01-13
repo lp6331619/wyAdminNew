@@ -74,6 +74,10 @@ ul {
   padding: 20px;
 }
 
+.w100 {
+  width: 100%;
+}
+
 .fl {
   float: left;
 }
@@ -206,14 +210,5 @@ ul {
       width: auto;
       line-height: 40px;
     }
-  }
-}
-
-.upload {
-
-  .el-upload--picture-card,
-  .el-upload-list__item {
-    width: 196px;
-    height: 134px;
   }
 }

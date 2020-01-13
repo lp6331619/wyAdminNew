@@ -25,7 +25,7 @@ export function createMember(data, schema) {
 // 关联用户
 export function relationUser(data, schema) {
   return request({
-    url: `/user/member/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    url: `/user/member/addAssociation${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
     method: schema ? 'get' : 'post',
     data: data
   })
@@ -226,6 +226,56 @@ export function applyRealInfo(data, schema) {
 export function realInfoUpdate(data, schema) {
   return request({
     url: `/user/member/realInfoUpdate${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 实名统计
+export function realInfoCount(data, schema) {
+  return request({
+    url: `/user/member/realInfo/count${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// 实名统计
+export function realInfoLogList(data, schema) {
+  return request({
+    url: `/user/member/realInfoLogList${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// 会员通行证列表
+export function passportList(data, schema) {
+  return request({
+    url: `/user/passport/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 会员通行证
+export function passportUpdate(data, schema) {
+  return request({
+    url: `/user/passport/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 会员通行证详情
+export function passportDetail(data, schema) {
+  return request({
+    url: `/user/passport/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// 会员等级折扣详情
+export function discountDetail(data, schema) {
+  return request({
+    url: `/user/level/discountDetail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
     method: schema ? 'get' : 'post',
     data: data
   })

@@ -16,7 +16,7 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 // 公用变量图片 url
-Vue.prototype.imgUrl = 'http://admin-maint.dev2.wcloud.me'
+Vue.prototype.imgUrl = process.env.VUE_APP_BASE_API
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

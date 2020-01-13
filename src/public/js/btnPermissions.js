@@ -4,10 +4,16 @@ import store from '@/store'
 const operatePriv = Vue.directive('operatePriv', {
   bind: function (el, binding) {
     // 获取按钮权限
-    let btnPermissions = binding.value;
+    const btnPermissions = binding.value.priv; // 是否有权限
+    const display = binding.value.display; // 没权限是否显示
     if (!Vue.prototype.$_operatePriv(btnPermissions)) {
       Vue.nextTick(() => {
-        el.parentNode.removeChild(el);
+        if (display) {
+          el.disabled = true
+          el.style.cursor = 'not-allowed'
+        } else {
+          el.parentNode.removeChild(el)
+        }
       })
     }
   }
@@ -17,5 +23,5 @@ Vue.prototype.$_operatePriv = function (value) {
   const btnPermissionsStr = store.state.user.data.privileges
   return btnPermissionsStr[value];
 }
-// v-operatePriv="'user:member:list'" 使用方法
+// v-operatePriv="{priv:'user:member:list'}" 使用方法
 export { operatePriv };

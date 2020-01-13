@@ -120,6 +120,7 @@ export default {
       this.$store
         .dispatch('user/loginSchema')
         .then(() => {
+          console.log(44)
           this.loading = false
         })
         .catch(() => {
