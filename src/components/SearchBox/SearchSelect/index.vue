@@ -67,7 +67,7 @@ export default {
             this.prepareType ? this.prepareType : this.searchType
           ]
         )
-        console.log(this.prepareData, this.prepareType, this.searchType)
+        console.log(this.prepareData, this.prepareType, this.searchType, 111)
         return box
       } else {
         return {}

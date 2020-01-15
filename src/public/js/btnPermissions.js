@@ -23,5 +23,5 @@ Vue.prototype.$_operatePriv = function (value) {
   const btnPermissionsStr = store.state.user.data.privileges
   return btnPermissionsStr[value];
 }
-// v-operatePriv="{priv:'user:member:list'}" 使用方法
+// v-operatePriv="{priv:'user:member:list',display:true}" 使用方法
 export { operatePriv };

@@ -276,7 +276,7 @@ export const asyncRoutes = [
         children: [{
           path: 'authentication/:id',
           hidden: true,
-          name: 'detail',
+          name: 'authentication',
           priv: 'user:member:detail',
           meta: { title: '审核详情', activeMenu: '/member/realinfo' },
           component: () => import('@/views/member/realinfo/detail/detail.vue')
@@ -329,7 +329,7 @@ export const asyncRoutes = [
         children: [{
           path: 'update/:id',
           hidden: true,
-          name: 'detail',
+          name: 'update',
           priv: 'user:member:detail',
           meta: { title: '详情', activeMenu: '/member/passport' },
           component: () => import('@/views/member/passport/detail/detail.vue')
@@ -405,7 +405,7 @@ export const asyncRoutes = [
         path: 'oplog',
         name: 'oplog',
         priv: 'log:op_log',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/member/opLog/list/list.vue'),
         meta: { title: '操作日志', icon: 'tree' },
         actions: {
           'member.oplog:search': {

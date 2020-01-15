@@ -280,3 +280,44 @@ export function discountDetail(data, schema) {
     data: data
   })
 }
+// 编辑会员等级折扣
+export function updateDiscount(data, schema) {
+  return request({
+    url: `/user/level/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 新建会员等级折扣
+export function createDiscount(data, schema) {
+  return request({
+    url: `/user/level/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 会员等级详情
+export function levelDetail(data, schema) {
+  return request({
+    url: `/user/level/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 删除会员等级折扣
+export function levelDelete(data, schema) {
+  return request({
+    url: `/user/level/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 迁移关联用户到另一会员等级下
+export function levelMove(data, schema) {
+  return request({
+    url: `/user/level/move${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: 'post',
+    data: data
+  })
+}
+

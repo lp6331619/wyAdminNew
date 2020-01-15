@@ -35,3 +35,13 @@
   position: relative;
   top: 0;
 }
+
+.error {
+  .el-input__inner {
+    border-color: red;
+  }
+
+  p {
+    font-size: 12px;
+  }
+}

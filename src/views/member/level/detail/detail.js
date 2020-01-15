@@ -1,26 +1,23 @@
-import { discountDetail } from '@/api/member'
+import { discountDetail, updateDiscount } from '@/api/member'
+import create from './component/create.vue'
+import update from './component/updateDiscount.vue'
 export default {
   name: 'PassportDetail',
-  components: {},
+  components: {
+    create,
+    update
+  },
   data() {
     return {
-      detailData: {},
-      schema: {},
-      prepare: {},
-      loading: true,
-      form: {
-        code: '',
-        status: ''
-      },
-      formRules: {
-        status: [{ required: true, trigger: 'change', message: '不能为空!' }],
-        code: [{ required: true, trigger: 'change', message: '不能为空!' }]
-      },
-      listLoading: false
+      detailData: undefined,
+      schema: undefined,
+      prepare: undefined,
+      loading: false,
+      product: '', // 产品类型
+      node: '', // 节点
+      form: undefined,
+      editStatus: true // 编辑状态
     }
-  },
-  computed: {
-
   },
   created() {
     this.getRule()
@@ -30,35 +27,51 @@ export default {
     getRule() {
       discountDetail({}, 'prepare').then(res => {
         if (res.result.isSuccess) {
-          this.prepare = res.prepare
+          this.prepare = res.data
         }
       })
     },
     getData() {
-      this.listLoading = true
-      discountDetail({}).then(
+      this.loading = true
+      const obj = {
+        product: this.product,
+        node: this.node
+      }
+      discountDetail(obj).then(
         res => {
           if (res.result.isSuccess) {
             this.detailData = res.data
-            this.listLoading = false
+            this.form = this.detailData.productDiscount
+            this.loading = false
           }
         }
       )
     },
     // 更新
     Submission() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          // const data = {
-          //   ...this.form,
-          //   id: this.detailData.id
-          // }
+      const obj = {
+        data: {
+          productDiscount: this.form
+        },
+        product: this.product,
+        node: this.node
+      }
+      updateDiscount(obj).then(res => {
+        if (res.result.isSuccess) {
+          this.$message.success(res.result.message)
+          this.getData()
+          this.editStatus = true
         }
       })
     },
-    // 去审核
-    toAuthentication() {
-      this.$router.push(`/member/list/realInfo/${this.userId}`)
+    // 选择产品类型
+    selectData(e) {
+      this.node = this.prepare.nodes[e].nodes[0].id
+      this.getData()
+    },
+    // 节点
+    selectDataProduct(e) {
+      this.getData()
     }
   }
 }
