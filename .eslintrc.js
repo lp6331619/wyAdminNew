@@ -28,12 +28,12 @@ module.exports = {
     'generator-star-spacing': 'off',
     "vue/html-self-closing": ["error", {
       "html": {
-        "void": "never",
-        "normal": "always",
-        "component": "always"
+        "void": "any",
+        "normal": "any",
+        "component": "any"
       },
-      "svg": "always",
-      "math": "always"
+      "svg": "any",
+      "math": "any"
     }],
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
