@@ -23,6 +23,7 @@
                 :prepare-type="item.prepareType"
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
+                :filterable="item.selectType"
                 :prepare-data="prepareData"
                 @emitData="emitData($event)"
               />

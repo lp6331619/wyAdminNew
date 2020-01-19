@@ -9,7 +9,7 @@ export default {
       privBox: {}, // 现在角色权限数据
       roles: '', // 选择的角色
       activeName: '1', // 列标识
-      privilegeList: asyncRoutes, // 权限列表数据
+      privilegeList: JSON.parse(JSON.stringify(asyncRoutes)), // 权限列表数据
       loading: this.$loading({
         lock: true,
         text: 'Loading',
@@ -22,6 +22,7 @@ export default {
   created() {
     this.addPrive()
     this.getData()
+    this.privilegeList = this.privilegeList.filter(res => res.redirect !== '/404')
   },
   methods: {
     // 获取数据

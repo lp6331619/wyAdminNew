@@ -1,8 +1,18 @@
 <template>
   <div v-if="prepareData && searchType">
     <div class="selectBox">
-      <el-select v-model="searchData" :placeholder="searchName" @change="selectData">
-        <el-option v-for="(key,val,i) in getPrepare()" :key="i" :label="key" :value="val" />
+      <el-select
+        v-model="searchData"
+        :filterable="filterable"
+        :placeholder="searchName"
+        @change="selectData"
+      >
+        <el-option
+          v-for="(item,i) in getPrepare()"
+          :key="i"
+          :label="item.name"
+          :value="String(item.id)"
+        />
       </el-select>
     </div>
   </div>
@@ -31,6 +41,10 @@ export default {
       default: () => {
         return {}
       }
+    },
+    filterable: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -58,16 +72,30 @@ export default {
     },
     // 获取 prepare
     getPrepare() {
-      if (this.prepareData && (this.searchType || this.prepareType)) {
-        const box = Object.assign(
-          {
-            all: '全部'
-          },
-          this.prepareData[
-            this.prepareType ? this.prepareType : this.searchType
-          ]
+      if (
+        this.prepareData &&
+        this.prepareData[
+          this.prepareType ? this.prepareType : this.searchType
+        ] &&
+        (this.searchType || this.prepareType)
+      ) {
+        let box = []
+        const array = JSON.parse(
+          JSON.stringify(
+            this.prepareData[
+              this.prepareType ? this.prepareType : this.searchType
+            ]
+          )
         )
-        console.log(this.prepareData, this.prepareType, this.searchType, 111)
+        // 判断是否是数组
+        if (Array.isArray(array)) {
+          box = array
+        } else {
+          for (const i in array) {
+            box.push({ id: i, name: array[i] })
+          }
+        }
+        box.unshift({ id: 'all', name: '全部' })
         return box
       } else {
         return {}

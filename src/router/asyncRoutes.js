@@ -27,6 +27,7 @@ tabs:{}                           权限列表所用
  */
 /* Layout */
 import Layout from '@/layout'
+import store from '@/store'
 export const asyncRoutes = [
   {
     path: '/member',
@@ -422,6 +423,230 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/org',
+    component: Layout,
+    redirect: '/org/user',
+    name: 'org',
+    priv: '_menu:org',
+    meta: { title: '组织架构', icon: 'example' },
+    children: [
+      {
+        path: 'user',
+        name: 'user',
+        priv: 'org:user:list',
+        component: () => import('@/views/org/user/list/list.vue'),
+        meta: { title: '员工管理', icon: 'table' },
+        children: [{
+          path: 'detail/:id',
+          hidden: true,
+          name: 'detail',
+          priv: 'org:user:detail',
+          meta: { title: '员工详情', activeMenu: '/org/user' },
+          component: () => import('@/views/org/user/detail/detail.vue')
+        }, {
+          path: 'updateRoles/:id',
+          hidden: true,
+          name: 'updateRoles',
+          priv: 'org:user:change_role',
+          meta: { title: '更新角色', activeMenu: '/org/user' },
+          component: () => import('@/views/org/user/roles/roles.vue')
+        }],
+        actions: {
+          'org.user:search': {
+            title: '列表/查询',
+            priv: 'org:user:list'
+          },
+          'org.user:create': {
+            title: '添加',
+            priv: 'org:user:create'
+          },
+          'org.user:detail': {
+            title: '详情',
+            priv: 'org:user:detail'
+          },
+          'org.user:update': {
+            title: '修改',
+            priv: 'org:user:update'
+          },
+          'org.user:change_role': {
+            title: '变更角色',
+            priv: 'org:user:change_role'
+          },
+          'org.user:change_status': {
+            title: '修改状态',
+            priv: 'org:user:change_status'
+          },
+          'org.user:set_password': {
+            title: '设置密码',
+            priv: 'org:user:set_password'
+          },
+          'org.user:delete': {
+            title: '删除',
+            priv: 'org:user:delete'
+          }
+        }
+      },
+      {
+        path: 'area',
+        name: 'area',
+        priv: 'org:area:list',
+        component: () => import('@/views/system/priv/index'),
+        meta: { title: '分公司', icon: 'table' },
+        actions: {
+          'org.area:search': {
+            title: '列表/查询',
+            priv: 'org:area:list'
+          },
+          'org.area:create': {
+            title: '添加',
+            priv: 'org:area:create'
+          },
+          'org.area:detail': {
+            title: '详情',
+            priv: 'org:area:detail'
+          },
+          'org.area:update': {
+            title: '修改',
+            priv: 'org:area:update'
+          },
+          'org.area:delete': {
+            title: '删除',
+            priv: 'org:area:delete'
+          }
+        }
+      },
+      {
+        path: 'dept',
+        name: 'dept',
+        priv: 'org:dept:list',
+        component: () => import('@/views/system/priv/index'),
+        meta: { title: '事业部', icon: 'table' },
+        actions: {
+          'org.dept:search': {
+            title: '列表/查询',
+            priv: 'org:dept:list'
+          },
+          'org.dept:create': {
+            title: '添加',
+            priv: 'org:dept:create'
+          },
+          'org.dept:detail': {
+            title: '详情',
+            priv: 'org:dept:detail'
+          },
+          'org.dept:update': {
+            title: '修改',
+            priv: 'org:dept:update'
+          },
+          'org.dept:delete': {
+            title: '删除',
+            priv: 'org:dept:delete'
+          }
+        }
+      }, {
+        path: 'areaDept',
+        name: 'areaDept',
+        priv: 'org:area_dept:list',
+        component: () => import('@/views/system/priv/index'),
+        meta: { title: '分公司部门', icon: 'table' },
+        actions: {
+          'org.area_dept:search': {
+            title: '列表/查询',
+            priv: 'org:area_dept:list'
+          },
+          'org.area_dept:create': {
+            title: '添加',
+            priv: 'org:area_dept:create'
+          },
+          'org.area_dept:detail': {
+            title: '详情',
+            priv: 'org:area_dept:detail'
+          },
+          'org.area_dept:update': {
+            title: '修改',
+            priv: 'org:area_dept:update'
+          },
+          'org.area_dept:delete': {
+            title: '删除',
+            priv: 'org:area_dept:delete'
+          }
+        }
+      }, {
+        path: 'role',
+        name: 'role',
+        priv: 'org:role:list',
+        component: () => import('@/views/system/priv/index'),
+        meta: { title: '角色管理', icon: 'table' },
+        actions: {
+          'org.role:search': {
+            title: '列表/查询',
+            priv: 'org:role:list'
+          },
+          'org.role:create': {
+            title: '添加',
+            priv: 'org:role:create'
+          },
+          'org.role:detail': {
+            title: '详情',
+            priv: 'org:role:detail'
+          },
+          'org.role:update': {
+            title: '修改',
+            priv: 'org:role:update'
+          },
+          'org.role:delete': {
+            title: '删除',
+            priv: 'org:role:delete'
+          }
+        }
+      }, {
+        path: 'roleLevel',
+        name: 'roleLevel',
+        priv: 'org:role:list',
+        component: () => import('@/views/system/priv/index'),
+        meta: { title: '角色等级管理', icon: 'table' },
+        actions: {
+          'org.role_level:search': {
+            title: '列表/查询',
+            priv: 'org:role_level:list'
+          },
+          'org.role_level:create': {
+            title: '添加',
+            priv: 'org:role_level:create'
+          },
+          'org.role_level:detail': {
+            title: '详情',
+            priv: 'org:role_level:detail'
+          },
+          'org.role_level:update': {
+            title: '修改',
+            priv: 'org:role_level:update'
+          },
+          'org.role_level:delete': {
+            title: '删除',
+            priv: 'org:role_level:delete'
+          }
+        }
+      }, {
+        path: 'prodRole',
+        name: 'prodRole',
+        priv: 'org:product:role:detail',
+        component: () => import('@/views/system/priv/index'),
+        meta: { title: '事业部角色映射关系', icon: 'table' },
+        actions: {
+          'org.product_role:detail': {
+            title: '详情',
+            priv: 'org:product_role:role:detail'
+          },
+          'org.product_role:update': {
+            title: '修改',
+            priv: 'org:product_role:role:update'
+          }
+        }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/priv',
@@ -469,7 +694,7 @@ export const asyncRoutes = [
 
 // 递归获取有权限的子菜单
 function recursion(item, role) {
-  if (item.children && item.children.length > 0) {
+  if (item.children && item.children.length) {
     item.children = item.children.filter(child => {
       recursion(child, role)
       return role[child.priv]
@@ -479,10 +704,28 @@ function recursion(item, role) {
 }
 // 筛选有权限的路由
 export function screenRoutes(role) {
-  let routeBox = []
-  routeBox = asyncRoutes.filter(item => {
-    return recursion(item, role)
-  })
+  var routeBox = []
+  // 是否有全部权限
+  if (store.state.user.data.privileges['_special:all']) {
+    routeBox = asyncRoutes
+  } else {
+    const box = JSON.parse(JSON.stringify(asyncRoutes)) // 深拷贝不完全.
+    // 深拷贝component
+    asyncRoutes.forEach((item, index) => {
+      box[index].component = item.component
+      if (item.children && item.children.length) {
+        item.children.forEach((t, i) => {
+          box[index].children[i].component = t.component
+          if (t.children && t.children.length) {
+            t.children.forEach((t1, i1) => {
+              box[index].children[i].children[i1].component = t1.component
+            })
+          }
+        })
+      }
+    })
+    routeBox = box.filter(item => recursion(item, role))
+  }
   routeBox.push({ path: '*', redirect: '/404', hidden: true })
   return routeBox
 }

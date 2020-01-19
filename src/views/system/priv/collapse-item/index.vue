@@ -3,7 +3,7 @@
     <template slot="title">
       <div class="title">
         <i class="el-icon-share" />
-        {{ item.meta.title }}
+        {{ item.meta ? item.meta.title:'' }}
       </div>
       <el-checkbox
         v-model="item.status"

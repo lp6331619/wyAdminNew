@@ -49,8 +49,34 @@ export default {
         passwordA: ''
       },
       formRules: {
-        password: [],
-        passwordA: []
+        password: [
+          { required: true, trigger: 'change', message: '不能为空!' },
+          {
+            pattern: /^(?![A-Za-z]+$)(?![A-Z\d]+$)(?![A-Z\W]+$)(?![a-z\d]+$)(?![a-z\W]+$)(?![\d\W]+$)\S{8,}$/,
+            message:
+              '密码长度至少8位，包含大小写字母、数字、特殊字符，任意三种',
+            trigger: 'change'
+          }
+        ],
+        passwordA: [
+          {
+            required: true,
+            message: '确认密码不能为空！',
+            trigger: 'blur'
+          },
+          {
+            trigger: 'blur',
+            validator: (rule, value, callback) => {
+              if (value === '') {
+                callback(new Error('请再次输入密码'))
+              } else if (value !== this.formPassWord.password) {
+                callback(new Error('两次输入密码不一致!'))
+              } else {
+                callback()
+              }
+            }
+          }
+        ]
       }
     }
   },
