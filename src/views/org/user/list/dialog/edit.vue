@@ -10,6 +10,7 @@
     >
       <el-form
         ref="setDetail"
+        v-loading="loading"
         :model="formStatus"
         :rules="formStatusRules"
         auto-complete="on"
@@ -45,7 +46,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="emitOut">取 消</el-button>
+        <el-button @click="handleClose">取 消</el-button>
         <el-button type="primary" @click="editDetailBox()">确 定</el-button>
       </div>
     </el-dialog>
@@ -85,6 +86,7 @@ export default {
         name: [{ required: true, trigger: 'blur', message: '不能为空!' }],
         mobile: [{ required: true, trigger: 'blur', message: '不能为空!' }]
       },
+      loading: false,
       prepare: undefined
     }
   },
@@ -102,6 +104,7 @@ export default {
       })
     },
     getDetail() {
+      this.loading = true
       orgUserDetail({ id: this.operationId }).then(res => {
         if (res.result.isSuccess) {
           const data = res.data
@@ -115,6 +118,7 @@ export default {
             qq: data.qq,
             weixin: data.weixin
           }
+          this.loading = false
         }
       })
     },

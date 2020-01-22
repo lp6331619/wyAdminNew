@@ -439,7 +439,7 @@ export const asyncRoutes = [
         children: [{
           path: 'detail/:id',
           hidden: true,
-          name: 'detail',
+          name: 'orgUserDetail',
           priv: 'org:user:detail',
           meta: { title: '员工详情', activeMenu: '/org/user' },
           component: () => import('@/views/org/user/detail/detail.vue')
@@ -490,7 +490,7 @@ export const asyncRoutes = [
         path: 'area',
         name: 'area',
         priv: 'org:area:list',
-        component: () => import('@/views/system/priv/index'),
+        component: () => import('@/views/org/area/list/list.vue'),
         meta: { title: '分公司', icon: 'table' },
         actions: {
           'org.area:search': {

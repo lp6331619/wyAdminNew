@@ -80,3 +80,44 @@ export function orgUserUpdateRoles(data, schema) {
     data: data
   })
 }
+
+// 分公司列表
+export function orgAreaList(data, schema) {
+  return request({
+    url: `/org/area/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 创建分公司
+export function orgAreaCreate(data, schema) {
+  return request({
+    url: `/org/area/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 删除分公司
+export function orgAreaDelete(data, schema) {
+  return request({
+    url: `/org/area/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新分公司
+export function orgAreaUpdate(data, schema) {
+  return request({
+    url: `/org/area/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 分公司详情
+export function orgAreaDetail(data, schema) {
+  return request({
+    url: `/org/area/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}

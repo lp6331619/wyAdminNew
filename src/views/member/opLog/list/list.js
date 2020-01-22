@@ -123,7 +123,7 @@ export default {
         query[i] = this.getType(box[i]) ? JSON.stringify(box[i]) : ''
       }
       this.$router.push({
-        path: '/member/oplog',
+        path: this.$route.path,
         query: query
       })
       this.getList()

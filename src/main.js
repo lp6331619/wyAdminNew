@@ -11,6 +11,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 import operatePriv from '@/public/js/btnPermissions.js' // 权限判断
+import 'default-passive-events'
 
 import '@/icons' // icon
 import '@/permission' // permission control

@@ -70,6 +70,7 @@
       <el-button v-operatePriv="{priv:operatePriv['search']}" type="primary" @click="outData()">查询</el-button>
       <el-button v-operatePriv="{priv:operatePriv['search']}" @click="clear()">清空</el-button>
       <el-button
+        v-if="exportExcel"
         v-operatePriv="{priv:operatePriv['excel']}"
         type="danger"
         @click="excelOut(exportExcel)"

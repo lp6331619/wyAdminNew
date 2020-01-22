@@ -8,7 +8,6 @@
           :search-list-data="formType"
           :operate-priv="operatePrivBox"
           :other-data="otherData"
-          :export-excel="exportExcel"
           @emitData="emitData($event)"
         />
       </el-card>

@@ -1,11 +1,17 @@
 <template>
   <div>
-    <div class="box">
-      <div class="title">现有的角色权限 {{ roles }}</div>
+    <div v-loading="loading" element-loading-text="拼命加载中" class="box">
+      <div class="title">现有的角色权限</div>
       <div v-if="roles" class="p20">
         <div v-for="(item,i) in roles" :key="i" class="item">
           {{ item.name }}
-          <el-select v-if="prepare" v-model="item.dept" style="width:250px" placeholder="请选择">
+          <el-select
+            v-if="prepare"
+            v-model="item.dept"
+            class="ml10"
+            style="width:250px"
+            placeholder="请选择"
+          >
             <el-option
               v-for="t in prepare.areaDepts"
               :key="t.id"
@@ -19,11 +25,19 @@
         </div>
       </div>
     </div>
-    <div class="box mt20">
-      <div class="title">请选择新增角色 {{ checkList }}</div>
+    <div v-loading="loading" element-loading-text="拼命加载中" class="box mt20">
+      <div class="title">请选择新增角色</div>
       <el-checkbox-group v-if="prepare" v-model="checkList" class="p20" @change="handleChecked">
-        <el-checkbox v-for="(item,i) in prepare.roles" :key="i" :label="item.id">{{ item.name }}</el-checkbox>
+        <el-checkbox
+          v-for="(item,i) in prepare.roles"
+          :key="i"
+          :label="item.id"
+          @change="checkedBox(item.id)"
+        >{{ item.name }}</el-checkbox>
       </el-checkbox-group>
+    </div>
+    <div class="mt20 text-center">
+      <el-button :loading="loading" type="primary" @click="submit">提交</el-button>
     </div>
     <!-- org:user:change_role -->
   </div>
@@ -47,7 +61,9 @@ export default {
       prepare: undefined,
       detailData: undefined,
       checkList: [],
-      roles: []
+      roles: [],
+      loading: false,
+      checked: null // 当前选中的角色
     }
   },
   created() {
@@ -95,25 +111,48 @@ export default {
       }
       this.roles.push(newData)
     },
+    // 当前选中的
+    checkedBox(e) {
+      this.checked = e
+    },
     // 选择新增角色
     handleChecked(e) {
-      e.forEach(item => {
-        var result = this.roles.some(child => {
-          return child.id === item
+      const status = this.checkList.includes(this.checked)
+      if (status) {
+        this.addItem(this.checked)
+      } else {
+        this.reduce(this.checked)
+      }
+    },
+    // 添加
+    addItem(item) {
+      let obj = []
+      obj = this.prepare.roles.find(r => {
+        return Number(r.id) === Number(item)
+      })
+      if (obj) {
+        this.addProd({
+          id: obj.id,
+          name: obj.name,
+          dept: ''
         })
-        if (!result) {
-          let obj = []
-          obj = this.prepare.roles.find(r => {
-            return Number(r.id) === Number(item)
-          })
-          if (obj) {
-            this.addProd({
-              id: obj.id,
-              name: obj.name,
-              dept: ''
-            })
-          }
+      }
+    },
+    // 减少
+    reduce(item) {
+      this.roles = this.roles.filter(t => item !== t.id)
+    },
+    submit() {
+      const params = { id: this.detailData.id, roles: [] }
+      this.roles.forEach(item => {
+        params.roles.push(`${item.id},${item.dept}`)
+      })
+      this.loading = true
+      orgUserUpdateRoles(params).then(res => {
+        if (res.result.isSuccess) {
+          this.$message.success(res.result.message)
         }
+        this.loading = false
       })
     }
   }
