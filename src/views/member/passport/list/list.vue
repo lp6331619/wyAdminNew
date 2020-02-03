@@ -89,12 +89,13 @@
               <span>{{ scope.row.syncDateTime ? scope.row.syncDateTime :' 暂无 ' }}</span>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="80">
             <template slot-scope="scope">
               <el-button
-                v-operatePriv="{priv:'user:passport:update',display:true}"
-                type="text"
-                size="small"
+                v-operatePriv="{priv:'user:passport:update'}"
+                plain
+                type="primary"
+                size="mini"
                 @click.native.prevent="$router.push(`/member/passport/update/${scope.row.id }`)"
               >管理</el-button>
             </template>

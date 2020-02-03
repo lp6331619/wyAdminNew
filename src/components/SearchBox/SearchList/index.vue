@@ -11,6 +11,7 @@
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
                 :prepare-data="prepareData"
+                :disabled="item.disabled"
                 @emitData="emitData($event)"
               />
             </div>
@@ -25,6 +26,7 @@
                 :search-name="item.typeName"
                 :filterable="item.selectType"
                 :prepare-data="prepareData"
+                :disabled="item.disabled"
                 @emitData="emitData($event)"
               />
             </div>
@@ -36,6 +38,7 @@
                 :search-type="item.type"
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
+                :disabled="item.disabled"
                 @emitData="emitData($event)"
               />
             </div>
@@ -47,6 +50,7 @@
                 :search-type="item.type"
                 :init-data="searchData[item.type]"
                 :search-name="item.typeName"
+                :disabled="item.disabled"
                 @emitData="emitData($event)"
               />
             </div>
@@ -54,7 +58,11 @@
           <!-- input类型 -->
           <template v-if="item.mode==='Input'">
             <div :key="index" class="mr20 mb10" :style="`width:${item.width || ''}`">
-              <el-input v-model="searchData[item.type]" :placeholder="item.typeName" />
+              <el-input
+                v-model="searchData[item.type]"
+                :disabled="item.disabled"
+                :placeholder="item.typeName"
+              />
             </div>
           </template>
         </template>
@@ -170,8 +178,15 @@ export default {
       if (this.otherData) {
         for (const i in this.otherData) {
           const type = typeof this.otherData[i]
-          this.otherData[i] =
-            type === 'object' ? this.objectBack(this.otherData[i]) : ''
+          if (type === 'object') {
+            this.otherData[i] = this.objectBack(this.otherData[i])
+          } else if (i === 'page') {
+            this.otherData[i] = 1
+          } else if (i === 'pageSize') {
+            this.otherData[i] = 10
+          } else {
+            this.otherData[i] = ''
+          }
         }
       }
       const data = { searchData: this.searchData, otherData: this.otherData }

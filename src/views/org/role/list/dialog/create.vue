@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="新建分公司"
+      title="新建角色"
       :visible.sync="setStatusStatus "
       width="500px"
       :before-close="handleClose"
@@ -16,18 +16,28 @@
         auto-complete="on"
         label-position="right"
       >
-        <el-form-item label="上级公司:" label-width="100px">
-          <el-select v-if="prepare" v-model="form.parent" placeholder="请选择上级公司名称">
+        <el-form-item label="所属事业部:" prop="dept" label-width="100px">
+          <el-select v-if="prepare" v-model="form.dept" placeholder="请选择所属事业部">
             <el-option
-              v-for="(item,i) in prepare.areas"
+              v-for="(item,i) in prepare.dept"
               :key="i"
               :label="item.name"
               :value="item.id"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="分公司名字:" prop="name" label-width="100px">
-          <el-input v-model="form.name" placeholder="请输入分公司名字"></el-input>
+        <el-form-item label="角色等级:" prop="level" label-width="100px">
+          <el-select v-if="prepare" v-model="form.level" placeholder="请选择角色等级">
+            <el-option
+              v-for="(item,i) in prepare.roleLevel"
+              :key="i"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="角色名字:" prop="name" label-width="100px">
+          <el-input v-model="form.name" placeholder="请输入角色名字"></el-input>
         </el-form-item>
         <el-form-item label="展示顺序:" label-width="100px">
           <el-input
@@ -46,7 +56,7 @@
   </div>
 </template>
 <script>
-import { orgAreaCreate } from '@/api/org'
+import { orgRoleCreate } from '@/api/org'
 export default {
   name: 'EditUpdate',
   props: {
@@ -62,12 +72,15 @@ export default {
       form: {
         displayOrder: 0,
         name: '',
-        parent: null
+        level: null,
+        dept: null
       },
       formRules: {
         name: [
           { required: true, max: '64', trigger: 'blur', message: '不能为空!' }
-        ]
+        ],
+        level: [{ required: true, trigger: 'blur', message: '不能为空!' }],
+        dept: [{ required: true, trigger: 'blur', message: '不能为空!' }]
       },
       loading: false,
       prepare: undefined
@@ -80,7 +93,7 @@ export default {
   methods: {
     getRule(rule) {
       this.loading = true
-      orgAreaCreate({}, rule).then(res => {
+      orgRoleCreate({}, rule).then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
           this.loading = false
@@ -90,15 +103,10 @@ export default {
     editDetailBox() {
       this.$refs.setDetail.validate(valid => {
         if (valid) {
-          orgAreaCreate(this.form).then(res => {
+          orgRoleCreate(this.form).then(res => {
             if (res.result.isSuccess) {
               this.$message.success(res.result.message)
               this.emitOut()
-              this.form = {
-                displayOrder: null,
-                name: '',
-                parent: null
-              }
             }
           })
         }

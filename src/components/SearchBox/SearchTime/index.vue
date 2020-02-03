@@ -5,6 +5,7 @@
         v-model="searchData"
         type="daterange"
         range-separator="至"
+        :disabled="disabled"
         value-format="yyyy/MM/dd"
         :start-placeholder="searchName"
         :end-placeholder="searchName"
@@ -29,6 +30,11 @@ export default {
     searchName: {
       type: String,
       default: ''
+    },
+    // 是否disabled
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

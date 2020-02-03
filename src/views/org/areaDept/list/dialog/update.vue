@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="新建分公司"
+      title="更新分公司部门"
       :visible.sync="setStatusStatus "
       width="500px"
       :before-close="handleClose"
@@ -16,8 +16,8 @@
         auto-complete="on"
         label-position="right"
       >
-        <el-form-item label="上级公司:" label-width="100px">
-          <el-select v-if="prepare" v-model="form.parent" placeholder="请选择上级公司名称">
+        <el-form-item label="分公司:" prop="area" label-width="100px">
+          <el-select v-if="prepare" v-model="form.area" placeholder="请选择分公司名称">
             <el-option
               v-for="(item,i) in prepare.areas"
               :key="i"
@@ -26,14 +26,24 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="分公司名字:" prop="name" label-width="100px">
-          <el-input v-model="form.name" placeholder="请输入分公司名字"></el-input>
+        <el-form-item label="事业部:" prop="dept" label-width="100px">
+          <el-select v-if="prepare" v-model="form.dept" placeholder="请选择上级事业部名称">
+            <el-option
+              v-for="(item,i) in prepare.depts"
+              :key="i"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
-        <el-form-item label="展示顺序:" label-width="100px">
+        <el-form-item label="部门名称:" prop="name" label-width="100px">
+          <el-input v-model="form.name" placeholder="请输入部门名称"></el-input>
+        </el-form-item>
+        <el-form-item label="显示顺序:" label-width="100px">
           <el-input
             v-model="form.displayOrder"
             type="text"
-            placeholder="请输入展示顺序"
+            placeholder="请输入显示顺序"
             @keyup.enter.native="editDetailBox"
           ></el-input>
         </el-form-item>
@@ -46,13 +56,17 @@
   </div>
 </template>
 <script>
-import { orgAreaCreate } from '@/api/org'
+import { orgAreaDeptUpdate, orgAreaDeptDetail } from '@/api/org'
 export default {
   name: 'EditUpdate',
   props: {
     status: {
       type: Boolean,
       default: false
+    },
+    operationId: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -60,13 +74,30 @@ export default {
       // 修改密码表单
       setStatusStatus: false,
       form: {
+        id: null,
         displayOrder: 0,
         name: '',
-        parent: null
+        area: '',
+        dept: ''
       },
+      detilData: {},
       formRules: {
         name: [
-          { required: true, max: '64', trigger: 'blur', message: '不能为空!' }
+          { required: true, max: '64', trigger: 'change', message: '不能为空!' }
+        ],
+        area: [
+          {
+            required: true,
+            trigger: 'change',
+            message: '不能为空!'
+          }
+        ],
+        dept: [
+          {
+            required: true,
+            trigger: 'change',
+            message: '不能为空!'
+          }
         ]
       },
       loading: false,
@@ -75,14 +106,29 @@ export default {
   },
   mounted() {
     this.getRule('prepare')
+    this.getDetail()
     this.setStatusStatus = this.status
   },
   methods: {
     getRule(rule) {
-      this.loading = true
-      orgAreaCreate({}, rule).then(res => {
+      orgAreaDeptUpdate({}, rule).then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
+        }
+      })
+    },
+    getDetail() {
+      this.loading = true
+      orgAreaDeptDetail({ id: this.operationId }).then(res => {
+        if (res.result.isSuccess) {
+          this.detilData = res.data
+          this.form = {
+            id: this.detilData.id,
+            displayOrder: this.detilData.displayOrder,
+            name: this.detilData.name,
+            area: this.detilData.area ? this.detilData.area.id : null,
+            dept: this.detilData.dept ? this.detilData.dept.id : null
+          }
           this.loading = false
         }
       })
@@ -90,14 +136,16 @@ export default {
     editDetailBox() {
       this.$refs.setDetail.validate(valid => {
         if (valid) {
-          orgAreaCreate(this.form).then(res => {
+          orgAreaDeptUpdate(this.form).then(res => {
             if (res.result.isSuccess) {
               this.$message.success(res.result.message)
               this.emitOut()
               this.form = {
-                displayOrder: null,
+                id: null,
+                displayOrder: 0,
                 name: '',
-                parent: null
+                area: '',
+                dept: ''
               }
             }
           })

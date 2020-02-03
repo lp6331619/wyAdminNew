@@ -159,20 +159,23 @@
               <span v-else>暂无</span>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
-              <el-button
-                v-operatePriv="{priv:'user:member:detail'}"
-                type="text"
-                size="small"
-                @click.native.prevent="$router.push(`/member/list/detail/${scope.row.id }`)"
-              >管理</el-button>
-              <el-button
-                v-operatePriv="{priv:'user:member:admin_login'}"
-                type="text"
-                size="small"
-                @click.native.prevent="toMember(scope.row.id)"
-              >登录账号</el-button>
+              <el-button-group>
+                <el-button
+                  v-operatePriv="{priv:'user:member:detail'}"
+                  plain
+                  type="primary"
+                  size="mini"
+                  @click.native.prevent="$router.push(`/member/list/detail/${scope.row.id }`)"
+                >管理</el-button>
+                <el-button
+                  v-operatePriv="{priv:'user:member:admin_login'}"
+                  plain
+                  size="mini"
+                  @click.native.prevent="toMember(scope.row.id)"
+                >登录账号</el-button>
+              </el-button-group>
             </template>
           </el-table-column>
         </el-table>

@@ -519,8 +519,16 @@ export const asyncRoutes = [
         path: 'dept',
         name: 'dept',
         priv: 'org:dept:list',
-        component: () => import('@/views/system/priv/index'),
+        component: () => import('@/views/org/dept/list/list.vue'),
         meta: { title: '事业部', icon: 'table' },
+        children: [{
+          path: 'detail/:id',
+          hidden: true,
+          name: 'orgDeptDetail',
+          priv: 'org:dept:detail',
+          meta: { title: '员工详情', activeMenu: '/org/dept' },
+          component: () => import('@/views/org/dept/detail/detail.vue')
+        }],
         actions: {
           'org.dept:search': {
             title: '列表/查询',
@@ -547,7 +555,7 @@ export const asyncRoutes = [
         path: 'areaDept',
         name: 'areaDept',
         priv: 'org:area_dept:list',
-        component: () => import('@/views/system/priv/index'),
+        component: () => import('@/views/org/areaDept/list/list.vue'),
         meta: { title: '分公司部门', icon: 'table' },
         actions: {
           'org.area_dept:search': {
@@ -575,7 +583,7 @@ export const asyncRoutes = [
         path: 'role',
         name: 'role',
         priv: 'org:role:list',
-        component: () => import('@/views/system/priv/index'),
+        component: () => import('@/views/org/role/list/list.vue'),
         meta: { title: '角色管理', icon: 'table' },
         actions: {
           'org.role:search': {

@@ -16,18 +16,18 @@
         auto-complete="on"
         label-position="right"
       >
-        <el-form-item label="上级公司:" label-width="100px">
-          <el-select v-if="prepare" v-model="form.parent" placeholder="请选择上级公司名称">
+        <el-form-item label="上级事业部:" label-width="100px">
+          <el-select v-if="prepare" v-model="form.parent" placeholder="请选择上级事业部名称">
             <el-option
-              v-for="(item,i) in prepare.areas"
+              v-for="(item,i) in prepare.depts"
               :key="i"
               :label="item.name"
               :value="item.id"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="分公司名字:" prop="name" label-width="100px">
-          <el-input v-model="form.name" placeholder="请输入分公司名字"></el-input>
+        <el-form-item label="事业部名称:" prop="name" label-width="100px">
+          <el-input v-model="form.name" placeholder="请输入事业部名称"></el-input>
         </el-form-item>
         <el-form-item label="展示顺序:" label-width="100px">
           <el-input
@@ -46,13 +46,17 @@
   </div>
 </template>
 <script>
-import { orgAreaCreate } from '@/api/org'
+import { orgDeptCreate } from '@/api/org'
 export default {
   name: 'EditUpdate',
   props: {
     status: {
       type: Boolean,
       default: false
+    },
+    operationId: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -80,7 +84,7 @@ export default {
   methods: {
     getRule(rule) {
       this.loading = true
-      orgAreaCreate({}, rule).then(res => {
+      orgDeptCreate({}, rule).then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
           this.loading = false
@@ -90,7 +94,7 @@ export default {
     editDetailBox() {
       this.$refs.setDetail.validate(valid => {
         if (valid) {
-          orgAreaCreate(this.form).then(res => {
+          orgDeptCreate(this.form).then(res => {
             if (res.result.isSuccess) {
               this.$message.success(res.result.message)
               this.emitOut()

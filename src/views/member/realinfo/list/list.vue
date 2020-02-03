@@ -102,12 +102,13 @@
               <span v-else>暂无</span>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="80">
             <template slot-scope="scope">
               <el-button
                 v-operatePriv="{priv:'user:member:realinfo_detail'}"
-                type="text"
-                size="small"
+                plain
+                type="primary"
+                size="mini"
                 @click.native.prevent="$router.push(`/member/realinfo/authentication/${scope.row.id }`)"
               >管理</el-button>
             </template>

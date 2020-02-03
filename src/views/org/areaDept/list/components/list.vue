@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!isDetail" class="fatherBox">
+    <div class="fatherBox">
       <el-card class="box-card">
         <SearchList
           :prepare-data="prepare"
@@ -11,11 +11,11 @@
           @emitData="emitData($event)"
         />
       </el-card>
-      <el-card v-if="schema" class="box-card pt0">
+      <el-card v-if="schema" v-loading="loading" class="box-card pt0">
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
           <el-button
-            v-operatePriv="{priv:'org:area:create'}"
+            v-operatePriv="{priv:'org:area_dept:create'}"
             type="primary"
             size="mini"
             @click="createStatus = true"
@@ -30,8 +30,10 @@
           :data="listData.data"
         >
           <el-table-column prop="id" :label="schema.output.id" width="100"></el-table-column>
-          <el-table-column prop="fullName" :label="schema.output.fullName"></el-table-column>
-          <el-table-column prop="displayOrder" :label="schema.output.displayOrder" width="200"></el-table-column>
+          <el-table-column prop="name" :label="schema.output.name"></el-table-column>
+          <el-table-column prop="area.fullName" :label="schema.output.area[':title']"></el-table-column>
+          <el-table-column prop="dept.fullName" :label="schema.output.dept[':title']"></el-table-column>
+          <el-table-column prop="displayOrder" :label="schema.output.displayOrder" width="120"></el-table-column>
           <el-table-column
             prop="stat.createDateTime"
             :label="schema.output.stat.createDateTime"
@@ -41,14 +43,14 @@
             <template slot-scope="scope">
               <el-button-group>
                 <el-button
-                  v-operatePriv="{priv:'org:area:detail'}"
+                  v-operatePriv="{priv:'org:area_dept:detail'}"
                   plain
                   type="primary"
                   size="mini"
-                  @click="setDialog(scope.row.id,'edit')"
+                  @click="setDialog(scope.row.id)"
                 >修改</el-button>
                 <el-button
-                  v-operatePriv="{priv:'org:area:delete'}"
+                  v-operatePriv="{priv:'org:area_dept:delete'}"
                   plain
                   type="danger"
                   size="mini"
@@ -72,18 +74,14 @@
           ></el-pagination>
         </div>
       </el-card>
-      <!-- 修改详情 -->
-      <edit
-        v-if="setEditDetail"
-        :status="setEditDetail"
-        :operation-id="operationId"
-        @emitOut="emitOutDetail"
-      />
       <!-- 创建员工 -->
       <create v-if="createStatus" :status="createStatus" @emitOut="emitOutCreate" />
-    </div>
-    <div v-else class="sonBox">
-      <router-view />
+      <update
+        v-if="updateStatus"
+        :status="updateStatus"
+        :operation-id="operationId"
+        @emitOut="emitOutUpdate"
+      />
     </div>
   </div>
 </template>

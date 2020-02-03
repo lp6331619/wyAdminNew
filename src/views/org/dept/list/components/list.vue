@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!isDetail" class="fatherBox">
+    <div class="fatherBox">
       <el-card class="box-card">
         <SearchList
           :prepare-data="prepare"
@@ -11,11 +11,11 @@
           @emitData="emitData($event)"
         />
       </el-card>
-      <el-card v-if="schema" class="box-card pt0">
+      <el-card v-if="schema" v-loading="loading" class="box-card pt0">
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
           <el-button
-            v-operatePriv="{priv:'org:area:create'}"
+            v-operatePriv="{priv:'org:dept:create'}"
             type="primary"
             size="mini"
             @click="createStatus = true"
@@ -41,14 +41,14 @@
             <template slot-scope="scope">
               <el-button-group>
                 <el-button
-                  v-operatePriv="{priv:'org:area:detail'}"
+                  v-operatePriv="{priv:'org:dept:detail'}"
                   plain
                   type="primary"
                   size="mini"
-                  @click="setDialog(scope.row.id,'edit')"
-                >修改</el-button>
+                  @click="$router.push(`/org/dept/detail/${scope.row.id }`)"
+                >管理</el-button>
                 <el-button
-                  v-operatePriv="{priv:'org:area:delete'}"
+                  v-operatePriv="{priv:'org:dept:delete'}"
                   plain
                   type="danger"
                   size="mini"
@@ -72,18 +72,8 @@
           ></el-pagination>
         </div>
       </el-card>
-      <!-- 修改详情 -->
-      <edit
-        v-if="setEditDetail"
-        :status="setEditDetail"
-        :operation-id="operationId"
-        @emitOut="emitOutDetail"
-      />
       <!-- 创建员工 -->
       <create v-if="createStatus" :status="createStatus" @emitOut="emitOutCreate" />
-    </div>
-    <div v-else class="sonBox">
-      <router-view />
     </div>
   </div>
 </template>

@@ -5,6 +5,7 @@
         v-model="searchData.search"
         class="el-dropdown-link"
         :placeholder="getPlaceholder"
+        :disabled="disabled"
         type="text"
         @blur="outData()"
       />
@@ -41,6 +42,11 @@ export default {
       default: () => {
         return {}
       }
+    },
+    // 是否disabled
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

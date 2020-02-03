@@ -5,6 +5,7 @@
         v-model="searchData"
         :filterable="filterable"
         :placeholder="searchName"
+        :disabled="disabled"
         @change="selectData"
       >
         <el-option
@@ -42,7 +43,13 @@ export default {
         return {}
       }
     },
+    // 搜索类型
     filterable: {
+      type: Boolean,
+      default: false
+    },
+    // 是否disabled
+    disabled: {
       type: Boolean,
       default: false
     }

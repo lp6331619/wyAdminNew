@@ -121,3 +121,124 @@ export function orgAreaDetail(data, schema) {
     data: data
   })
 }
+// 事业部列表
+export function orgDeptList(data, schema) {
+  return request({
+    url: `/org/dept/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 删除事业部
+export function orgDeptDelete(data, schema) {
+  return request({
+    url: `/org/dept/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 创建事业部
+export function orgDeptCreate(data, schema) {
+  return request({
+    url: `/org/dept/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 事业部详情
+export function orgDeptDetail(data, schema) {
+  return request({
+    url: `/org/dept/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 修改事业部
+export function orgDeptUpdate(data, schema) {
+  return request({
+    url: `/org/dept/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 分公司部门列表
+export function orgAreaDeptList(data, schema) {
+  return request({
+    url: `/org/areaDept/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 创建分公司部门
+export function orgAreaDeptCreate(data, schema) {
+  return request({
+    url: `/org/areaDept/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 删除分公司部门
+export function orgAreaDeptDelete(data, schema) {
+  return request({
+    url: `/org/areaDept/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新分公司部门
+export function orgAreaDeptUpdate(data, schema) {
+  return request({
+    url: `/org/areaDept/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新分公司部门
+export function orgAreaDeptDetail(data, schema) {
+  return request({
+    url: `/org/areaDept/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// 分公司部门列表
+export function orgRoleList(data, schema) {
+  return request({
+    url: `/org/role/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 创建分公司部门
+export function orgRoleCreate(data, schema) {
+  return request({
+    url: `/org/role/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 删除分公司部门
+export function orgRoleDelete(data, schema) {
+  return request({
+    url: `/org/role/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新分公司部门
+export function orgRoleUpdate(data, schema) {
+  return request({
+    url: `/org/role/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新分公司部门
+export function orgRoleDetail(data, schema) {
+  return request({
+    url: `/org/role/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}

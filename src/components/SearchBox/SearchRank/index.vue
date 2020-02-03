@@ -2,10 +2,22 @@
   <div v-if="initData && searchType">
     <div class="rankBox">
       <!-- eslint-disable-next-line-->
-      <input v-model="searchData.start" :keyup="outData()" :placeholder="searchName" type="number" />
+      <input
+        v-model="searchData.start"
+        :disabled="disabled"
+        :keyup="outData()"
+        :placeholder="searchName"
+        type="number"
+      />
       <span>至</span>
       <!-- eslint-disable-next-line-->
-      <input v-model="searchData.end" :keyup="outData()" :placeholder="searchName" type="number" />
+      <input
+        v-model="searchData.end"
+        :keyup="outData()"
+        :disabled="disabled"
+        :placeholder="searchName"
+        type="number"
+      />
     </div>
   </div>
 </template>
@@ -25,6 +37,11 @@ export default {
     searchName: {
       type: String,
       default: ''
+    },
+    // 是否disabled
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
