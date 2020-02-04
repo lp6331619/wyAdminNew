@@ -14,7 +14,7 @@
       <div slot="header" class="header flex">
         <div>{{ schema.title }} ({{ page.totals }})</div>
         <el-button
-          v-operatePriv="{priv:'org:area:create'}"
+          v-operatePriv="{priv:'org:role:create'}"
           type="primary"
           size="mini"
           @click="createStatus = true"
@@ -32,25 +32,38 @@
         <el-table-column prop="name" :label="schema.output.name"></el-table-column>
         <el-table-column prop="dept.name" :label="schema.output.dept[':title']"></el-table-column>
         <el-table-column prop="level.name" :label="schema.output.level[':title']"></el-table-column>
-        <el-table-column prop="fullName" :label="schema.output.fullName"></el-table-column>
-        <el-table-column prop="displayOrder" :label="schema.output.displayOrder" width="200"></el-table-column>
+        <el-table-column v-if="type==='detail'" prop="admin" label="管理员" width="300">
+          <template slot-scope="scope">
+            <a
+              v-for="(item,i) in scope.row.admin"
+              :key="i"
+              class="p"
+              @click="$router.push(`/org/dept/updateRoles/${item.id }`)"
+            >{{ item.name }}</a>
+            <!-- <a
+              class="p"
+              @click="$router.push(`/org/dept/addRoles/${scope.row.id}?dept=${scope.row.dept.id}`)"
+            >添加</a>-->
+          </template>
+        </el-table-column>
+        <el-table-column prop="displayOrder" :label="schema.output.displayOrder" width="100"></el-table-column>
         <el-table-column
           prop="stat.createDateTime"
           :label="schema.output.stat.createDateTime"
-          width="200"
+          width="180"
         ></el-table-column>
         <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
             <el-button-group>
               <el-button
-                v-operatePriv="{priv:'org:area:detail'}"
+                v-operatePriv="{priv:'org:role:update'}"
                 plain
                 type="primary"
                 size="mini"
                 @click="setDialog(scope.row.id,'edit')"
               >修改</el-button>
               <el-button
-                v-operatePriv="{priv:'org:area:delete'}"
+                v-operatePriv="{priv:'org:role:delete'}"
                 plain
                 type="danger"
                 size="mini"
@@ -92,17 +105,8 @@ export default listJs
 </script>
 
 <style lang="scss" scoped>
-.popover {
-  text-align: center;
-  ul {
-    margin: 0;
-  }
-  li {
-    line-height: 40px;
-    cursor: pointer;
-    &:hover {
-      background: #f6f6f6;
-    }
-  }
+.p {
+  display: block;
+  margin: 5px 0;
 }
 </style>

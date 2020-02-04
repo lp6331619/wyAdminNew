@@ -15,7 +15,7 @@
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
           <el-button
-            v-operatePriv="{priv:'org:area_dept:create'}"
+            v-operatePriv="{priv:'org:role_level:create'}"
             type="primary"
             size="mini"
             @click="createStatus = true"
@@ -31,9 +31,9 @@
         >
           <el-table-column prop="id" :label="schema.output.id" width="100"></el-table-column>
           <el-table-column prop="name" :label="schema.output.name"></el-table-column>
-          <el-table-column prop="area.fullName" :label="schema.output.area[':title']"></el-table-column>
-          <el-table-column prop="dept.fullName" :label="schema.output.dept[':title']"></el-table-column>
-          <el-table-column prop="displayOrder" :label="schema.output.displayOrder" width="120"></el-table-column>
+          <el-table-column prop="level" :label="schema.output.level"></el-table-column>
+          <el-table-column prop="type.name" :label="schema.output.type[':title']"></el-table-column>
+          <el-table-column prop="scope.name" :label="schema.output.scope[':title']"></el-table-column>
           <el-table-column
             prop="stat.createDateTime"
             :label="schema.output.stat.createDateTime"
@@ -43,14 +43,14 @@
             <template slot-scope="scope">
               <el-button-group>
                 <el-button
-                  v-operatePriv="{priv:'org:area_dept:update'}"
+                  v-operatePriv="{priv:'org:role_level:update'}"
                   plain
                   type="primary"
                   size="mini"
                   @click="setDialog(scope.row.id)"
                 >修改</el-button>
                 <el-button
-                  v-operatePriv="{priv:'org:area_dept:delete'}"
+                  v-operatePriv="{priv:'org:role_level:delete'}"
                   plain
                   type="danger"
                   size="mini"

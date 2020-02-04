@@ -528,6 +528,21 @@ export const asyncRoutes = [
           priv: 'org:dept:detail',
           meta: { title: '员工详情', activeMenu: '/org/dept' },
           component: () => import('@/views/org/dept/detail/detail.vue')
+        }, {
+          path: 'updateRoles/:id',
+          hidden: true,
+          name: 'orgUpdateRoles',
+          priv: 'org:user:change_role',
+          meta: { title: '修改角色', activeMenu: '/org/dept' },
+          component: () => import('@/views/org/user/roles/roles.vue')
+        },
+        {
+          path: 'addRoles/:id',
+          hidden: true,
+          name: 'orgAddRoles',
+          priv: 'org:user:change_role',
+          meta: { title: '新增角色', activeMenu: '/org/dept' },
+          component: () => import('@/views/org/dept/addRoles/addRoles.vue')
         }],
         actions: {
           'org.dept:search': {
@@ -611,7 +626,7 @@ export const asyncRoutes = [
         path: 'roleLevel',
         name: 'roleLevel',
         priv: 'org:role:list',
-        component: () => import('@/views/system/priv/index'),
+        component: () => import('@/views/org/roleLevel/list/list.vue'),
         meta: { title: '角色等级管理', icon: 'table' },
         actions: {
           'org.role_level:search': {
@@ -639,7 +654,7 @@ export const asyncRoutes = [
         path: 'prodRole',
         name: 'prodRole',
         priv: 'org:product:role:detail',
-        component: () => import('@/views/system/priv/index'),
+        component: () => import('@/views/org/prodRole/list/list.vue'),
         meta: { title: '事业部角色映射关系', icon: 'table' },
         actions: {
           'org.product_role:detail': {

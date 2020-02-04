@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 新建会员等级折扣
+// 角色列表
 export function orgUserList(data, schema) {
   return request({
     url: `/org/user/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -161,7 +161,7 @@ export function orgDeptUpdate(data, schema) {
     data: data
   })
 }
-// 分公司部门列表
+// 事业部列表
 export function orgAreaDeptList(data, schema) {
   return request({
     url: `/org/areaDept/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -169,7 +169,7 @@ export function orgAreaDeptList(data, schema) {
     data: data
   })
 }
-// 创建分公司部门
+// 创建事业部
 export function orgAreaDeptCreate(data, schema) {
   return request({
     url: `/org/areaDept/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -177,7 +177,7 @@ export function orgAreaDeptCreate(data, schema) {
     data: data
   })
 }
-// 删除分公司部门
+// 删除事业部
 export function orgAreaDeptDelete(data, schema) {
   return request({
     url: `/org/areaDept/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -185,7 +185,7 @@ export function orgAreaDeptDelete(data, schema) {
     data: data
   })
 }
-// 更新分公司部门
+// 更新事业部
 export function orgAreaDeptUpdate(data, schema) {
   return request({
     url: `/org/areaDept/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -193,7 +193,7 @@ export function orgAreaDeptUpdate(data, schema) {
     data: data
   })
 }
-// 更新分公司部门
+// 事业部
 export function orgAreaDeptDetail(data, schema) {
   return request({
     url: `/org/areaDept/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -201,6 +201,8 @@ export function orgAreaDeptDetail(data, schema) {
     data: data
   })
 }
+
+// 分公司部门
 
 // 分公司部门列表
 export function orgRoleList(data, schema) {
@@ -242,3 +244,63 @@ export function orgRoleDetail(data, schema) {
     data: data
   })
 }
+
+// 角色等级
+
+// 角色等级列表
+export function orgRoleLevelList(data, schema) {
+  return request({
+    url: `/org/roleLevel/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 创建角色等级
+export function orgRoleLevelCreate(data, schema) {
+  return request({
+    url: `/org/roleLevel/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 删除角色等级
+export function orgRoleLevelDelete(data, schema) {
+  return request({
+    url: `/org/roleLevel/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新角色等级
+export function orgRoleLevelUpdate(data, schema) {
+  return request({
+    url: `/org/roleLevel/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新角色等级
+export function orgRoleLevelDetail(data, schema) {
+  return request({
+    url: `/org/roleLevel/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 事业部角色映射关系详情
+export function orgProductRoleDetail(data, schema) {
+  return request({
+    url: `/org/productRole/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 事业部角色映射关系更新数据
+export function orgProductRoleUpdate(data, schema) {
+  return request({
+    url: `/org/productRole/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+

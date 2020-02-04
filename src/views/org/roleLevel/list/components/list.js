@@ -1,17 +1,18 @@
-import { orgRoleList, orgRoleDelete, orgUserList } from '@/api/org'
+import { orgRoleLevelList, orgRoleLevelDelete } from '@/api/org'
 import { SearchList } from '@/components/SearchBox'
-import edit from '../dialog/edit.vue'
 import create from '../dialog/create.vue'
+import update from '../dialog/update.vue'
 export default {
+  name: 'ChildList',
   components: {
     SearchList, // 搜索
-    edit,
-    create
+    create,
+    update
   },
   props: {
     type: {
       type: String,
-      default: undefined
+      default: 'list'
     }
   },
   data() {
@@ -19,12 +20,12 @@ export default {
       // 搜索的列表数据
       searchForm: {
         search: this.$route.query.search ? JSON.parse(this.$route.query.search) : '',
-        roleLevel: this.$route.query.roleLevel ? JSON.parse(this.$route.query.roleLevel) : '',
-        dept: this.$route.query.dept ? JSON.parse(this.$route.query.dept) : this.$route.params.id || null
+        scope: this.$route.query.scope ? JSON.parse(this.$route.query.scope) : '',
+        type: this.$route.query.type ? JSON.parse(this.$route.query.type) : null
       },
       // 权限
       operatePrivBox: {
-        search: 'org:role:list',
+        search: 'org:roleLevel:list',
         excel: '_special:export_csv'
       },
       // 搜索的列表数据类型格式
@@ -32,15 +33,15 @@ export default {
         typeName: '名称',
         type: 'search',
         mode: 'Input'
-      },
-      {
-        typeName: '事业部',
-        type: 'dept',
-        mode: 'SearchSelect',
-        disabled: this.type === 'detail'
       }, {
-        typeName: '等级',
-        type: 'roleLevel',
+        typeName: '类型',
+        type: 'type',
+        selectType: true,
+        mode: 'SearchSelect'
+      }, {
+        typeName: '权限',
+        type: 'scope',
+        selectType: true,
         mode: 'SearchSelect'
       }],
       // 其余的数据
@@ -53,9 +54,9 @@ export default {
       schema: undefined,
       listData: {}, // 列表数据
       page: {}, // 分页
-      operationId: null, // 操作 ID
-      setEditDetail: false, // 修改详情
-      createStatus: false // 创建员工
+      operationId: null, // 操作 id
+      createStatus: false, // 创建员工
+      updateStatus: false // 更新
     }
   },
   computed: {
@@ -64,7 +65,6 @@ export default {
     }
   },
   created() {
-    // 是否是详情页
     this.getRule('prepare')
     this.getRule('schema')
     this.getList()
@@ -73,7 +73,7 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      orgRoleList({}, type).then(res => {
+      orgRoleLevelList({}, type).then(res => {
         type === 'prepare'
           ? (this.prepare = res.data)
           : (this.schema = res.schema)
@@ -82,18 +82,9 @@ export default {
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      orgRoleList(parse).then(res => {
+      orgRoleLevelList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
-          if (this.type === 'detail' && this.listData.data) {
-            this.listData.data.forEach(item => {
-              orgUserList({ dept: this.isDetail, roles: item.id }).then(res => {
-                if (res.result.isSuccess) {
-                  this.$set(item, 'admin', res.data)
-                }
-              })
-            })
-          }
           this.loading = false
           this.page = res.pagination
         }
@@ -105,7 +96,6 @@ export default {
         this.$refs.multipleTable.clearSelection()
         this.$refs.multipleTable.clearSort()
         this.$refs.multipleTable.clearFilter()
-        this.type === 'detail' ? this.searchForm.dept = this.$route.params.id : ''
       } else {
         this.searchForm = data.searchData
         this.otherData = data.otherData
@@ -118,9 +108,6 @@ export default {
       const box = Object.assign({}, this.searchForm, this.otherData)
       for (const i in box) {
         query[i] = this.getType(box[i]) ? JSON.stringify(box[i]) : ''
-      }
-      if (this.type === 'detail') {
-        query['activeName'] = '1'
       }
       this.$router.push({
         path: this.$route.path,
@@ -142,14 +129,14 @@ export default {
       this.$set(this.otherData, 'page', data)
       this.toList()
     },
-    // 删除员工
+    // 删除
     delMember(e) {
-      this.$confirm(`确认删除id为${e}的角色吗`, '确认删除', {
+      this.$confirm(`确认删除id为${e}的角色等级吗`, '确认删除', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        orgRoleDelete({ id: e }).then(res => {
+        orgRoleLevelDelete({ id: e }).then(res => {
           if (res.result.isSuccess) {
             this.$message.success(res.result.message)
             this.getList()
@@ -158,22 +145,18 @@ export default {
       }).catch(() => {
       })
     },
-    setDialog(e, n) {
+    setDialog(e) {
       this.operationId = e
-      switch (n) {
-        case 'edit':
-          this.setEditDetail = true
-          break
-      }
+      this.updateStatus = true
     },
-    // 修改详情返回
-    emitOutDetail(e, s) {
-      this.setEditDetail = !e
-      !s ? this.getList() : ''
-    },
-    // 创建员工
+    // 创建
     emitOutCreate(e, s) {
       this.createStatus = !e
+      !s ? this.getList() : ''
+    },
+    // 修改
+    emitOutUpdate(e, s) {
+      this.updateStatus = !e
       !s ? this.getList() : ''
     }
   }
