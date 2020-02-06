@@ -38,11 +38,11 @@
               v-for="(item,i) in scope.row.admin"
               :key="i"
               class="p"
-              @click="$router.push(`/org/dept/updateRoles/${item.id }`)"
+              @click="common.openWindow(`/org/dept/updateRoles/${item.id }`)"
             >{{ item.name }}</a>
             <!-- <a
               class="p"
-              @click="$router.push(`/org/dept/addRoles/${scope.row.id}?dept=${scope.row.dept.id}`)"
+              @click="common.openWindow(`/org/dept/addRoles/${scope.row.id}?dept=${scope.row.dept.id}`)"
             >添加</a>-->
           </template>
         </el-table-column>

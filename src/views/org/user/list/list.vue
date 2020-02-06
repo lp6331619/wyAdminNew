@@ -51,7 +51,7 @@
                   plain
                   type="primary"
                   size="mini"
-                  @click="$router.push(`/org/user/detail/${scope.row.id }`)"
+                  @click="common.openWindow(`/org/user/detail/${scope.row.id }`)"
                 >详情</el-button>
                 <el-button
                   v-operatePriv="{priv:'org:user:delete'}"
@@ -77,7 +77,7 @@
                       >修改</li>
                       <li
                         v-operatePriv="{prive:'org:user:change_role'}"
-                        @click="$router.push(`/org/user/updateRoles/${scope.row.id }`)"
+                        @click="common.openWindow(`/org/user/updateRoles/${scope.row.id }`)"
                       >更新角色</li>
                       <li
                         v-operatePriv="{prive:'org:user:change_status'}"

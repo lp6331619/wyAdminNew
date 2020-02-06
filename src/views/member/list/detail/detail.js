@@ -1,5 +1,6 @@
 import { getDetail } from '@/api/member'
-import { account, product, contactBox, realname, enterlog, memberOpLog } from './component'
+import { account, product, contactBox, realname, enterlog } from './component'
+import { OpList } from '@/components'
 import { RemarkCard } from '@/components/'
 export default {
   name: 'Detail',
@@ -10,7 +11,7 @@ export default {
     RemarkCard,
     realname,
     enterlog,
-    memberOpLog
+    OpList
   },
   data() {
     return {

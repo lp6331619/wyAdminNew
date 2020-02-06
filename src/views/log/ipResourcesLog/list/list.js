@@ -1,12 +1,8 @@
-import { orgAreaList, orgAreaDelete } from '@/api/org'
+import { resourceLogList } from '@/api/log'
 import { SearchList } from '@/components/SearchBox'
-import edit from './dialog/edit.vue'
-import create from './dialog/create.vue'
 export default {
   components: {
-    SearchList, // 搜索
-    edit,
-    create
+    SearchList // 搜索
   },
   data() {
     return {
@@ -16,7 +12,7 @@ export default {
       },
       // 权限
       operatePrivBox: {
-        search: 'org:area:list',
+        search: 'resource:log:owner_log:list',
         excel: '_special:export_csv'
       },
       // 搜索的列表数据类型格式
@@ -34,10 +30,8 @@ export default {
       prepare: undefined,
       schema: undefined,
       listData: {}, // 列表数据
-      page: {}, // 分页
-      operationId: null, // 操作 ID
-      setEditDetail: false, // 修改详情
-      createStatus: false // 创建员工
+      page: {} // 分页
+
     }
   },
   computed: {
@@ -53,11 +47,10 @@ export default {
       this.getList()
     }
   },
-
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      orgAreaList({}, type).then(res => {
+      resourceLogList({}, type).then(res => {
         type === 'prepare'
           ? (this.prepare = res.data.length ? res.data : {})
           : (this.schema = res.schema)
@@ -66,7 +59,7 @@ export default {
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      orgAreaList(parse).then(res => {
+      resourceLogList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.loading = false
@@ -112,40 +105,6 @@ export default {
     handleCurrentChange(data) {
       this.$set(this.otherData, 'page', data)
       this.toList()
-    },
-    // 删除员工
-    delMember(e) {
-      this.$confirm(`确认删除id为${e}的分公司吗`, '确认删除', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        orgAreaDelete({ id: e }).then(res => {
-          if (res.result.isSuccess) {
-            this.$message.success(res.result.message)
-            this.getList()
-          }
-        })
-      }).catch(() => {
-      })
-    },
-    setDialog(e, n) {
-      this.operationId = e
-      switch (n) {
-        case 'edit':
-          this.setEditDetail = true
-          break
-      }
-    },
-    // 修改详情返回
-    emitOutDetail(e, s) {
-      this.setEditDetail = !e
-      !s ? this.getList() : ''
-    },
-    // 创建员工
-    emitOutCreate(e, s) {
-      this.createStatus = !e
-      !s ? this.getList() : ''
     }
   }
 }

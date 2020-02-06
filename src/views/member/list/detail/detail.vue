@@ -31,7 +31,7 @@
       <enterlog />
     </template>
     <template v-if="activeName==='5'">
-      <memberOpLog url="/log/opLog/list" list="/member/list/detail" privs="log:op_log" />
+      <OpList module="user" :disabled="['opObject','module']" />
     </template>
   </div>
 </template>

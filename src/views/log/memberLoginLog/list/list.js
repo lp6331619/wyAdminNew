@@ -1,22 +1,22 @@
-import { orgAreaList, orgAreaDelete } from '@/api/org'
+import { opMemberLoginLogList } from '@/api/log'
 import { SearchList } from '@/components/SearchBox'
-import edit from './dialog/edit.vue'
-import create from './dialog/create.vue'
 export default {
   components: {
-    SearchList, // 搜索
-    edit,
-    create
+    SearchList // 搜索
   },
   data() {
     return {
       // 搜索的列表数据
       searchForm: {
-        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : ''
+        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : '',
+        time: this.$route.query.time ? JSON.parse(this.$route.query.time) : {
+          start: '',
+          end: ''
+        },
       },
       // 权限
       operatePrivBox: {
-        search: 'org:area:list',
+        search: 'user:member:list',
         excel: '_special:export_csv'
       },
       // 搜索的列表数据类型格式
@@ -24,6 +24,10 @@ export default {
         typeName: '名称',
         type: 'search',
         mode: 'Input'
+      }, {
+        typeName: '登录时间',
+        type: 'time',
+        mode: 'SearchTime'
       }],
       // 其余的数据
       otherData: {
@@ -31,24 +35,22 @@ export default {
         page: this.$route.query.page ? JSON.parse(this.$route.query.page) : 1
       },
       loading: false, // 加载
-      prepare: undefined,
+      prepare: {},
       schema: undefined,
-      listData: {}, // 列表数据
-      page: {}, // 分页
-      operationId: null, // 操作 ID
-      setEditDetail: false, // 修改详情
-      createStatus: false // 创建员工
+      listData: {
+        data: undefined
+      }, // 列表数据
+      page: {} // 分页
     }
   },
   computed: {
     isDetail() {
-      return this.$route.params.id ? JSON.parse(this.$route.params.id) : null
+      return !!this.$route.params.id ? JSON.parse(this.$route.params.id) : null
     }
   },
   created() {
     // 是否是详情页
     if (!this.isDetail) {
-      this.getRule('prepare')
       this.getRule('schema')
       this.getList()
     }
@@ -57,16 +59,20 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      orgAreaList({}, type).then(res => {
+      opMemberLoginLogList({}, type).then(res => {
         type === 'prepare'
-          ? (this.prepare = res.data.length ? res.data : {})
+          ? (this.prepare = res.data)
           : (this.schema = res.schema)
       })
     },
     getList() {
       this.loading = true
-      const parse = Object.assign({}, this.searchForm, this.otherData)
-      orgAreaList(parse).then(res => {
+      const time = {
+        loginStartTime: this.searchForm.time.start,
+        LoginEndTime: this.searchForm.time.end
+      }
+      const parse = Object.assign({}, this.searchForm, this.otherData, time)
+      opMemberLoginLogList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.loading = false
@@ -112,40 +118,6 @@ export default {
     handleCurrentChange(data) {
       this.$set(this.otherData, 'page', data)
       this.toList()
-    },
-    // 删除员工
-    delMember(e) {
-      this.$confirm(`确认删除id为${e}的分公司吗`, '确认删除', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        orgAreaDelete({ id: e }).then(res => {
-          if (res.result.isSuccess) {
-            this.$message.success(res.result.message)
-            this.getList()
-          }
-        })
-      }).catch(() => {
-      })
-    },
-    setDialog(e, n) {
-      this.operationId = e
-      switch (n) {
-        case 'edit':
-          this.setEditDetail = true
-          break
-      }
-    },
-    // 修改详情返回
-    emitOutDetail(e, s) {
-      this.setEditDetail = !e
-      !s ? this.getList() : ''
-    },
-    // 创建员工
-    emitOutCreate(e, s) {
-      this.createStatus = !e
-      !s ? this.getList() : ''
     }
   }
 }

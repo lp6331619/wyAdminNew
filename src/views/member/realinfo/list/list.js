@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     isDetail() {
-      return this.$route.params.id
+      return this.$route.params.id ? JSON.parse(this.$route.params.id) : null
     }
   },
   created() {

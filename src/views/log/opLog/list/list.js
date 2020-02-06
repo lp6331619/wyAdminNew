@@ -1,7 +1,6 @@
-
 import { OpList } from '@/components'
 export default {
   components: {
-    OpList
+    OpList // 搜索
   }
 }

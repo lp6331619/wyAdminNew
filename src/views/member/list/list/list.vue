@@ -94,7 +94,7 @@
                 v-operatePriv="{priv:'user:member:detail',display:true}"
                 type="text"
                 size="small"
-                @click.native.prevent="$router.push(`/member/list/detail/${scope.row.id }`)"
+                @click.native.prevent="common.openWindow(`/member/list/detail/${scope.row.id }`)"
               >{{ scope.row.id }}</el-button>
             </template>
           </el-table-column>
@@ -154,7 +154,7 @@
                 v-if="scope.row.saler && scope.row.saler.name"
                 type="text"
                 size="small"
-                @click.native.prevent="$router.push({path:'/org/user/detail',query:{id:scope.row.saler.id}})"
+                @click.native.prevent="common.openWindow(`/org/user/detail/${scope.row.saler.id}`)"
               >{{ scope.row.saler.name }}</el-button>
               <span v-else>暂无</span>
             </template>
@@ -167,7 +167,7 @@
                   plain
                   type="primary"
                   size="mini"
-                  @click.native.prevent="$router.push(`/member/list/detail/${scope.row.id }`)"
+                  @click.native.prevent="common.openWindow(`/member/list/detail/${scope.row.id }`)"
                 >管理</el-button>
                 <el-button
                   v-operatePriv="{priv:'user:member:admin_login'}"

@@ -46,7 +46,7 @@
                 v-operatePriv="{priv:'user:member:realinfo_detail',display:true}"
                 type="text"
                 size="small"
-                @click.native.prevent="$router.push(`/member/realinfo/authentication/${scope.row.id }`)"
+                @click.native.prevent="common.openWindow(`/member/realinfo/authentication/${scope.row.id }`)"
               >{{ scope.row.id }}</el-button>
             </template>
           </el-table-column>
@@ -56,7 +56,7 @@
                 v-operatePriv="{priv:'user:member:detail',display:true}"
                 type="text"
                 size="small"
-                @click.native.prevent="$router.push(`/member/list/detail/${scope.row.member.id }`)"
+                @click.native.prevent="common.openWindow(`/member/list/detail/${scope.row.member.id }`)"
               >{{ scope.row.member.id }}</el-button>
             </template>
           </el-table-column>
@@ -109,7 +109,7 @@
                 plain
                 type="primary"
                 size="mini"
-                @click.native.prevent="$router.push(`/member/realinfo/authentication/${scope.row.id }`)"
+                @click.native.prevent="common.openWindow(`/member/realinfo/authentication/${scope.row.id }`)"
               >管理</el-button>
             </template>
           </el-table-column>

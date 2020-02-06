@@ -206,14 +206,6 @@ export function memberLoginLog(data, schema) {
     data: schema === 'withSchema' ? '' : data
   })
 }
-// 操作日志列表
-export function opLogList(data, schema) {
-  return request({
-    url: `/log/opLog/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
-    method: schema ? 'get' : 'post',
-    data: data
-  })
-}
 // 申请实名
 export function applyRealInfo(data, schema) {
   return request({

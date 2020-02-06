@@ -18,6 +18,8 @@ import '@/permission' // permission control
 
 // 公用变量图片 url
 Vue.prototype.imgUrl = process.env.VUE_APP_BASE_API
+import common from '@/public/js/common.js';
+Vue.prototype.common = common;
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

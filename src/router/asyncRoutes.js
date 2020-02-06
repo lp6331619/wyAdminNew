@@ -670,6 +670,135 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/log',
+    component: Layout,
+    redirect: '/log/ipResourcesLog',
+    name: 'log',
+    priv: '_menu:log',
+    meta: { title: '日志管理', icon: 'example' },
+    children: [{
+      path: 'ipResourcesLog',
+      name: 'ipResourcesLog',
+      priv: 'resource:log:owner_log:list',
+      component: () => import('@/views/log/ipResourcesLog/list/list.vue'),
+      meta: { title: 'IP使用日志', icon: 'table' },
+      actions: {
+        'log.ipowner:search': {
+          title: '列表/查询',
+          priv: 'resource:log:owner_log:list'
+        }
+      }
+    },
+    {
+      path: 'opLog',
+      name: 'opLog',
+      priv: 'log:op_log',
+      meta: { title: '操作日志', icon: 'table' },
+      component: () => import('@/views/log/opLog/list/list.vue'),
+      actions: {
+        'log.oplog:search': {
+          title: '列表/查询',
+          priv: 'log:op_log'
+        },
+        'log.oplog:export': {
+          hidePriv: true,
+          title: '导出Excel',
+          priv: '_special:export_csv'
+        }
+      }
+    },
+    {
+      path: 'memberLoginLog',
+      name: 'memberLoginLog',
+      priv: 'log:member_login_log',
+      meta: { title: '会员登录日志', icon: 'table' },
+      component: () => import('@/views/log/memberLoginLog/list/list.vue'),
+      children: [{
+        path: 'detail/:id',
+        hidden: true,
+        name: 'logMember_login_logDetail',
+        priv: 'log:member_login_log:detail',
+        meta: { title: '员工详情', activeMenu: '/log/memberLoginLog' },
+        component: () => import('@/views/log/memberLoginLog/detail/detail.vue')
+      }],
+      actions: {
+        'log.member_login:search': {
+          title: '列表/查询',
+          priv: 'log:member_login_log'
+        },
+        'log.member_login:export': {
+          hidePriv: true,
+          title: '导出Excel',
+          priv: '_special:export_csv'
+        },
+        'log.member_login:detail': {
+          title: '详情',
+          priv: 'log:member_login_log'
+        }
+      }
+    }
+      // {
+      //   title: '员工登录日志',
+      //   route: '/log/userLoginLog/list',
+      //   mark: 'log:userLoginLog',
+      //   priv: 'log:org_user_login_log',
+      //   actions: {
+      //     'log.org_user_login:search': {
+      //       title: '列表/查询',
+      //       priv: 'log:org_user_login_log'
+      //     },
+      //     'log.org_user_login:export': {
+      //       hidePriv: true,
+      //       title: '导出Excel',
+      //       priv: '_special:export_csv'
+      //     },
+      //     'log.org_user_login:detail': {
+      //       title: '详情',
+      //       priv: 'log:org_user_login_log'
+      //     }
+      //   }
+      // },
+      // {
+      //   title: '错误日志',
+      //   route: '/log/errorLog/list',
+      //   mark: 'log:errorLog',
+      //   priv: 'log:error_log',
+      //   actions: {
+      //     'log.error:search': {
+      //       title: '列表/查询',
+      //       priv: 'log:error_log'
+      //     },
+      //     'log.error:export': {
+      //       hidePriv: true,
+      //       title: '导出Excel',
+      //       priv: '_special:export_csv'
+      //     }
+      //   }
+      // },
+      // {
+      //   title: '后台任务',
+      //   route: '/log/sysTask/list',
+      //   mark: 'log:sysTask',
+      //   priv: 'log:sys_task',
+      //   actions: {
+      //     'log.task:search': {
+      //       title: '列表/查询',
+      //       priv: 'log:sys_task'
+      //     },
+      //     'log.task:export': {
+      //       hidePriv: true,
+      //       title: '导出Excel',
+      //       priv: '_special:export_csv'
+      //     },
+      //     'log.task:detail': {
+      //       title: '详情',
+      //       priv: 'log:sys_task'
+      //     }
+      //   }
+      // }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/priv',
