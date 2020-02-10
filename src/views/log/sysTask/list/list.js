@@ -1,4 +1,4 @@
-import { opMemberLoginLogList } from '@/api/log'
+import { sysTaskList } from '@/api/log'
 import { SearchList } from '@/components/SearchBox'
 export default {
   components: {
@@ -8,15 +8,11 @@ export default {
     return {
       // 搜索的列表数据
       searchForm: {
-        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : '',
-        loginTime: this.$route.query.loginTime ? JSON.parse(this.$route.query.loginTime) : {
-          start: '',
-          end: ''
-        }
+        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : ''
       },
       // 权限
       operatePrivBox: {
-        search: 'log:member_login_log',
+        search: 'log:sys_task',
         excel: '_special:export_csv'
       },
       // 搜索的列表数据类型格式
@@ -24,10 +20,6 @@ export default {
         typeName: '模糊搜索',
         type: 'search',
         mode: 'Input'
-      }, {
-        typeName: '登录时间',
-        type: 'loginTime',
-        mode: 'SearchTime'
       }],
       // 其余的数据
       otherData: {
@@ -51,7 +43,6 @@ export default {
   created() {
     // 是否是详情页
     if (!this.isDetail) {
-      this.getRule('prepare')
       this.getRule('schema')
       this.getList()
     }
@@ -60,7 +51,7 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      opMemberLoginLogList({}, type).then(res => {
+      sysTaskList({}, type).then(res => {
         type === 'prepare'
           ? (this.prepare = res.data)
           : (this.schema = res.schema)
@@ -69,7 +60,7 @@ export default {
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      opMemberLoginLogList(parse).then(res => {
+      sysTaskList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.loading = false

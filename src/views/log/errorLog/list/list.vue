@@ -23,21 +23,20 @@
           :data="listData.data"
         >
           <el-table-column prop="id" :label="schema.output.id" width="100"></el-table-column>
-          <el-table-column prop="memberId" :label="schema.output.memberId" width="100"></el-table-column>
-          <el-table-column prop="memberName" :label="schema.output.memberName" width="100"></el-table-column>
-          <el-table-column prop="loginName" :label="schema.output.loginName" width="150"></el-table-column>
-          <el-table-column prop="loginIp" :label="schema.output.loginIp"></el-table-column>
-          <el-table-column prop="loginDateTime" :label="schema.output.loginDateTime" width="200"></el-table-column>
-          <el-table-column prop="orgUserId" :label="schema.output.orgUserId" width="100"></el-table-column>
-          <el-table-column prop="orgUserName" :label="schema.output.orgUserName"></el-table-column>
+          <el-table-column prop="dateTime" :label="schema.output.dateTime" width="170"></el-table-column>
+          <el-table-column prop="updateDateTime" :label="schema.output.updateDateTime" width="170"></el-table-column>
+          <el-table-column prop="category" :label="schema.output.category" width="220"></el-table-column>
+          <el-table-column prop="status.name" :label="schema.output.status[':title']" width="100"></el-table-column>
+          <el-table-column prop="message" :label="schema.output.message"></el-table-column>
+
           <el-table-column fixed="right" label="操作" width="80">
             <template slot-scope="scope">
               <el-button
-                v-operatePriv="{priv:'log:member_login_log'}"
+                v-operatePriv="{priv:'log:error_log'}"
                 plain
                 type="primary"
                 size="mini"
-                @click="common.openWindow(`/log/memberLoginLog/detail/${scope.row.id}`)"
+                @click="common.openWindow(`/log/errorLog/detail/${scope.row.id}`)"
               >详情</el-button>
             </template>
           </el-table-column>

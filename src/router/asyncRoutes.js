@@ -423,6 +423,218 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/information',
+    component: Layout,
+    redirect: '/information/new',
+    name: 'information',
+    meta: { title: '网站管理', icon: 'example' },
+    children: [
+      {
+        path: 'new',
+        name: 'informationNew',
+        priv: 'site:article:list',
+        meta: { title: '新闻公告', icon: 'table' },
+        component: () => import('@/views/member/list/list/list.vue'),
+        actions: {
+          'site.news:search': {
+            title: '列表/查询',
+            priv: 'site:article:list'
+          },
+          'site.news:type': {
+            title: '分类管理',
+            priv: 'site:article_cate:list'
+          },
+          'site.news:create': {
+            title: '创建新闻',
+            priv: 'site:article:create'
+          },
+          'site.news:upload': {
+            title: '上传附件',
+            priv: 'site:article:upload'
+          },
+          'site.news:detail': {
+            title: '查看',
+            priv: 'site:article:detail'
+          },
+          'site.news:update': {
+            title: '编辑',
+            priv: 'site:article:update'
+          },
+          'site.news:delete': {
+            title: '删除',
+            priv: 'site:article:delete'
+          }
+        }
+      },
+      {
+        path: 'list',
+        name: 'informationHelp',
+        priv: 'site:article:help',
+        meta: { title: '帮助中心', icon: 'table' },
+        component: () => import('@/views/member/list/list/list.vue'),
+        actions: {
+          'site.help:search': {
+            title: '列表/查询',
+            priv: 'site:article:help'
+          },
+          'site.help:type': {
+            title: '分类管理',
+            priv: 'site:article_cate:list'
+          },
+          'site.help:create': {
+            title: '新增帮助',
+            priv: 'site:article:create'
+          },
+          'site.help:upload': {
+            title: '上传附件',
+            priv: 'site:article:upload'
+          },
+          'site.help:detail': {
+            title: '查看',
+            priv: 'site:article:detail'
+          },
+          'site.help:update': {
+            title: '编辑',
+            priv: 'site:article:update'
+          },
+          'site.help:delete': {
+            title: '删除',
+            priv: 'site:article:delete'
+          }
+        }
+      }
+      // ,
+      //  {
+      //   title: '集团新闻',
+      //   route: '/information/bloc/list',
+      //   mark: 'information:bloc',
+      //   priv: 'site:article:group',
+      //   actions: {
+      //     'site.bloc:search': {
+      //       title: '列表/查询',
+      //       priv: 'site:article:group'
+      //     },
+      //     'site.bloc:type': {
+      //       title: '分类管理',
+      //       priv: 'site:article_cate:list'
+      //     },
+      //     'site.bloc:create': {
+      //       title: '创建新闻',
+      //       priv: 'site:article:create'
+      //     },
+      //     'site.bloc:upload': {
+      //       title: '上传附件',
+      //       priv: 'site:article:upload'
+      //     },
+      //     'site.bloc:detail': {
+      //       title: '查看',
+      //       priv: 'site:article:detail'
+      //     },
+      //     'site.bloc:update': {
+      //       title: '编辑',
+      //       priv: 'site:article:update'
+      //     },
+      //     'site.bloc:delete': {
+      //       title: '删除',
+      //       priv: 'site:article:delete'
+      //     }
+      //   }
+      // },
+      //  {
+      //   title: '分类管理',
+      //   route: '/information/class/list',
+      //   mark: 'information:class',
+      //   priv: 'site:article_cate:list',
+      //   actions: {
+      //     'site.news_category:search': {
+      //       title: '列表/查询',
+      //       priv: 'site:article_cate:list'
+      //     },
+      //     'site.news_category:create': {
+      //       title: '添加分类',
+      //       priv: 'site:article_cate:create'
+      //     },
+      //     'site.news_category:detail': {
+      //       title: '查看',
+      //       priv: 'site:article_cate:detail'
+      //     },
+      //     'site.news_category:update': {
+      //       title: '编辑',
+      //       priv: 'site:article_cate:update'
+      //     },
+      //     'site.news_category:delete': {
+      //       title: '删除',
+      //       priv: 'site:article_cate:delete'
+      //     }
+      //   }
+      // }
+    ]
+  },
+
+  {
+    path: '/express',
+    name: 'express',
+    priv: '_menu:express',
+    component: Layout,
+    redirect: '/express/list',
+    meta: { title: '物流管理', icon: 'example' },
+    children: [{
+      path: 'list',
+      name: 'expressList',
+      priv: 'express:express:list',
+      meta: { title: '快递列表', icon: 'example' },
+      component: () => import('@/views/express/express/list/list.vue'),
+      actions: {
+        'express.express:search': {
+          title: '列表/查询',
+          priv: 'express:express:list'
+        },
+        'express.express:create': {
+          title: '添加快递',
+          priv: 'express:express:create'
+        },
+        'express.express:detail': {
+          title: '快递信息',
+          priv: 'express:express:detail'
+        },
+        'express.express:update': {
+          title: '更新信息',
+          priv: 'express:express:update'
+        }
+      }
+    },
+    {
+      path: 'company',
+      name: 'companyList',
+      priv: 'express:company:list',
+      meta: { title: '快递公司', icon: 'example' },
+      component: () => import('@/views/express/company/list/list.vue'),
+      actions: {
+        'express.company:search': {
+          title: '列表/查询',
+          priv: 'express:company:list'
+        },
+        'express.company:create': {
+          title: '添加',
+          priv: 'express:company:create'
+        },
+        'express.company:detail': {
+          title: '详情',
+          priv: 'express:company:detail'
+        },
+        'express.company:update': {
+          title: '更新',
+          priv: 'express:company:update'
+        },
+        'express.company:delete': {
+          title: '删除',
+          priv: 'express:company:delete'
+        }
+      }
+    }
+    ]
+  },
+  {
     path: '/org',
     component: Layout,
     redirect: '/org/user',
@@ -718,7 +930,7 @@ export const asyncRoutes = [
         hidden: true,
         name: 'logMember_login_logDetail',
         priv: 'log:member_login_log:detail',
-        meta: { title: '员工详情', activeMenu: '/log/memberLoginLog' },
+        meta: { title: '会员登录日志详情', activeMenu: '/log/memberLoginLog' },
         component: () => import('@/views/log/memberLoginLog/detail/detail.vue')
       }],
       actions: {
@@ -736,66 +948,92 @@ export const asyncRoutes = [
           priv: 'log:member_login_log'
         }
       }
+    },
+    {
+      path: 'userLoginLog',
+      name: 'userLoginLog',
+      meta: { title: '员工登录日志', icon: 'table' },
+      priv: 'log:org_user_login_log',
+      component: () => import('@/views/log/userLoginLog/list/list.vue'),
+      children: [{
+        path: 'detail/:id',
+        hidden: true,
+        name: 'userLoginLog',
+        priv: 'log:org_user_login_log',
+        meta: { title: '员工登录日志详情', activeMenu: '/log/userLoginLog' },
+        component: () => import('@/views/log/userLoginLog/detail/detail.vue')
+      }],
+      actions: {
+        'log.org_user_login:search': {
+          title: '列表/查询',
+          priv: 'log:org_user_login_log'
+        },
+        'log.org_user_login:export': {
+          hidePriv: true,
+          title: '导出Excel',
+          priv: '_special:export_csv'
+        },
+        'log.org_user_login:detail': {
+          title: '详情',
+          priv: 'log:org_user_login_log'
+        }
+      }
+    },
+    {
+      path: 'errorLog',
+      name: 'errorLog',
+      meta: { title: '错误日志', icon: 'table' },
+      priv: 'log:error_log',
+      component: () => import('@/views/log/errorLog/list/list.vue'),
+      children: [{
+        path: 'detail/:id',
+        hidden: true,
+        name: 'errorLogDetail',
+        priv: 'log:error_log',
+        meta: { title: '错误日志详情', activeMenu: '/log/errorLog' },
+        component: () => import('@/views/log/errorLog/detail/detail.vue')
+      }],
+      actions: {
+        'log.error:search': {
+          title: '列表/查询',
+          priv: 'log:error_log'
+        },
+        'log.error:export': {
+          hidePriv: true,
+          title: '导出Excel',
+          priv: '_special:export_csv'
+        }
+      }
+    },
+    {
+      path: 'sysTask',
+      name: 'sysTask',
+      meta: { title: '后台任务', icon: 'table' },
+      component: () => import('@/views/log/sysTask/list/list.vue'),
+      children: [{
+        path: 'detail/:id',
+        hidden: true,
+        name: 'sysTaskDetail',
+        priv: 'log:sys_task',
+        meta: { title: '后台任务详情', activeMenu: '/log/sysTask' },
+        component: () => import('@/views/log/sysTask/detail/detail.vue')
+      }],
+      actions: {
+        'log.task:search': {
+          title: '列表/查询',
+          priv: 'log:sys_task'
+        },
+        'log.task:export': {
+          hidePriv: true,
+          title: '导出Excel',
+          priv: '_special:export_csv'
+        },
+        'log.task:detail': {
+          title: '详情',
+          priv: 'log:sys_task'
+        }
+      }
     }
-      // {
-      //   title: '员工登录日志',
-      //   route: '/log/userLoginLog/list',
-      //   mark: 'log:userLoginLog',
-      //   priv: 'log:org_user_login_log',
-      //   actions: {
-      //     'log.org_user_login:search': {
-      //       title: '列表/查询',
-      //       priv: 'log:org_user_login_log'
-      //     },
-      //     'log.org_user_login:export': {
-      //       hidePriv: true,
-      //       title: '导出Excel',
-      //       priv: '_special:export_csv'
-      //     },
-      //     'log.org_user_login:detail': {
-      //       title: '详情',
-      //       priv: 'log:org_user_login_log'
-      //     }
-      //   }
-      // },
-      // {
-      //   title: '错误日志',
-      //   route: '/log/errorLog/list',
-      //   mark: 'log:errorLog',
-      //   priv: 'log:error_log',
-      //   actions: {
-      //     'log.error:search': {
-      //       title: '列表/查询',
-      //       priv: 'log:error_log'
-      //     },
-      //     'log.error:export': {
-      //       hidePriv: true,
-      //       title: '导出Excel',
-      //       priv: '_special:export_csv'
-      //     }
-      //   }
-      // },
-      // {
-      //   title: '后台任务',
-      //   route: '/log/sysTask/list',
-      //   mark: 'log:sysTask',
-      //   priv: 'log:sys_task',
-      //   actions: {
-      //     'log.task:search': {
-      //       title: '列表/查询',
-      //       priv: 'log:sys_task'
-      //     },
-      //     'log.task:export': {
-      //       hidePriv: true,
-      //       title: '导出Excel',
-      //       priv: '_special:export_csv'
-      //     },
-      //     'log.task:detail': {
-      //       title: '详情',
-      //       priv: 'log:sys_task'
-      //     }
-      //   }
-      // }
     ]
   },
   {

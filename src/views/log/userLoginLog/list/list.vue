@@ -23,21 +23,19 @@
           :data="listData.data"
         >
           <el-table-column prop="id" :label="schema.output.id" width="100"></el-table-column>
-          <el-table-column prop="memberId" :label="schema.output.memberId" width="100"></el-table-column>
-          <el-table-column prop="memberName" :label="schema.output.memberName" width="100"></el-table-column>
+          <el-table-column prop="userId" :label="schema.output.userId" width="100"></el-table-column>
           <el-table-column prop="loginName" :label="schema.output.loginName" width="150"></el-table-column>
-          <el-table-column prop="loginIp" :label="schema.output.loginIp"></el-table-column>
-          <el-table-column prop="loginDateTime" :label="schema.output.loginDateTime" width="200"></el-table-column>
-          <el-table-column prop="orgUserId" :label="schema.output.orgUserId" width="100"></el-table-column>
-          <el-table-column prop="orgUserName" :label="schema.output.orgUserName"></el-table-column>
+          <el-table-column prop="userName" :label="schema.output.userName"></el-table-column>
+          <el-table-column prop="loginIp" :label="schema.output.loginIp" width="200"></el-table-column>
+          <el-table-column prop="loginDateTime" :label="schema.output.loginDateTime" width="180"></el-table-column>
           <el-table-column fixed="right" label="操作" width="80">
             <template slot-scope="scope">
               <el-button
-                v-operatePriv="{priv:'log:member_login_log'}"
+                v-operatePriv="{priv:'log:org_user_login_log'}"
                 plain
                 type="primary"
                 size="mini"
-                @click="common.openWindow(`/log/memberLoginLog/detail/${scope.row.id}`)"
+                @click="common.openWindow(`/log/userLoginLog/detail/${scope.row.id}`)"
               >详情</el-button>
             </template>
           </el-table-column>

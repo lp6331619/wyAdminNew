@@ -1,4 +1,3 @@
-import { orgDeptList, orgDeptDelete } from '@/api/org'
 import { SearchList } from '@/components/SearchBox'
 import list from './components/list.vue'
 export default {

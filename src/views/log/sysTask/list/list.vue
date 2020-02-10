@@ -22,22 +22,35 @@
           style="width: 100%"
           :data="listData.data"
         >
-          <el-table-column prop="id" :label="schema.output.id" width="100"></el-table-column>
-          <el-table-column prop="memberId" :label="schema.output.memberId" width="100"></el-table-column>
-          <el-table-column prop="memberName" :label="schema.output.memberName" width="100"></el-table-column>
-          <el-table-column prop="loginName" :label="schema.output.loginName" width="150"></el-table-column>
-          <el-table-column prop="loginIp" :label="schema.output.loginIp"></el-table-column>
-          <el-table-column prop="loginDateTime" :label="schema.output.loginDateTime" width="200"></el-table-column>
-          <el-table-column prop="orgUserId" :label="schema.output.orgUserId" width="100"></el-table-column>
-          <el-table-column prop="orgUserName" :label="schema.output.orgUserName"></el-table-column>
+          <el-table-column prop="id" :label="schema.output.id" width="70"></el-table-column>
+          <el-table-column
+            prop="resInfo.moduleName"
+            :label="schema.output.resInfo.moduleName"
+            width="80"
+          ></el-table-column>
+          <el-table-column
+            prop="resInfo.typeName"
+            :label="schema.output.resInfo.typeName"
+            width="80"
+          ></el-table-column>
+          <el-table-column prop="resInfo.id" :label="schema.output.resInfo.id" width="70"></el-table-column>
+          <el-table-column prop="resInfo.name" :label="schema.output.resInfo.name"></el-table-column>
+          <el-table-column prop="actionName" :label="schema.output.actionName" width="100"></el-table-column>
+          <el-table-column prop="startDateTime" :label="schema.output.startDateTime" width="160"></el-table-column>
+          <el-table-column prop="endDateTime" :label="schema.output.endDateTime" width="160"></el-table-column>
+          <el-table-column prop="status.name" :label="schema.output.status.name" width="100"></el-table-column>
+          <el-table-column prop="summary" :label="schema.output.summary" width="100"></el-table-column>
+          <el-table-column prop="opUser.summary" :label="schema.output.opUser.summary"></el-table-column>
+          <el-table-column prop="opUser.ip" :label="schema.output.opUser.ip"></el-table-column>
+
           <el-table-column fixed="right" label="操作" width="80">
             <template slot-scope="scope">
               <el-button
-                v-operatePriv="{priv:'log:member_login_log'}"
+                v-operatePriv="{priv:'log:sys_task'}"
                 plain
                 type="primary"
                 size="mini"
-                @click="common.openWindow(`/log/memberLoginLog/detail/${scope.row.id}`)"
+                @click="common.openWindow(`/log/sysTask/detail/${scope.row.id}`)"
               >详情</el-button>
             </template>
           </el-table-column>

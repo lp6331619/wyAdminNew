@@ -1,4 +1,4 @@
-import { opMemberLoginLogList } from '@/api/log'
+import { errorLogList } from '@/api/log'
 import { SearchList } from '@/components/SearchBox'
 export default {
   components: {
@@ -9,24 +9,31 @@ export default {
       // 搜索的列表数据
       searchForm: {
         search: this.$route.query.search ? JSON.parse(this.$route.query.search) : '',
-        loginTime: this.$route.query.loginTime ? JSON.parse(this.$route.query.loginTime) : {
+        status: this.$route.query.status ? JSON.parse(this.$route.query.status) : '',
+        time: this.$route.query.time ? JSON.parse(this.$route.query.time) : {
           start: '',
           end: ''
         }
       },
       // 权限
       operatePrivBox: {
-        search: 'log:member_login_log',
+        search: 'log:error_log',
         excel: '_special:export_csv'
       },
+      // 导出 excel 链接
+      // exportExcel: '/log/error_log/list',
       // 搜索的列表数据类型格式
       formType: [{
-        typeName: '模糊搜索',
+        typeName: '名称',
         type: 'search',
         mode: 'Input'
       }, {
-        typeName: '登录时间',
-        type: 'loginTime',
+        typeName: '状态',
+        type: 'status',
+        mode: 'SearchSelect'
+      }, {
+        typeName: '发生时间',
+        type: 'time',
         mode: 'SearchTime'
       }],
       // 其余的数据
@@ -51,8 +58,8 @@ export default {
   created() {
     // 是否是详情页
     if (!this.isDetail) {
-      this.getRule('prepare')
       this.getRule('schema')
+      this.getRule('prepare')
       this.getList()
     }
   },
@@ -60,7 +67,7 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      opMemberLoginLogList({}, type).then(res => {
+      errorLogList({}, type).then(res => {
         type === 'prepare'
           ? (this.prepare = res.data)
           : (this.schema = res.schema)
@@ -69,7 +76,7 @@ export default {
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      opMemberLoginLogList(parse).then(res => {
+      errorLogList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.loading = false

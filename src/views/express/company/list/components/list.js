@@ -1,33 +1,38 @@
-import { opMemberLoginLogList } from '@/api/log'
+import { expressCompanyList, expressCompanyDelete } from '@/api/express'
 import { SearchList } from '@/components/SearchBox'
+import create from '../dialog/create.vue'
+import update from '../dialog/update.vue'
 export default {
+  name: 'ChildList',
   components: {
-    SearchList // 搜索
+    SearchList, // 搜索
+    create,
+    update
+  },
+  props: {
+    type: {
+      type: String,
+      default: 'list'
+    }
   },
   data() {
     return {
       // 搜索的列表数据
       searchForm: {
-        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : '',
-        loginTime: this.$route.query.loginTime ? JSON.parse(this.$route.query.loginTime) : {
-          start: '',
-          end: ''
-        }
+        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : ''
       },
       // 权限
       operatePrivBox: {
-        search: 'log:member_login_log',
+        search: 'express:express:list',
         excel: '_special:export_csv'
       },
+      // 导出 excel 链接
+      exportExcel: '/user/member/list',
       // 搜索的列表数据类型格式
       formType: [{
-        typeName: '模糊搜索',
+        typeName: '名称',
         type: 'search',
         mode: 'Input'
-      }, {
-        typeName: '登录时间',
-        type: 'loginTime',
-        mode: 'SearchTime'
       }],
       // 其余的数据
       otherData: {
@@ -37,10 +42,11 @@ export default {
       loading: false, // 加载
       prepare: {},
       schema: undefined,
-      listData: {
-        data: undefined
-      }, // 列表数据
-      page: {} // 分页
+      listData: {}, // 列表数据
+      page: {}, // 分页
+      operationId: null, // 操作 id
+      createStatus: false, // 创建员工
+      updateStatus: false // 更新
     }
   },
   computed: {
@@ -49,18 +55,14 @@ export default {
     }
   },
   created() {
-    // 是否是详情页
-    if (!this.isDetail) {
-      this.getRule('prepare')
-      this.getRule('schema')
-      this.getList()
-    }
+    this.getRule('schema')
+    this.getList()
   },
 
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      opMemberLoginLogList({}, type).then(res => {
+      expressCompanyList({}, type).then(res => {
         type === 'prepare'
           ? (this.prepare = res.data)
           : (this.schema = res.schema)
@@ -69,7 +71,7 @@ export default {
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      opMemberLoginLogList(parse).then(res => {
+      expressCompanyList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.loading = false
@@ -115,6 +117,36 @@ export default {
     handleCurrentChange(data) {
       this.$set(this.otherData, 'page', data)
       this.toList()
+    },
+    // 删除
+    delMember(e) {
+      this.$confirm(`确认删除名字为${e.name}的快递公司吗`, '确认删除', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        expressCompanyDelete({ id: e.id }).then(res => {
+          if (res.result.isSuccess) {
+            this.$message.success(res.result.message)
+            this.getList()
+          }
+        })
+      }).catch(() => {
+      })
+    },
+    setDialog(e) {
+      this.operationId = e
+      this.updateStatus = true
+    },
+    // 创建
+    emitOutCreate(e, s) {
+      this.createStatus = !e
+      !s ? this.getList() : ''
+    },
+    // 修改
+    emitOutUpdate(e, s) {
+      this.updateStatus = !e
+      !s ? this.getList() : ''
     }
   }
 }

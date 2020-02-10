@@ -1,4 +1,4 @@
-import { opMemberLoginLogList } from '@/api/log'
+import { userLoginLogList } from '@/api/log'
 import { SearchList } from '@/components/SearchBox'
 export default {
   components: {
@@ -16,7 +16,7 @@ export default {
       },
       // 权限
       operatePrivBox: {
-        search: 'log:member_login_log',
+        search: 'log:org_user_login_log',
         excel: '_special:export_csv'
       },
       // 搜索的列表数据类型格式
@@ -51,7 +51,6 @@ export default {
   created() {
     // 是否是详情页
     if (!this.isDetail) {
-      this.getRule('prepare')
       this.getRule('schema')
       this.getList()
     }
@@ -60,7 +59,7 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      opMemberLoginLogList({}, type).then(res => {
+      userLoginLogList({}, type).then(res => {
         type === 'prepare'
           ? (this.prepare = res.data)
           : (this.schema = res.schema)
@@ -69,7 +68,7 @@ export default {
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      opMemberLoginLogList(parse).then(res => {
+      userLoginLogList(parse).then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.loading = false

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!isDetail" class="fatherBox">
+    <div class="fatherBox">
       <el-card class="box-card">
         <SearchList
           :prepare-data="prepare"
@@ -11,11 +11,18 @@
           @emitData="emitData($event)"
         />
       </el-card>
-      <el-card v-if="listData.data && schema" class="box-card pt0">
+      <el-card v-if="schema" v-loading="loading" class="box-card pt0">
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
+          <el-button
+            v-operatePriv="{priv:'express:express:create'}"
+            type="primary"
+            size="mini"
+            @click="createStatus = true"
+          >创建</el-button>
         </div>
         <el-table
+          v-if="listData"
           ref="multipleTable"
           v-loading="loading"
           tooltip-effect="dark"
@@ -23,22 +30,22 @@
           :data="listData.data"
         >
           <el-table-column prop="id" :label="schema.output.id" width="100"></el-table-column>
-          <el-table-column prop="memberId" :label="schema.output.memberId" width="100"></el-table-column>
-          <el-table-column prop="memberName" :label="schema.output.memberName" width="100"></el-table-column>
-          <el-table-column prop="loginName" :label="schema.output.loginName" width="150"></el-table-column>
-          <el-table-column prop="loginIp" :label="schema.output.loginIp"></el-table-column>
-          <el-table-column prop="loginDateTime" :label="schema.output.loginDateTime" width="200"></el-table-column>
-          <el-table-column prop="orgUserId" :label="schema.output.orgUserId" width="100"></el-table-column>
-          <el-table-column prop="orgUserName" :label="schema.output.orgUserName"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="80">
+          <el-table-column prop="no" :label="schema.output.no"></el-table-column>
+          <el-table-column prop="company.name" :label="schema.output.company[':title']"></el-table-column>
+          <el-table-column prop="member.realInfoName" :label="schema.output.member['realInfoName']"></el-table-column>
+          <el-table-column prop="receiver" :label="schema.output.receiver" width="120"></el-table-column>
+          <el-table-column prop="createDateTime" :label="schema.output.createDateTime" width="180"></el-table-column>
+          <el-table-column prop="sendDateTime" :label="schema.output.sendDateTime" width="180"></el-table-column>
+          <el-table-column prop="status.name" :label="schema.output.status[':title']" width="100"></el-table-column>
+          <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="scope">
               <el-button
-                v-operatePriv="{priv:'log:member_login_log'}"
+                v-operatePriv="{priv:'express:express:update'}"
                 plain
                 type="primary"
                 size="mini"
-                @click="common.openWindow(`/log/memberLoginLog/detail/${scope.row.id}`)"
-              >详情</el-button>
+                @click="setDialog(scope.row.id)"
+              >修改</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -56,9 +63,14 @@
           ></el-pagination>
         </div>
       </el-card>
-    </div>
-    <div v-else class="sonBox">
-      <router-view />
+      <!-- 创建员工 -->
+      <create v-if="createStatus" :status="createStatus" @emitOut="emitOutCreate" />
+      <update
+        v-if="updateStatus"
+        :status="updateStatus"
+        :operation-id="operationId"
+        @emitOut="emitOutUpdate"
+      />
     </div>
   </div>
 </template>
