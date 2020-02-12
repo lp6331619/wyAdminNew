@@ -430,11 +430,26 @@ export const asyncRoutes = [
     meta: { title: '网站管理', icon: 'example' },
     children: [
       {
-        path: 'new',
+        path: 'news',
         name: 'informationNew',
         priv: 'site:article:list',
         meta: { title: '新闻公告', icon: 'table' },
-        component: () => import('@/views/member/list/list/list.vue'),
+        component: () => import('@/views/information/news/list/list.vue'),
+        children: [{
+          path: 'detail',
+          hidden: true,
+          name: 'informationNewDetail',
+          priv: 'site:article:detail',
+          meta: { title: '新闻详情', activeMenu: '/information/news' },
+          component: () => import('@/views/information/news/detail/detail.vue')
+        }, {
+          path: 'create',
+          hidden: true,
+          name: 'informationNewCreate',
+          priv: 'site:article:create',
+          meta: { title: '创建新闻', activeMenu: '/information/news' },
+          component: () => import('@/views/information/news/create/create.vue')
+        }],
         actions: {
           'site.news:search': {
             title: '列表/查询',
@@ -467,11 +482,26 @@ export const asyncRoutes = [
         }
       },
       {
-        path: 'list',
+        path: 'help',
         name: 'informationHelp',
         priv: 'site:article:help',
         meta: { title: '帮助中心', icon: 'table' },
-        component: () => import('@/views/member/list/list/list.vue'),
+        component: () => import('@/views/information/help/list/list.vue'),
+        children: [{
+          path: 'detail',
+          hidden: true,
+          name: 'informationNewDetail',
+          priv: 'site:article:detail',
+          meta: { title: '帮助详情', activeMenu: '/information/help' },
+          component: () => import('@/views/information/help/detail/detail.vue')
+        }, {
+          path: 'create',
+          hidden: true,
+          name: 'informationNewCreate',
+          priv: 'site:article:create',
+          meta: { title: '创建新文章', activeMenu: '/information/help' },
+          component: () => import('@/views/information/help/create/create.vue')
+        }],
         actions: {
           'site.help:search': {
             title: '列表/查询',
@@ -503,71 +533,88 @@ export const asyncRoutes = [
           }
         }
       }
-      // ,
-      //  {
-      //   title: '集团新闻',
-      //   route: '/information/bloc/list',
-      //   mark: 'information:bloc',
-      //   priv: 'site:article:group',
-      //   actions: {
-      //     'site.bloc:search': {
-      //       title: '列表/查询',
-      //       priv: 'site:article:group'
-      //     },
-      //     'site.bloc:type': {
-      //       title: '分类管理',
-      //       priv: 'site:article_cate:list'
-      //     },
-      //     'site.bloc:create': {
-      //       title: '创建新闻',
-      //       priv: 'site:article:create'
-      //     },
-      //     'site.bloc:upload': {
-      //       title: '上传附件',
-      //       priv: 'site:article:upload'
-      //     },
-      //     'site.bloc:detail': {
-      //       title: '查看',
-      //       priv: 'site:article:detail'
-      //     },
-      //     'site.bloc:update': {
-      //       title: '编辑',
-      //       priv: 'site:article:update'
-      //     },
-      //     'site.bloc:delete': {
-      //       title: '删除',
-      //       priv: 'site:article:delete'
-      //     }
-      //   }
-      // },
-      //  {
-      //   title: '分类管理',
-      //   route: '/information/class/list',
-      //   mark: 'information:class',
-      //   priv: 'site:article_cate:list',
-      //   actions: {
-      //     'site.news_category:search': {
-      //       title: '列表/查询',
-      //       priv: 'site:article_cate:list'
-      //     },
-      //     'site.news_category:create': {
-      //       title: '添加分类',
-      //       priv: 'site:article_cate:create'
-      //     },
-      //     'site.news_category:detail': {
-      //       title: '查看',
-      //       priv: 'site:article_cate:detail'
-      //     },
-      //     'site.news_category:update': {
-      //       title: '编辑',
-      //       priv: 'site:article_cate:update'
-      //     },
-      //     'site.news_category:delete': {
-      //       title: '删除',
-      //       priv: 'site:article_cate:delete'
-      //     }
-      //   }
-      // }
+      ,
+      {
+        path: 'group',
+        name: 'informationGroup',
+        priv: 'site:article:group',
+        meta: { title: '集团新闻', icon: 'table' },
+        component: () => import('@/views/information/group/list/list.vue'),
+        children: [{
+          path: 'detail',
+          hidden: true,
+          name: 'informationNewDetail',
+          priv: 'site:article:detail',
+          meta: { title: '帮助详情', activeMenu: '/information/group' },
+          component: () => import('@/views/information/group/detail/detail.vue')
+        }, {
+          path: 'create',
+          hidden: true,
+          name: 'informationNewCreate',
+          priv: 'site:article:create',
+          meta: { title: '创建新文章', activeMenu: '/information/group' },
+          component: () => import('@/views/information/group/create/create.vue')
+        }],
+        actions: {
+          'site.bloc:search': {
+            title: '列表/查询',
+            priv: 'site:article:group'
+          },
+          'site.bloc:type': {
+            title: '分类管理',
+            priv: 'site:article_cate:list'
+          },
+          'site.bloc:create': {
+            title: '创建新闻',
+            priv: 'site:article:create'
+          },
+          'site.bloc:upload': {
+            title: '上传附件',
+            priv: 'site:article:upload'
+          },
+          'site.bloc:detail': {
+            title: '查看',
+            priv: 'site:article:detail'
+          },
+          'site.bloc:update': {
+            title: '编辑',
+            priv: 'site:article:update'
+          },
+          'site.bloc:delete': {
+            title: '删除',
+            priv: 'site:article:delete'
+          }
+        }
+      },
+      {
+        priv: 'site:article_cate:list',
+        path: 'class',
+        name: 'informationClass',
+        meta: { title: '分类管理', icon: 'table' },
+        component: () => import('@/views/information/class/list/list.vue'),
+        actions: {
+          'site.news_category:search': {
+            title: '列表/查询',
+            priv: 'site:article_cate:list'
+          },
+          'site.news_category:create': {
+            title: '添加分类',
+            priv: 'site:article_cate:create'
+          },
+          'site.news_category:detail': {
+            title: '查看',
+            priv: 'site:article_cate:detail'
+          },
+          'site.news_category:update': {
+            title: '编辑',
+            priv: 'site:article_cate:update'
+          },
+          'site.news_category:delete': {
+            title: '删除',
+            priv: 'site:article_cate:delete'
+          }
+        }
+      }
     ]
   },
 
@@ -958,7 +1005,7 @@ export const asyncRoutes = [
       children: [{
         path: 'detail/:id',
         hidden: true,
-        name: 'userLoginLog',
+        name: 'userLoginLogDetail',
         priv: 'log:org_user_login_log',
         meta: { title: '员工登录日志详情', activeMenu: '/log/userLoginLog' },
         component: () => import('@/views/log/userLoginLog/detail/detail.vue')
