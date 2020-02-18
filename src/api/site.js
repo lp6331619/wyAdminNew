@@ -40,7 +40,7 @@ export function articleCreate(data, schema) {
     data: data
   })
 }
-//帮助中心
+// 帮助中心
 export function articleHelp(data, schema) {
   return request({
     url: `/site/article/help${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -48,7 +48,7 @@ export function articleHelp(data, schema) {
     data: data
   })
 }
-//帮助中心
+// 帮助中心
 export function articleGroup(data, schema) {
   return request({
     url: `/site/article/group${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -72,6 +72,7 @@ export function articleCateDelete(data, schema) {
     data: data
   })
 }
+// 创建分类
 export function articleCateCreate(data, schema) {
   return request({
     url: `/site/articleCate/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -79,6 +80,7 @@ export function articleCateCreate(data, schema) {
     data: data
   })
 }
+// 更新分类
 export function articleCateUpdate(data, schema) {
   return request({
     url: `/site/articleCate/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -86,6 +88,7 @@ export function articleCateUpdate(data, schema) {
     data: data
   })
 }
+// 分类详情
 export function articleCateDetail(data, schema) {
   return request({
     url: `/site/articleCate/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,

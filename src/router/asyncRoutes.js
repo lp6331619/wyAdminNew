@@ -423,6 +423,45 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/combo',
+    component: Layout,
+    redirect: '/information/new',
+    name: 'combo',
+    priv: '_menu:combo',
+    meta: { title: '套餐管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        priv: 'business:combo:list',
+        meta: { title: '套餐', icon: 'example' },
+        component: () => import('@/views/information/news/list/list.vue'),
+        actions: {
+          'combo.combo:search': {
+            title: '套餐列表',
+            priv: 'business:combo:list'
+          },
+          'combo.combo:create': {
+            title: '套餐规则',
+            priv: 'business:combo:create'
+          },
+          'combo.combo:detail': {
+            title: '套餐信息',
+            priv: 'business:combo:detail'
+          },
+          'combo.combo:update': {
+            title: '编辑套餐',
+            priv: 'business:combo:update'
+          },
+          'combo.combo:delete': {
+            title: '删除套餐',
+            priv: 'business:combo:delete'
+          }
+        }
+      }
+    ]
+  },
+  {
     path: '/information',
     component: Layout,
     redirect: '/information/new',
@@ -532,8 +571,7 @@ export const asyncRoutes = [
             priv: 'site:article:delete'
           }
         }
-      }
-      ,
+      },
       {
         path: 'group',
         name: 'informationGroup',
@@ -617,7 +655,94 @@ export const asyncRoutes = [
       }
     ]
   },
-
+  {
+    path: '/message',
+    name: 'message',
+    priv: '_menu:message',
+    component: Layout,
+    redirect: '/message/template',
+    meta: { title: '消息模版', icon: 'example' },
+    children: [
+      {
+        path: 'template',
+        name: 'messageTemplate',
+        priv: 'message:template:list',
+        meta: { title: '消息模板', icon: 'example' },
+        component: () => import('@/views/message/template/list/list.vue'),
+        children: [{
+          path: 'detail/:id',
+          hidden: true,
+          name: 'templateDetail',
+          priv: 'message:template:detail',
+          meta: { title: '更新内容', activeMenu: '/message/template' },
+          component: () => import('@/views/message/template/detail/detail.vue')
+        }],
+        actions: {
+          'message.template:search': {
+            title: '模版列表',
+            priv: 'message:template:list'
+          },
+          'message.template:detail': {
+            title: '模版信息',
+            priv: 'message:template:detail'
+          },
+          'message.template:content': {
+            title: '内容设置',
+            priv: 'message:template:content'
+          },
+          'message.template:create': {
+            title: '创建自定义模版',
+            priv: 'message:template:create'
+          },
+          'message.template:delete': {
+            title: '删除自定义模版',
+            priv: 'message:template:delete'
+          }
+        }
+      },
+      {
+        path: 'subscribe',
+        name: 'messageSubscribe',
+        priv: 'message:subscribe:list',
+        meta: { title: '消息订阅', icon: 'example' },
+        component: () => import('@/views/message/subscribe/list/list.vue'),
+        children: [{
+          path: 'updateUsers/:id',
+          hidden: true,
+          name: 'templateupdateUser',
+          priv: 'message:subscribe:detail',
+          meta: { title: '修改分组用户', activeMenu: '/message/subscribe' },
+          component: () => import('@/views/message/subscribe/updateUsers/updateUsers.vue')
+        }],
+        actions: {
+          'message.subscribe:search': {
+            title: '分组列表',
+            priv: 'message:subscribe:list'
+          },
+          'message.subscribe:create': {
+            title: '创建分组',
+            priv: 'message:subscribe:create'
+          },
+          'message.subscribe:detail': {
+            title: '分组信息',
+            priv: 'message:subscribe:detail'
+          },
+          'message.subscribe:update': {
+            title: '修改分组',
+            priv: 'message:subscribe:update'
+          },
+          'message.subscribe:delete': {
+            title: '删除分组',
+            priv: 'message:subscribe:delete'
+          },
+          'message.subscribe:set_users': {
+            title: '设置分组用户',
+            priv: 'message:subscribe:set_users'
+          }
+        }
+      }
+    ]
+  },
   {
     path: '/express',
     name: 'express',
