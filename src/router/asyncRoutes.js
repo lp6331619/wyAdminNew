@@ -562,6 +562,50 @@ export const asyncRoutes = [
           }
         }]
       }
+    }, {
+      path: 'domainLimitList',
+      name: 'domainLimitList',
+      priv: 'net_sec:domain_limit:list',
+      meta: { title: '产品域名限制', icon: 'table' },
+      component: () => import('@/views/netSec/domainLimit/list/list.vue'),
+      children: [{
+        path: 'setting',
+        hidden: true,
+        name: 'setting',
+        priv: 'net_sec:domain_limit:global_list',
+        meta: { title: '全局域名限制默认设置', activeMenu: '/netSec/domainLimit/' },
+        component: () => import('@/views/netSec/domainLimit/setting/setting.vue')
+      }, {
+        path: 'edit/:id',
+        hidden: true,
+        name: 'edit',
+        priv: 'net_sec:domain_limit:update',
+        meta: { title: '编辑', activeMenu: '/netSec/domainLimit/' },
+        component: () => import('@/views/netSec/domainLimit/edit/edit.vue')
+      }],
+      actions: {
+        'netsec.limit:search': {
+          title: '列表/查询',
+          priv: 'net_sec:domain_limit:list'
+        },
+        'netsec.limit:edit': {
+          title: '编辑',
+          priv: 'net_sec:domain_limit:update'
+        },
+        'netsec.limit:setting': {
+          title: '默认设置',
+          priv: 'net_sec:domain_limit:global_list'
+        },
+        'netsec.limit:global_update': {
+          title: '修改默认产品限制',
+          priv: 'net_sec:domain_limit:global_update'
+        },
+        'netsec.limit:export': {
+          hidePriv: true,
+          title: '导出Excel',
+          priv: '_special:export_csv'
+        }
+      }
     }]
   },
   {

@@ -110,3 +110,43 @@ export function importfirewall(data) {
     data: data
   })
 }
+/**
+ * 产品域名限制管理列表
+ */
+export function getDomainLimitList(data, schema) {
+  return request({
+    url: `/netsec/domainLimit/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+/**
+ * 获取全局列表
+ */
+export function getGlobalList(data) {
+  return request({
+    url: '/netsec/domainlimit/globallist',
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 更新
+ */
+export function globalUpdate(data) {
+  return request({
+    url: '/netsec/domainlimit/globalupdate',
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 更新限制数量
+ */
+export function updateNum(data) {
+  return request({
+    url: '/netsec/domainlimit/update',
+    method: 'post',
+    data: data
+  })
+}

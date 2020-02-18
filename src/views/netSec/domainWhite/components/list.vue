@@ -74,7 +74,7 @@
           <template slot-scope="scope">
             <div>
               <el-tooltip v-if="scope.row.ips.length > 1" class="item" effect="dark" :content="scope.row.ips.join(',')" placement="right-end">
-                <div>{{ scope.row.ips[0] }}</div>
+                <div>{{ scope.row.ips[0] }} +</div>
               </el-tooltip>
               <div v-else>{{ scope.row.ips.length > 0 ? scope.row.ips[0] : "-" }}</div>
             </div>
