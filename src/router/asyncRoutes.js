@@ -462,6 +462,109 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/netSec',
+    component: Layout,
+    redirect: '/netSec',
+    name: 'netSec',
+    meta: { title: '信安管理', icon: 'example' },
+    children: [{
+      path: 'domainWhiteList',
+      name: 'domainWhiteList',
+      priv: 'net_sec:domain_white_list:list',
+      meta: { title: '白名单', icon: 'table' },
+      component: () => import('@/views/netSec/domainWhite/list/list.vue'),
+      children: [{
+        path: 'edit/:id?',
+        hidden: true,
+        name: 'edit',
+        priv: 'net_sec:domain_white_list:create',
+        meta: { title: '添加白名单', activeMenu: '/netSec/domainWhite/' },
+        component: () => import('@/views/netSec/domainWhite/edit/edit.vue')
+      }, {
+        path: 'detail/:id?',
+        hidden: true,
+        name: 'detail',
+        priv: 'net_sec:domain_white_list:detail',
+        meta: { title: '白名单详情', activeMenu: '/netSec/domainWhite/' },
+        component: () => import('@/views/netSec/domainWhite/detail/detail.vue')
+      }],
+      tabs: {
+        child: [{
+          title: '列表页',
+          actions: {
+            'netsec.white.list:search': {
+              title: '列表/查询',
+              priv: 'net_sec:domain_white_list:list'
+            },
+            'netsec.white.list:detail': {
+              title: '详情',
+              priv: 'net_sec:domain_white_list:detail'
+            },
+            'netsec.white.list:update': {
+              title: '编辑',
+              priv: 'net_sec:domain_white_list:update'
+            },
+            'netsec.white.list:export': {
+              hidePriv: true,
+              title: '导出Excel',
+              priv: '_special:export_csv'
+            },
+            'netsec.white.list:create': {
+              title: '添加白名单',
+              priv: 'net_sec:domain_white_list:create'
+            },
+            'netsec.white.list:check_domain': {
+              title: '检查域名',
+              priv: 'net_sec:domain_white_list:check_domain'
+            },
+            'netsec.white.list:find_product': {
+              title: '查询产品',
+              priv: 'net_sec:domain_white_list:find_product'
+            },
+            'netsec.white.list:set_audit_status': {
+              title: '审核',
+              priv:
+                'net_sec:domain_white_list:set_audit_status'
+            }
+          }
+        }, {
+          title: '详情信息',
+          actions: {
+            'netsec.white.detail:import_firewall': {
+              title: '导入防火墙',
+              priv:
+                'net_sec:domain_white_list:import_firewall'
+            },
+            'netsec.white.detail:list': {
+              title: '防火墙信息列表',
+              priv: 'resource:idc:firewall:list'
+            },
+            'netsec.white.detail:log_search': {
+              title: '操作日志',
+              priv: 'net_sec:domain_white_list:log_search'
+            },
+            'netsec.white.detail:check_bei_an': {
+              title: '查询是否备案',
+              priv: 'net_sec:domain_white_list:check_bei_an'
+            },
+            'netsec.white.detail:note_list': {
+              title: '备注列表',
+              priv: 'net_sec:domain_white_list:note_list'
+            },
+            'netsec.white.detail:add_note': {
+              title: '添加备注',
+              priv: 'net_sec:domain_white_list:add_note'
+            },
+            'netsec.white.detail:del_note': {
+              title: '删除备注',
+              priv: 'net_sec:domain_white_list:del_note'
+            }
+          }
+        }]
+      }
+    }]
+  },
+  {
     path: '/information',
     component: Layout,
     redirect: '/information/new',
@@ -571,8 +674,7 @@ export const asyncRoutes = [
             priv: 'site:article:delete'
           }
         }
-      },
-      {
+      }, {
         path: 'group',
         name: 'informationGroup',
         priv: 'site:article:group',

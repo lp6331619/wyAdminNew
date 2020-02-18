@@ -6,4 +6,5 @@ import Dialog from './Dialog'
 import RemarkCard from './RemarkCard'
 import Upload from './Upload/Upload.vue'
 import OpList from './OpList/OpList.vue'
-export { Breadcrumb, Hamburger, SvgIcon, SearchBox, Dialog, RemarkCard, Upload, OpList }
+import MemberInfo from './MemberInfo/MemberInfo.vue'
+export { Breadcrumb, Hamburger, SvgIcon, SearchBox, Dialog, RemarkCard, Upload, OpList, MemberInfo }
