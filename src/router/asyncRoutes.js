@@ -606,6 +606,105 @@ export const asyncRoutes = [
           priv: '_special:export_csv'
         }
       }
+    }, {
+      path: 'cate',
+      name: 'cate',
+      priv: 'net_sec:cate:list',
+      meta: { title: '类别管理', icon: 'table' },
+      component: () => import('@/views/netSec/cate/list/list.vue'),
+      actions: {
+        'netsec.cate:search': {
+          title: '列表',
+          priv: 'net_sec:cate:list'
+        },
+        'netsec.cate:create': {
+          title: '添加类别',
+          priv: 'net_sec:cate:create'
+        },
+        'netsec.cate:update': {
+          title: '编辑类别',
+          priv: 'net_sec:cate:update'
+        },
+        'netsec.cate:delete': {
+          title: '删除类别',
+          priv: 'net_sec:cate:delete'
+        }
+      }
+    }, {
+      path: 'harmfulList',
+      name: 'harmfulList',
+      priv: 'net_sec:harmful_list:list',
+      meta: { title: '有害信息管理', icon: 'table' },
+      component: () => import('@/views/netSec/harmful/list/list.vue'),
+      children: [{
+        path: 'edit',
+        hidden: true,
+        name: 'edit',
+        priv: 'net_sec:harmful_list:create',
+        meta: { title: '提交有害信息', activeMenu: '/netSec/harmful/' },
+        component: () => import('@/views/netSec/harmful/edit/edit.vue')
+      }],
+      tabs: {
+        'netsec.harmful.list': {
+          title: '列表页',
+          actions: {
+            'netsec.harmful.list:search': {
+              title: '列表/查询',
+              priv: 'net_sec:harmful_list:list'
+            },
+            'netsec.harmful.list:export': {
+              hidePriv: true,
+              title: '导出Excel',
+              priv: '_special:export_csv'
+            },
+            'netsec.harmful.list:create': {
+              title: '新建有害信息',
+              priv: 'net_sec:harmful_list:create'
+            },
+            'netsec.harmful.list:update': {
+              title: '变更有害信息',
+              priv: 'net_sec:harmful_list:update'
+            },
+            'netsec.harmful.list:detail': {
+              title: '有害信息详情',
+              priv: 'net_sec:harmful_list:detail'
+            },
+            'netsec.harmful.list:find_ips': {
+              title: '检查ip',
+              priv: 'net_sec:harmful_list:find_ips'
+            },
+            'netsec.harmful.list:set_process': {
+              title: '处理信息',
+              priv: 'net_sec:harmful_list:set_process'
+            },
+            'netsec.harmful.list:getfile': {
+              title: '查看图片',
+              priv: 'net_sec:harmful_list:get_file'
+            },
+            'netsec.harmful.list:get_base_domain': {
+              title: '获取网址',
+              priv: 'net_sec:harmful_list:get_base_domain'
+            }
+          }
+        },
+        'netsec.harmful.detail': {
+          title: '详情信息',
+          actions: {
+            'netsec.harmful.detail:add_note': {
+              title: '添加备注',
+              priv: 'net_sec:harmful_list:add_note'
+            },
+            'netsec.harmful.detail:note_list': {
+              title: '备注列表',
+              priv: 'net_sec:harmful_list:note_list'
+            },
+            'netsec.harmful.detail:del_note': {
+              title: '删除备注',
+              priv: 'net_sec:harmful_list:del_note'
+            }
+          }
+        }
+      }
     }]
   },
   {

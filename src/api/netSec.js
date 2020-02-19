@@ -150,3 +150,63 @@ export function updateNum(data) {
     data: data
   })
 }
+/**
+ * 获取类别列表
+ */
+export function getCateList(data, schema) {
+  return request({
+    url: `/netsec/cate/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 新增类别
+ */
+export function createCate(data) {
+  return request({
+    url: '/netsec/cate/create',
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 更新类别
+ */
+export function updateCate(data) {
+  return request({
+    url: '/netsec/cate/update',
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 删除类别
+ */
+export function deleteCate(data) {
+  return request({
+    url: '/netsec/cate/delete',
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 获取有害信息列表
+ */
+export function getHarmfulList(data, schema) {
+  return request({
+    url: `/netsec/harmfullist/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 处理有害信息
+ */
+export function setProcess(data, schema) {
+  return request({
+    url: `/netsec/harmfullist/setprocess${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: 'post',
+    data: data
+  })
+}

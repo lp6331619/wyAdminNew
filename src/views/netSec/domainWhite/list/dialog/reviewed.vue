@@ -49,7 +49,7 @@ export default {
       },
       rules: {
         status: [
-          { required: true, message: '请选择审核状态', trigger: 'blur' }
+          { required: true, message: '请选择审核状态', trigger: 'change' }
         ]
       }
     }
