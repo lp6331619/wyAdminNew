@@ -164,27 +164,192 @@ export function resourceCloudNodeCpuMemCreate(data, schema) {
     data: data
   })
 }
+
 // -----
-// 云服务器资源磁盘类型列表
+// 云服务器资源 磁盘类型列表
 export function resourceCloudDiskTypeList(data, schema) {
   return request({
-    url: `/resource/cloud/diskType/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    url: `/resource/cloud/diskType/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// 云服务器资源 磁盘类型详情
+export function resourceCloudDiskTypeDetail(data, schema) {
+  return request({
+    url: `/resource/cloud/diskType/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
     method: schema ? 'get' : 'post',
     data: data
   })
 }
+// 云服务器资源 磁盘类型创建
+export function resourceCloudDiskTypeCreate(data, schema) {
+  return request({
+    url: `/resource/cloud/diskType/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 云服务器资源 磁盘类型更新
+export function resourceCloudDiskTypeUpdate(data, schema) {
+  return request({
+    url: `/resource/cloud/diskType/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// ----
 // 云服务器资源操作系统版本列表
 export function resourceOsVersionList(data, schema) {
   return request({
-    url: `/resource/os/version/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    url: `/resource/os/version/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// 云服务器资源操作系统版本 详情
+export function resourceOsVersionDetail(data, schema) {
+  return request({
+    url: `/resource/os/version/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
     method: schema ? 'get' : 'post',
     data: data
   })
 }
-// 云服务器资源IP列表
+// 云服务器资源操作系统版本 更新
+export function resourceOsVersionUpdate(data, schema) {
+  return request({
+    url: `/resource/os/version/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 云服务器资源操作系统版本 创建
+export function resourceOsVersionCreate(data, schema) {
+  return request({
+    url: `/resource/os/version/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------云服务器资源IP列表
 export function resourceCloudIpList(data, schema) {
   return request({
-    url: `/resource/cloud/noipde/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    url: `/resource/cloud/ip/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// 详情
+export function resourceCloudIpDetail(data, schema) {
+  return request({
+    url: `/resource/cloud/ip/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// 更新
+export function resourceCloudIpUpdate(data, schema) {
+  return request({
+    url: `/resource/cloud/ip/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// ddos资源 区域列表
+export function resourceDDosRegionList(data, schema) {
+  return request({
+    url: `/resource/ddos/region/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 区域详情
+export function resourceDDosRegionDetail(data, schema) {
+  return request({
+    url: `/resource/ddos/region/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 区域更新
+export function resourceDDosRegionUpdate(data, schema) {
+  return request({
+    url: `/resource/ddos/region/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 区域创建
+export function resourceDDosRegionCreate(data, schema) {
+  return request({
+    url: `/resource/ddos/region/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// ddos资源 线路列表
+export function resourceDDosRegionLineList(data, schema) {
+  return request({
+    url: `/resource/ddos/region/line/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 线路详情
+export function resourceDDosRegionLineDetail(data, schema) {
+  return request({
+    url: `/resource/ddos/region/line/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 线路更新
+export function resourceDDosRegionLineUpdate(data, schema) {
+  return request({
+    url: `/resource/ddos/region/line/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 线路创建
+export function resourceDDosRegionLineCreate(data, schema) {
+  return request({
+    url: `/resource/ddos/region/line/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// ddos资源 IP列表
+export function resourceDDosReginIpList(data, schema) {
+  return request({
+    url: `/resource/ddos/ip/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 IP详情
+export function resourceDDosReginIpDetail(data, schema) {
+  return request({
+    url: `/resource/ddos/ip/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 IP更新
+export function resourceDDosReginIpUpdate(data, schema) {
+  return request({
+    url: `/resource/ddos/ip/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// ddos资源 IP创建
+export function resourceDDosReginIpCreate(data, schema) {
+  return request({
+    url: `/resource/ddos/ip/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
     method: schema ? 'get' : 'post',
     data: data
   })

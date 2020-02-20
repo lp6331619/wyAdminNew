@@ -15,7 +15,7 @@
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
           <el-button
-            v-operatePriv="{priv:'resource:cloud:node:disk_type:create'}"
+            v-operatePriv="{priv:'resource:ddos:ip:create'}"
             type="primary"
             size="mini"
             @click="setEditDetail = true;scene = 'create'"
@@ -29,23 +29,21 @@
           style="width: 100%"
           :data="listData.data"
         >
-          <el-table-column prop="id" :label="schema.output.id" width="140"></el-table-column>
-          <el-table-column prop="name" :label="schema.output.name"></el-table-column>
-          <el-table-column prop="description" :label="schema.output.description"></el-table-column>
+          <el-table-column prop="id" :label="schema.output.id" width="60"></el-table-column>
+          <el-table-column prop="ip" :label="schema.output.ip" width="120"></el-table-column>
+          <el-table-column prop="region.name" :label="schema.output.region[':title']" width="200"></el-table-column>
+          <el-table-column prop="line.name" :label="schema.output.line[':title']"></el-table-column>
+          <el-table-column prop="type.name" :label="schema.output.type[':title']"></el-table-column>
+          <el-table-column prop="enableStatus.name" :label="schema.output.enableStatus[':title']"></el-table-column>
           <el-table-column
             prop="stat.createDateTime"
             :label="schema.output.stat.createDateTime"
             width="200"
           ></el-table-column>
-          <el-table-column
-            prop="stat.updateDateTime"
-            :label="schema.output.stat.updateDateTime"
-            width="200"
-          ></el-table-column>
           <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="scope">
               <el-button
-                v-operatePriv="{priv:'resource:cloud:node:disk_type:detail'}"
+                v-operatePriv="{priv:'resource:ddos:ip:detail'}"
                 plain
                 type="primary"
                 size="mini"
@@ -81,8 +79,8 @@
 </template>
 
 <script>
-import diskTypeJs from './diskType'
-export default diskTypeJs
+import indexJs from './index'
+export default indexJs
 </script>
 
 <style lang="scss" scoped>

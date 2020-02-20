@@ -23,7 +23,7 @@ export default {
       },
       // 权限
       operatePrivBox: {
-        search: 'resource:cloud:node:cpu_mem:ist',
+        search: 'resource:cloud:node:cpu_mem:list',
         excel: '_special:export_csv'
       },
       // 导出 excel 链接

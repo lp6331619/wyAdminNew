@@ -3,20 +3,30 @@ export default {
   },
   data() {
     return {
-      activeName: 'node'
-    }
-  },
-  computed: {
-    type() {
-      return this.$route.params ? this.$route.params.type : ''
+      activeName: this.$route.params.type ? this.$route.params.type : this.$route.name
     }
   },
   created() {
-    this.activeName = this.type
+    console.log(this.activeName, 123)
   },
   methods: {
     tabsClick(e) {
-      this.$router.push(`/resource/cloud/${e.name === 'node' ? 'node/node' : e.name}/list`)
+      let url
+      switch (e.name) {
+        case 'resourceCloudNodeList': case 'node':
+          url = '/resource/cloud/node/node/list'
+          break
+        case 'resourceCloudDiskType':
+          url = '/resource/cloud/diskType/list'
+          break
+        case 'resourceCloudVersion':
+          url = '/resource/cloud/version/list'
+          break
+        case 'resourceCloudIp':
+          url = '/resource/cloud/ip/list'
+          break
+      }
+      this.$router.push(url)
     }
   }
 }

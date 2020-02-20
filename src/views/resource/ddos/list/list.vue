@@ -3,21 +3,20 @@
     <div class="fatherBox">
       <div class="box-card tabBox">
         <el-tabs v-model="activeName" @tab-click="tabsClick">
-          <el-tab-pane v-operatePriv="{priv:'resource:cloud:node:list'}" label="节点" name="node"></el-tab-pane>
           <el-tab-pane
-            v-operatePriv="{priv:'resource:cloud:node:disk_type:list'}"
-            label="磁盘类型"
-            name="resourceCloudDiskType"
+            v-operatePriv="{priv:'resource:ddos:region:list'}"
+            label="区域"
+            name="resourceDdosRegion"
           ></el-tab-pane>
           <el-tab-pane
-            v-operatePriv="{priv:'resource:os:version:list'}"
-            label="操作系统版本"
-            name="resourceCloudVersion"
+            v-operatePriv="{priv:'resource:ddos:region:line:list'}"
+            label="线路"
+            name="resourceDdosLine"
           ></el-tab-pane>
           <el-tab-pane
-            v-operatePriv="{priv:'resource:cloud:ip:list'}"
+            v-operatePriv="{priv:'resource:ddos:ip:list'}"
             label="IP"
-            name="resourceCloudIp"
+            name="resourceDdosIp"
           ></el-tab-pane>
         </el-tabs>
       </div>

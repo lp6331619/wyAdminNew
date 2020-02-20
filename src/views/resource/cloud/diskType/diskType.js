@@ -1,9 +1,11 @@
-import { articleList, articleDelete } from '@/api/site'
+import { resourceCloudDiskTypeList } from '@/api/resource'
 import { SearchList } from '@/components/SearchBox'
+import update from './dialog/update.vue'
 export default {
-  name: 'NodeList',
+  name: 'DiskTypeList',
   components: {
-    SearchList // 搜索
+    SearchList, // 搜索
+    update
   },
   props: {
     type: {
@@ -15,26 +17,20 @@ export default {
     return {
       // 搜索的列表数据
       searchForm: {
-        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : '',
-        cate: this.$route.query.cate ? JSON.parse(this.$route.query.cate) : ''
+        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : ''
       },
       // 权限
       operatePrivBox: {
-        search: 'site:article:list',
+        search: 'resource:cloud:node:disk_type:list',
         excel: '_special:export_csv'
       },
       // 导出 excel 链接
       // exportExcel: '/user/member/list',
       // 搜索的列表数据类型格式
       formType: [{
-        typeName: '名称',
+        typeName: '名称关键字',
         type: 'search',
         mode: 'Input'
-      }, {
-        typeName: '文章分类',
-        type: 'cate',
-        selectType: true,
-        mode: 'SearchSelect'
       }],
       // 其余的数据
       otherData: {
@@ -42,38 +38,37 @@ export default {
         page: this.$route.query.page ? JSON.parse(this.$route.query.page) : 1
       },
       loading: false, // 加载
-      prepare: undefined,
+      prepare: {},
       schema: undefined,
       listData: {}, // 列表数据
-      page: {} // 分页
+      page: {}, // 分页
+      operationId: null, // 操作 ID
+      setEditDetail: false, // 修改详情
+      scene: '' // 场景
     }
   },
   computed: {
-    isDetail() {
-      return this.$route.params.id ? JSON.parse(this.$route.params.id) : null
-    }
+
   },
   created() {
-    this.getRule('prepare')
-    this.getRule('schema')
+    // this.getRule('prepare')
     this.getList()
   },
 
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      articleList({}, type).then(res => {
-        type === 'prepare'
-          ? (this.prepare = res.data)
-          : (this.schema = res.schema)
+      resourceCloudDiskTypeList({}, type).then(res => {
+        this.prepare = res.data
       })
     },
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      articleList(parse).then(res => {
+      resourceCloudDiskTypeList(parse, '_withSchema').then(res => {
         if (res.result.isSuccess) {
           this.listData = res
+          this.schema = res.schema
           this.loading = false
           this.page = res.pagination
         }
@@ -118,24 +113,15 @@ export default {
       this.$set(this.otherData, 'page', data)
       this.toList()
     },
-    // 删除公告
-    del(e) {
-      this.$prompt(`确认删除新闻' ${e.title} '吗?`, '确认删除', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then(({ value }) => {
-        articleDelete({ id: e.id, note: value }).then(res => {
-          if (res.result.isSuccess) {
-            this.$message.success(res.result.message)
-            this.getList()
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
-      })
+    setDialog(e) {
+      this.operationId = e
+      this.setEditDetail = true
+      this.scene = 'edit'
+    },
+    // 修改详情返回
+    emitOutDetail(e, s) {
+      this.setEditDetail = !e
+      !s ? this.getList() : ''
     }
   }
 }

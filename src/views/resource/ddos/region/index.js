@@ -1,8 +1,8 @@
-import { resourceCloudNodeDiskTypeList } from '@/api/resource'
+import { resourceDDosRegionList } from '@/api/resource'
 import { SearchList } from '@/components/SearchBox'
 import update from './dialog/update.vue'
 export default {
-  name: 'NodeList',
+  name: 'DDosList',
   components: {
     SearchList, // 搜索
     update
@@ -17,14 +17,11 @@ export default {
     return {
       // 搜索的列表数据
       searchForm: {
-        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : '',
-        isEnable: this.$route.query.isEnable ? JSON.parse(this.$route.query.isEnable) : '',
-        node: this.$route.query.node ? JSON.parse(this.$route.query.node) : '',
-        diskType: this.$route.query.diskType ? JSON.parse(this.$route.query.diskType) : ''
+        search: this.$route.query.search ? JSON.parse(this.$route.query.search) : ''
       },
       // 权限
       operatePrivBox: {
-        search: 'resource:cloud:node:disk_type:list',
+        search: 'resource:os:version:list',
         excel: '_special:export_csv'
       },
       // 导出 excel 链接
@@ -34,22 +31,6 @@ export default {
         typeName: '名称关键字',
         type: 'search',
         mode: 'Input'
-      }, {
-        typeName: '节点',
-        type: 'node',
-        selectType: true,
-        mode: 'SearchSelect'
-      }, {
-        typeName: '磁盘类型',
-        type: 'diskType',
-        selectType: true,
-        mode: 'SearchSelect'
-      }, {
-        typeName: '是否启用',
-        type: 'isEnable',
-        prepareType: 'status',
-        selectType: true,
-        mode: 'SearchSelect'
       }],
       // 其余的数据
       otherData: {
@@ -57,7 +38,7 @@ export default {
         page: this.$route.query.page ? JSON.parse(this.$route.query.page) : 1
       },
       loading: false, // 加载
-      prepare: undefined,
+      prepare: {},
       schema: undefined,
       listData: {}, // 列表数据
       page: {}, // 分页
@@ -67,31 +48,27 @@ export default {
     }
   },
   computed: {
-    getDType() {
-      return this.$route.query.detail ? this.$route.query.detail : 'diskType'
-    }
+
   },
   created() {
     this.getRule('prepare')
-    this.getRule('schema')
     this.getList()
   },
 
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      resourceCloudNodeDiskTypeList({}, type).then(res => {
-        type === 'prepare'
-          ? (this.prepare = res.data)
-          : (this.schema = res.schema)
+      resourceDDosRegionList({}, type).then(res => {
+        this.prepare = res.data
       })
     },
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      resourceCloudNodeDiskTypeList(parse).then(res => {
+      resourceDDosRegionList(parse, '_withSchema').then(res => {
         if (res.result.isSuccess) {
           this.listData = res
+          this.schema = res.schema
           this.loading = false
           this.page = res.pagination
         }
@@ -112,7 +89,6 @@ export default {
     // 赋值 url 参数
     toList() {
       const query = {}
-      query.detail = this.getDType
       const box = Object.assign({}, this.searchForm, this.otherData)
       for (const i in box) {
         query[i] = this.getType(box[i]) ? JSON.stringify(box[i]) : ''

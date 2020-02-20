@@ -15,7 +15,7 @@
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
           <el-button
-            v-operatePriv="{priv:'resource:cloud:node:disk_type:create'}"
+            v-operatePriv="{priv:'resource:os:version:create'}"
             type="primary"
             size="mini"
             @click="setEditDetail = true;scene = 'create'"
@@ -30,22 +30,20 @@
           :data="listData.data"
         >
           <el-table-column prop="id" :label="schema.output.id" width="140"></el-table-column>
+          <el-table-column prop="distro.name" :label="schema.output.distro[':title']"></el-table-column>
           <el-table-column prop="name" :label="schema.output.name"></el-table-column>
-          <el-table-column prop="description" :label="schema.output.description"></el-table-column>
+          <el-table-column prop="arch.name" :label="schema.output.arch[':title']" width="60"></el-table-column>
+          <el-table-column prop="locale.name" :label="schema.output.locale[':title']" width="80"></el-table-column>
+          <el-table-column prop="version" :label="schema.output.version"></el-table-column>
           <el-table-column
             prop="stat.createDateTime"
             :label="schema.output.stat.createDateTime"
             width="200"
           ></el-table-column>
-          <el-table-column
-            prop="stat.updateDateTime"
-            :label="schema.output.stat.updateDateTime"
-            width="200"
-          ></el-table-column>
           <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="scope">
               <el-button
-                v-operatePriv="{priv:'resource:cloud:node:disk_type:detail'}"
+                v-operatePriv="{priv:'resource:os:version:detail'}"
                 plain
                 type="primary"
                 size="mini"
@@ -81,8 +79,8 @@
 </template>
 
 <script>
-import diskTypeJs from './diskType'
-export default diskTypeJs
+import osJs from './os'
+export default osJs
 </script>
 
 <style lang="scss" scoped>

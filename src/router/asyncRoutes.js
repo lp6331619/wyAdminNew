@@ -470,6 +470,251 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/netSec',
+    component: Layout,
+    redirect: '/netSec',
+    name: 'netSec',
+    meta: { title: '信安管理', icon: 'example' },
+    children: [{
+      path: 'domainWhiteList',
+      name: 'domainWhiteList',
+      priv: 'net_sec:domain_white_list:list',
+      meta: { title: '白名单', icon: 'table' },
+      component: () => import('@/views/netSec/domainWhite/list/list.vue'),
+      children: [{
+        path: 'edit/:id?',
+        hidden: true,
+        name: 'domainWhiteListedit',
+        priv: 'net_sec:domain_white_list:create',
+        meta: { title: '添加白名单', activeMenu: '/netSec/domainWhite/' },
+        component: () => import('@/views/netSec/domainWhite/edit/edit.vue')
+      }, {
+        path: 'detail/:id?',
+        hidden: true,
+        name: 'domainWhiteListdetail',
+        priv: 'net_sec:domain_white_list:detail',
+        meta: { title: '白名单详情', activeMenu: '/netSec/domainWhite/' },
+        component: () => import('@/views/netSec/domainWhite/detail/detail.vue')
+      }],
+      tabs: {
+        child: [{
+          title: '列表页',
+          actions: {
+            'netsec.white.list:search': {
+              title: '列表/查询',
+              priv: 'net_sec:domain_white_list:list'
+            },
+            'netsec.white.list:detail': {
+              title: '详情',
+              priv: 'net_sec:domain_white_list:detail'
+            },
+            'netsec.white.list:update': {
+              title: '编辑',
+              priv: 'net_sec:domain_white_list:update'
+            },
+            'netsec.white.list:export': {
+              hidePriv: true,
+              title: '导出Excel',
+              priv: '_special:export_csv'
+            },
+            'netsec.white.list:create': {
+              title: '添加白名单',
+              priv: 'net_sec:domain_white_list:create'
+            },
+            'netsec.white.list:check_domain': {
+              title: '检查域名',
+              priv: 'net_sec:domain_white_list:check_domain'
+            },
+            'netsec.white.list:find_product': {
+              title: '查询产品',
+              priv: 'net_sec:domain_white_list:find_product'
+            },
+            'netsec.white.list:set_audit_status': {
+              title: '审核',
+              priv:
+                'net_sec:domain_white_list:set_audit_status'
+            }
+          }
+        }, {
+          title: '详情信息',
+          actions: {
+            'netsec.white.detail:import_firewall': {
+              title: '导入防火墙',
+              priv:
+                'net_sec:domain_white_list:import_firewall'
+            },
+            'netsec.white.detail:list': {
+              title: '防火墙信息列表',
+              priv: 'resource:idc:firewall:list'
+            },
+            'netsec.white.detail:log_search': {
+              title: '操作日志',
+              priv: 'net_sec:domain_white_list:log_search'
+            },
+            'netsec.white.detail:check_bei_an': {
+              title: '查询是否备案',
+              priv: 'net_sec:domain_white_list:check_bei_an'
+            },
+            'netsec.white.detail:note_list': {
+              title: '备注列表',
+              priv: 'net_sec:domain_white_list:note_list'
+            },
+            'netsec.white.detail:add_note': {
+              title: '添加备注',
+              priv: 'net_sec:domain_white_list:add_note'
+            },
+            'netsec.white.detail:del_note': {
+              title: '删除备注',
+              priv: 'net_sec:domain_white_list:del_note'
+            }
+          }
+        }]
+      }
+    }, {
+      path: 'domainLimitList',
+      name: 'domainLimitList',
+      priv: 'net_sec:domain_limit:list',
+      meta: { title: '产品域名限制', icon: 'table' },
+      component: () => import('@/views/netSec/domainLimit/list/list.vue'),
+      children: [{
+        path: 'setting',
+        hidden: true,
+        name: 'setting',
+        priv: 'net_sec:domain_limit:global_list',
+        meta: { title: '全局域名限制默认设置', activeMenu: '/netSec/domainLimit/' },
+        component: () => import('@/views/netSec/domainLimit/setting/setting.vue')
+      }, {
+        path: 'edit/:id',
+        hidden: true,
+        name: 'edit',
+        priv: 'net_sec:domain_limit:update',
+        meta: { title: '编辑', activeMenu: '/netSec/domainLimit/' },
+        component: () => import('@/views/netSec/domainLimit/edit/edit.vue')
+      }],
+      actions: {
+        'netsec.limit:search': {
+          title: '列表/查询',
+          priv: 'net_sec:domain_limit:list'
+        },
+        'netsec.limit:edit': {
+          title: '编辑',
+          priv: 'net_sec:domain_limit:update'
+        },
+        'netsec.limit:setting': {
+          title: '默认设置',
+          priv: 'net_sec:domain_limit:global_list'
+        },
+        'netsec.limit:global_update': {
+          title: '修改默认产品限制',
+          priv: 'net_sec:domain_limit:global_update'
+        },
+        'netsec.limit:export': {
+          hidePriv: true,
+          title: '导出Excel',
+          priv: '_special:export_csv'
+        }
+      }
+    }, {
+      path: 'cate',
+      name: 'cate',
+      priv: 'net_sec:cate:list',
+      meta: { title: '类别管理', icon: 'table' },
+      component: () => import('@/views/netSec/cate/list/list.vue'),
+      actions: {
+        'netsec.cate:search': {
+          title: '列表',
+          priv: 'net_sec:cate:list'
+        },
+        'netsec.cate:create': {
+          title: '添加类别',
+          priv: 'net_sec:cate:create'
+        },
+        'netsec.cate:update': {
+          title: '编辑类别',
+          priv: 'net_sec:cate:update'
+        },
+        'netsec.cate:delete': {
+          title: '删除类别',
+          priv: 'net_sec:cate:delete'
+        }
+      }
+    }, {
+      path: 'harmfulList',
+      name: 'harmfulList',
+      priv: 'net_sec:harmful_list:list',
+      meta: { title: '有害信息管理', icon: 'table' },
+      component: () => import('@/views/netSec/harmful/list/list.vue'),
+      children: [{
+        path: 'edit',
+        hidden: true,
+        name: 'harmfulListedit',
+        priv: 'net_sec:harmful_list:create',
+        meta: { title: '提交有害信息', activeMenu: '/netSec/harmful/' },
+        component: () => import('@/views/netSec/harmful/edit/edit.vue')
+      }],
+      tabs: {
+        'netsec.harmful.list': {
+          title: '列表页',
+          actions: {
+            'netsec.harmful.list:search': {
+              title: '列表/查询',
+              priv: 'net_sec:harmful_list:list'
+            },
+            'netsec.harmful.list:export': {
+              hidePriv: true,
+              title: '导出Excel',
+              priv: '_special:export_csv'
+            },
+            'netsec.harmful.list:create': {
+              title: '新建有害信息',
+              priv: 'net_sec:harmful_list:create'
+            },
+            'netsec.harmful.list:update': {
+              title: '变更有害信息',
+              priv: 'net_sec:harmful_list:update'
+            },
+            'netsec.harmful.list:detail': {
+              title: '有害信息详情',
+              priv: 'net_sec:harmful_list:detail'
+            },
+            'netsec.harmful.list:find_ips': {
+              title: '检查ip',
+              priv: 'net_sec:harmful_list:find_ips'
+            },
+            'netsec.harmful.list:set_process': {
+              title: '处理信息',
+              priv: 'net_sec:harmful_list:set_process'
+            },
+            'netsec.harmful.list:getfile': {
+              title: '查看图片',
+              priv: 'net_sec:harmful_list:get_file'
+            },
+            'netsec.harmful.list:get_base_domain': {
+              title: '获取网址',
+              priv: 'net_sec:harmful_list:get_base_domain'
+            }
+          }
+        },
+        'netsec.harmful.detail': {
+          title: '详情信息',
+          actions: {
+            'netsec.harmful.detail:add_note': {
+              title: '添加备注',
+              priv: 'net_sec:harmful_list:add_note'
+            },
+            'netsec.harmful.detail:note_list': {
+              title: '备注列表',
+              priv: 'net_sec:harmful_list:note_list'
+            },
+            'netsec.harmful.detail:del_note': {
+              title: '删除备注',
+              priv: 'net_sec:harmful_list:del_note'
+            }
+          }
+        }
+      }
+    }]
+  }, {
     path: '/resource',
     name: 'resource',
     priv: '_menu:resource',
@@ -493,7 +738,7 @@ export const asyncRoutes = [
           children: [{
             path: 'node/list',
             hidden: true,
-            name: 'resourceCloudNode',
+            name: 'resourceCloudNodeList',
             priv: 'resource:cloud:node:list',
             meta: { title: '节点', activeMenu: '/resource/cloud' },
             component: () => import('@/views/resource/cloud/node/node/node.vue')
@@ -514,25 +759,39 @@ export const asyncRoutes = [
           }, {
             path: 'diskType/list',
             hidden: true,
-            name: 'resourceCloudImage',
+            name: 'resourceCloudDiskType',
             priv: 'resource:cloud:node:disk_type:list',
             meta: { title: '磁盘类型', activeMenu: '/resource/cloud' },
             component: () => import('@/views/resource/cloud/node/diskType/diskType.vue')
           }, {
             path: 'cpuMem/list',
             hidden: true,
-            name: 'resourceCloudImage',
+            name: 'resourceCloudCpuMem',
             priv: 'resource:cloud:node:cpu_mem:list',
             meta: { title: '磁盘类型', activeMenu: '/resource/cloud' },
             component: () => import('@/views/resource/cloud/node/cpuMem/cpuMem.vue')
           }]
         }, {
-          path: ':type/list',
+          path: 'diskType/list',
           hidden: true,
           name: 'resourceCloudDiskType',
           priv: 'resource:cloud:node:disk_type:list',
           meta: { title: '磁盘类型', activeMenu: '/resource/cloud' },
           component: () => import('@/views/resource/cloud/diskType/diskType.vue')
+        }, {
+          path: 'version/list',
+          hidden: true,
+          name: 'resourceCloudVersion',
+          priv: 'resource:os:version:list',
+          meta: { title: '操作系统版本', activeMenu: '/resource/cloud' },
+          component: () => import('@/views/resource/os/os.vue')
+        }, {
+          path: 'ip/list',
+          hidden: true,
+          name: 'resourceCloudIp',
+          priv: 'resource:cloud:node:ip:list',
+          meta: { title: 'ip', activeMenu: '/resource/cloud' },
+          component: () => import('@/views/resource/cloud/ip/index.vue')
         }],
         tabs: {
           child: [
@@ -668,78 +927,105 @@ export const asyncRoutes = [
               }
             }]
         }
-      }
-      // {
-      //   title: 'DDoS资源',
-      //   route: '/resource/ddos/region/list',
-      //   mark: 'resource:ddos',
-      //   priv: 'resource:ddos:region:list',
-      //   tabs: {
-      //     'resource.ddos.region': {
-      //       title: '区域',
-      //       actions: {
-      //         'resource.ddos.region:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:ddos:region:list'
-      //         },
-      //         'resource.ddos.region:create': {
-      //           title: '新增',
-      //           priv: 'resource:ddos:region:create'
-      //         },
-      //         'resource.ddos.region:detail': {
-      //           title: '详情',
-      //           priv: 'resource:ddos:region:detail'
-      //         },
-      //         'resource.ddos.region:update': {
-      //           title: '修改',
-      //           priv: 'resource:ddos:region:update'
-      //         }
-      //       }
-      //     },
-      //     'resource.ddos.region_line': {
-      //       title: '线路',
-      //       actions: {
-      //         'resource.ddos.region_line:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:ddos:region:line:list'
-      //         },
-      //         'resource.ddos.region_line:create': {
-      //           title: '新增',
-      //           priv: 'resource:ddos:region:line:create'
-      //         },
-      //         'resource.ddos.region_line:detail': {
-      //           title: '详情',
-      //           priv: 'resource:ddos:region:line:detail'
-      //         },
-      //         'resource.ddos.region_line:update': {
-      //           title: '修改',
-      //           priv: 'resource:ddos:region:line:update'
-      //         }
-      //       }
-      //     },
-      //     'resource.ddos.ip': {
-      //       title: 'IP',
-      //       actions: {
-      //         'resource.ddos.ip:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:ddos:ip:list'
-      //         },
-      //         'resource.ddos.ip:create': {
-      //           title: '新增',
-      //           priv: 'resource:ddos:ip:create'
-      //         },
-      //         'resource.ddos.ip:detail': {
-      //           title: '详情',
-      //           priv: 'resource:ddos:ip:detail'
-      //         },
-      //         'resource.ddos.ip:update': {
-      //           title: '修改',
-      //           priv: 'resource:ddos:ip:update'
-      //         }
-      //       }
-      //     }
-      //   }
-      // },
+      },
+      {
+        path: 'ddos',
+        name: 'resourceDDos',
+        priv: 'resource:ddos:region:list',
+        redirect: '/resource/ddos/region/list',
+        meta: { title: 'DDoS资源', icon: 'example' },
+        component: () => import('@/views/resource/ddos/list/list.vue'),
+        children: [{
+          path: 'region/list',
+          hidden: true,
+          name: 'resourceDdosRegion',
+          priv: 'resource:ddos:region:list',
+          meta: { title: '区域', activeMenu: '/resource/ddos' },
+          component: () => import('@/views/resource/ddos/region/index.vue')
+        },
+        {
+          path: 'line/list',
+          hidden: true,
+          name: 'resourceDdosLine',
+          priv: 'resource:ddos:region:line:list',
+          meta: { title: '线路', activeMenu: '/resource/ddos' },
+          component: () => import('@/views/resource/ddos/line/index.vue')
+        }, {
+          path: 'ip/list',
+          hidden: true,
+          name: 'resourceDdosIp',
+          priv: 'resource:ddos:ip:list',
+          meta: { title: '线路', activeMenu: '/resource/ddos' },
+          component: () => import('@/views/resource/ddos/ip/index.vue')
+        }],
+        tabs: {
+          child: [
+            {
+              title: '区域',
+              actions: {
+                'resource.ddos.region:search': {
+                  title: '列表/查询',
+                  priv: 'resource:ddos:region:list'
+                },
+                'resource.ddos.region:create': {
+                  title: '新增',
+                  priv: 'resource:ddos:region:create'
+                },
+                'resource.ddos.region:detail': {
+                  title: '详情',
+                  priv: 'resource:ddos:region:detail'
+                },
+                'resource.ddos.region:update': {
+                  title: '修改',
+                  priv: 'resource:ddos:region:update'
+                }
+              }
+            },
+            {
+              title: '线路',
+              actions: {
+                'resource.ddos.region_line:search': {
+                  title: '列表/查询',
+                  priv: 'resource:ddos:region:line:list'
+                },
+                'resource.ddos.region_line:create': {
+                  title: '新增',
+                  priv: 'resource:ddos:region:line:create'
+                },
+                'resource.ddos.region_line:detail': {
+                  title: '详情',
+                  priv: 'resource:ddos:region:line:detail'
+                },
+                'resource.ddos.region_line:update': {
+                  title: '修改',
+                  priv: 'resource:ddos:region:line:update'
+                }
+              }
+            },
+            {
+              title: 'IP',
+              actions: {
+                'resource.ddos.ip:search': {
+                  title: '列表/查询',
+                  priv: 'resource:ddos:ip:list'
+                },
+                'resource.ddos.ip:create': {
+                  title: '新增',
+                  priv: 'resource:ddos:ip:create'
+                },
+                'resource.ddos.ip:detail': {
+                  title: '详情',
+                  priv: 'resource:ddos:ip:detail'
+                },
+                'resource.ddos.ip:update': {
+                  title: '修改',
+                  priv: 'resource:ddos:ip:update'
+                }
+              }
+            }
+          ]
+        }
+      },
       // {
       //   title: 'IDC资源',
       //   route: '/resource/idc/region/list',
@@ -1035,30 +1321,31 @@ export const asyncRoutes = [
       //     }
       //   }
       // },
-      // {
-      //   title: '操作系统',
-      //   route: '/resource/os/version/list',
-      //   mark: 'resource:os',
-      //   priv: 'resource:os:version:list',
-      //   actions: {
-      //     'resource.os:search': {
-      //       title: '列表/查询',
-      //       priv: 'resource:os:version:list'
-      //     },
-      //     'resource.os:create': {
-      //       title: '新增',
-      //       priv: 'resource:os:version:create'
-      //     },
-      //     'resource.os:detail': {
-      //       title: '详情',
-      //       priv: 'resource:os:version:detail'
-      //     },
-      //     'resource.os:update': {
-      //       title: '修改',
-      //       priv: 'resource:os:version:update'
-      //     }
-      //   }
-      // },
+      {
+        path: 'os/version/list',
+        name: 'resourceOs',
+        meta: { title: '操作系统', icon: 'table' },
+        priv: 'resource:os:version:list',
+        component: () => import('@/views/resource/os/os.vue'),
+        actions: {
+          'resource.os:search': {
+            title: '列表/查询',
+            priv: 'resource:os:version:list'
+          },
+          'resource.os:create': {
+            title: '新增',
+            priv: 'resource:os:version:create'
+          },
+          'resource.os:detail': {
+            title: '详情',
+            priv: 'resource:os:version:detail'
+          },
+          'resource.os:update': {
+            title: '修改',
+            priv: 'resource:os:version:update'
+          }
+        }
+      }
       // {
       //   title: '线路',
       //   route: '/resource/idc/line/list',
@@ -1088,252 +1375,6 @@ export const asyncRoutes = [
       //   }
       // }
     ]
-  },
-  {
-    path: '/netSec',
-    component: Layout,
-    redirect: '/netSec',
-    name: 'netSec',
-    meta: { title: '信安管理', icon: 'example' },
-    children: [{
-      path: 'domainWhiteList',
-      name: 'domainWhiteList',
-      priv: 'net_sec:domain_white_list:list',
-      meta: { title: '白名单', icon: 'table' },
-      component: () => import('@/views/netSec/domainWhite/list/list.vue'),
-      children: [{
-        path: 'edit/:id?',
-        hidden: true,
-        name: 'edit',
-        priv: 'net_sec:domain_white_list:create',
-        meta: { title: '添加白名单', activeMenu: '/netSec/domainWhite/' },
-        component: () => import('@/views/netSec/domainWhite/edit/edit.vue')
-      }, {
-        path: 'detail/:id?',
-        hidden: true,
-        name: 'detail',
-        priv: 'net_sec:domain_white_list:detail',
-        meta: { title: '白名单详情', activeMenu: '/netSec/domainWhite/' },
-        component: () => import('@/views/netSec/domainWhite/detail/detail.vue')
-      }],
-      tabs: {
-        child: [{
-          title: '列表页',
-          actions: {
-            'netsec.white.list:search': {
-              title: '列表/查询',
-              priv: 'net_sec:domain_white_list:list'
-            },
-            'netsec.white.list:detail': {
-              title: '详情',
-              priv: 'net_sec:domain_white_list:detail'
-            },
-            'netsec.white.list:update': {
-              title: '编辑',
-              priv: 'net_sec:domain_white_list:update'
-            },
-            'netsec.white.list:export': {
-              hidePriv: true,
-              title: '导出Excel',
-              priv: '_special:export_csv'
-            },
-            'netsec.white.list:create': {
-              title: '添加白名单',
-              priv: 'net_sec:domain_white_list:create'
-            },
-            'netsec.white.list:check_domain': {
-              title: '检查域名',
-              priv: 'net_sec:domain_white_list:check_domain'
-            },
-            'netsec.white.list:find_product': {
-              title: '查询产品',
-              priv: 'net_sec:domain_white_list:find_product'
-            },
-            'netsec.white.list:set_audit_status': {
-              title: '审核',
-              priv:
-                'net_sec:domain_white_list:set_audit_status'
-            }
-          }
-        }, {
-          title: '详情信息',
-          actions: {
-            'netsec.white.detail:import_firewall': {
-              title: '导入防火墙',
-              priv:
-                'net_sec:domain_white_list:import_firewall'
-            },
-            'netsec.white.detail:list': {
-              title: '防火墙信息列表',
-              priv: 'resource:idc:firewall:list'
-            },
-            'netsec.white.detail:log_search': {
-              title: '操作日志',
-              priv: 'net_sec:domain_white_list:log_search'
-            },
-            'netsec.white.detail:check_bei_an': {
-              title: '查询是否备案',
-              priv: 'net_sec:domain_white_list:check_bei_an'
-            },
-            'netsec.white.detail:note_list': {
-              title: '备注列表',
-              priv: 'net_sec:domain_white_list:note_list'
-            },
-            'netsec.white.detail:add_note': {
-              title: '添加备注',
-              priv: 'net_sec:domain_white_list:add_note'
-            },
-            'netsec.white.detail:del_note': {
-              title: '删除备注',
-              priv: 'net_sec:domain_white_list:del_note'
-            }
-          }
-        }]
-      }
-    }, {
-      path: 'domainLimitList',
-      name: 'domainLimitList',
-      priv: 'net_sec:domain_limit:list',
-      meta: { title: '产品域名限制', icon: 'table' },
-      component: () => import('@/views/netSec/domainLimit/list/list.vue'),
-      children: [{
-        path: 'setting',
-        hidden: true,
-        name: 'setting',
-        priv: 'net_sec:domain_limit:global_list',
-        meta: { title: '全局域名限制默认设置', activeMenu: '/netSec/domainLimit/' },
-        component: () => import('@/views/netSec/domainLimit/setting/setting.vue')
-      }, {
-        path: 'edit/:id',
-        hidden: true,
-        name: 'edit',
-        priv: 'net_sec:domain_limit:update',
-        meta: { title: '编辑', activeMenu: '/netSec/domainLimit/' },
-        component: () => import('@/views/netSec/domainLimit/edit/edit.vue')
-      }],
-      actions: {
-        'netsec.limit:search': {
-          title: '列表/查询',
-          priv: 'net_sec:domain_limit:list'
-        },
-        'netsec.limit:edit': {
-          title: '编辑',
-          priv: 'net_sec:domain_limit:update'
-        },
-        'netsec.limit:setting': {
-          title: '默认设置',
-          priv: 'net_sec:domain_limit:global_list'
-        },
-        'netsec.limit:global_update': {
-          title: '修改默认产品限制',
-          priv: 'net_sec:domain_limit:global_update'
-        },
-        'netsec.limit:export': {
-          hidePriv: true,
-          title: '导出Excel',
-          priv: '_special:export_csv'
-        }
-      }
-    }, {
-      path: 'cate',
-      name: 'cate',
-      priv: 'net_sec:cate:list',
-      meta: { title: '类别管理', icon: 'table' },
-      component: () => import('@/views/netSec/cate/list/list.vue'),
-      actions: {
-        'netsec.cate:search': {
-          title: '列表',
-          priv: 'net_sec:cate:list'
-        },
-        'netsec.cate:create': {
-          title: '添加类别',
-          priv: 'net_sec:cate:create'
-        },
-        'netsec.cate:update': {
-          title: '编辑类别',
-          priv: 'net_sec:cate:update'
-        },
-        'netsec.cate:delete': {
-          title: '删除类别',
-          priv: 'net_sec:cate:delete'
-        }
-      }
-    }, {
-      path: 'harmfulList',
-      name: 'harmfulList',
-      priv: 'net_sec:harmful_list:list',
-      meta: { title: '有害信息管理', icon: 'table' },
-      component: () => import('@/views/netSec/harmful/list/list.vue'),
-      children: [{
-        path: 'edit',
-        hidden: true,
-        name: 'edit',
-        priv: 'net_sec:harmful_list:create',
-        meta: { title: '提交有害信息', activeMenu: '/netSec/harmful/' },
-        component: () => import('@/views/netSec/harmful/edit/edit.vue')
-      }],
-      tabs: {
-        'netsec.harmful.list': {
-          title: '列表页',
-          actions: {
-            'netsec.harmful.list:search': {
-              title: '列表/查询',
-              priv: 'net_sec:harmful_list:list'
-            },
-            'netsec.harmful.list:export': {
-              hidePriv: true,
-              title: '导出Excel',
-              priv: '_special:export_csv'
-            },
-            'netsec.harmful.list:create': {
-              title: '新建有害信息',
-              priv: 'net_sec:harmful_list:create'
-            },
-            'netsec.harmful.list:update': {
-              title: '变更有害信息',
-              priv: 'net_sec:harmful_list:update'
-            },
-            'netsec.harmful.list:detail': {
-              title: '有害信息详情',
-              priv: 'net_sec:harmful_list:detail'
-            },
-            'netsec.harmful.list:find_ips': {
-              title: '检查ip',
-              priv: 'net_sec:harmful_list:find_ips'
-            },
-            'netsec.harmful.list:set_process': {
-              title: '处理信息',
-              priv: 'net_sec:harmful_list:set_process'
-            },
-            'netsec.harmful.list:getfile': {
-              title: '查看图片',
-              priv: 'net_sec:harmful_list:get_file'
-            },
-            'netsec.harmful.list:get_base_domain': {
-              title: '获取网址',
-              priv: 'net_sec:harmful_list:get_base_domain'
-            }
-          }
-        },
-        'netsec.harmful.detail': {
-          title: '详情信息',
-          actions: {
-            'netsec.harmful.detail:add_note': {
-              title: '添加备注',
-              priv: 'net_sec:harmful_list:add_note'
-            },
-            'netsec.harmful.detail:note_list': {
-              title: '备注列表',
-              priv: 'net_sec:harmful_list:note_list'
-            },
-            'netsec.harmful.detail:del_note': {
-              title: '删除备注',
-              priv: 'net_sec:harmful_list:del_note'
-            }
-          }
-        }
-      }
-    }]
   },
   {
     path: '/information',
@@ -1403,14 +1444,14 @@ export const asyncRoutes = [
         children: [{
           path: 'detail',
           hidden: true,
-          name: 'informationNewDetail',
+          name: 'informationHelpDetail',
           priv: 'site:article:detail',
           meta: { title: '帮助详情', activeMenu: '/information/help' },
           component: () => import('@/views/information/help/detail/detail.vue')
         }, {
           path: 'create',
           hidden: true,
-          name: 'informationNewCreate',
+          name: 'informationHelpCreate',
           priv: 'site:article:create',
           meta: { title: '创建新文章', activeMenu: '/information/help' },
           component: () => import('@/views/information/help/create/create.vue')
@@ -1454,14 +1495,14 @@ export const asyncRoutes = [
         children: [{
           path: 'detail',
           hidden: true,
-          name: 'informationNewDetail',
+          name: 'informationGroupDetail',
           priv: 'site:article:detail',
           meta: { title: '帮助详情', activeMenu: '/information/group' },
           component: () => import('@/views/information/group/detail/detail.vue')
         }, {
           path: 'create',
           hidden: true,
-          name: 'informationNewCreate',
+          name: 'informationGroupCreate',
           priv: 'site:article:create',
           meta: { title: '创建新文章', activeMenu: '/information/group' },
           component: () => import('@/views/information/group/create/create.vue')
@@ -2108,7 +2149,7 @@ export const asyncRoutes = [
       },
       {
         path: 'setting',
-        name: 'setting',
+        name: 'systemSetting',
         priv: 'system:setting:detail',
         component: () => import('@/views/system/setting/index'),
         meta: { title: '参数设置', icon: 'table' },
