@@ -424,18 +424,26 @@ export const asyncRoutes = [
   },
   {
     path: '/combo',
-    component: Layout,
     redirect: '/information/new',
     name: 'combo',
     priv: '_menu:combo',
+    component: Layout,
     meta: { title: '套餐管理', icon: 'example' },
     children: [
       {
-        path: 'list',
-        name: 'list',
+        path: 'business',
+        name: 'business',
         priv: 'business:combo:list',
         meta: { title: '套餐', icon: 'example' },
-        component: () => import('@/views/information/news/list/list.vue'),
+        component: () => import('@/views/setMeal/business/list/list.vue'),
+        children: [{
+          path: 'detail/:id',
+          hidden: true,
+          name: 'businessDetail',
+          priv: 'business:combo:detail',
+          meta: { title: '套餐详情', activeMenu: '/setMeal/business' },
+          component: () => import('@/views/setMeal/business/detail/detail.vue')
+        }],
         actions: {
           'combo.combo:search': {
             title: '套餐列表',
@@ -459,6 +467,626 @@ export const asyncRoutes = [
           }
         }
       }
+    ]
+  },
+  {
+    path: '/resource',
+    name: 'resource',
+    priv: '_menu:resource',
+    component: Layout,
+    meta: { title: '资源管理', icon: 'example' },
+    children: [
+      {
+        path: 'cloud',
+        name: 'resourceCloud',
+        priv: 'resource:cloud:node:list',
+        redirect: '/resource/cloud/node/node/list',
+        meta: { title: '云服务器资源', icon: 'table' },
+        component: () => import('@/views/resource/cloud/list/list.vue'),
+        children: [{
+          path: ':type',
+          hidden: true,
+          name: 'resourceCloudNode',
+          priv: 'resource:cloud:node:list',
+          meta: { title: '节点', activeMenu: '/resource/cloud' },
+          component: () => import('@/views/resource/cloud/node/list.vue'),
+          children: [{
+            path: 'node/list',
+            hidden: true,
+            name: 'resourceCloudNode',
+            priv: 'resource:cloud:node:list',
+            meta: { title: '节点', activeMenu: '/resource/cloud' },
+            component: () => import('@/views/resource/cloud/node/node/node.vue')
+          }, {
+            path: 'line/list',
+            hidden: true,
+            name: 'resourceCloudLine',
+            priv: 'resource:cloud:line:list',
+            meta: { title: '线路', activeMenu: '/resource/cloud' },
+            component: () => import('@/views/resource/cloud/node/line/line.vue')
+          }, {
+            path: 'image/list',
+            hidden: true,
+            name: 'resourceCloudImage',
+            priv: 'resource:cloud:node:image:list',
+            meta: { title: '线路', activeMenu: '/resource/cloud' },
+            component: () => import('@/views/resource/cloud/node/image/image.vue')
+          }, {
+            path: 'diskType/list',
+            hidden: true,
+            name: 'resourceCloudImage',
+            priv: 'resource:cloud:node:disk_type:list',
+            meta: { title: '磁盘类型', activeMenu: '/resource/cloud' },
+            component: () => import('@/views/resource/cloud/node/diskType/diskType.vue')
+          }, {
+            path: 'cpuMem/list',
+            hidden: true,
+            name: 'resourceCloudImage',
+            priv: 'resource:cloud:node:cpu_mem:list',
+            meta: { title: '磁盘类型', activeMenu: '/resource/cloud' },
+            component: () => import('@/views/resource/cloud/node/cpuMem/cpuMem.vue')
+          }]
+        }, {
+          path: ':type/list',
+          hidden: true,
+          name: 'resourceCloudDiskType',
+          priv: 'resource:cloud:node:disk_type:list',
+          meta: { title: '磁盘类型', activeMenu: '/resource/cloud' },
+          component: () => import('@/views/resource/cloud/diskType/diskType.vue')
+        }],
+        tabs: {
+          child: [
+            {
+              title: '节点',
+              actions: {
+                'resource.cloud.node:search': {
+                  title: '列表/查询',
+                  priv: 'resource:cloud:node:list'
+                },
+                'resource.cloud.node:create': {
+                  title: '新增',
+                  priv: 'resource:cloud:node:create'
+                },
+                'resource.cloud.node:detail': {
+                  title: '详情',
+                  priv: 'resource:cloud:node:detail'
+                },
+                'resource.cloud.node:update': {
+                  title: '修改',
+                  priv: 'resource:cloud:node:update'
+                }
+              }
+            },
+            {
+              title: '线路',
+              actions: {
+                'resource.cloud.node_line:search': {
+                  title: '列表/查询',
+                  priv: 'resource:cloud:node:line:list'
+                },
+                'resource.cloud.node_line:export': {
+                  hidden: true,
+                  title: '导出Excel',
+                  priv: '_special:export_csv'
+                },
+                'resource.cloud.node_line:create': {
+                  title: '新增',
+                  priv: 'resource:cloud:node:line:create'
+                },
+                'resource.cloud.node_line:detail': {
+                  title: '详情',
+                  priv: 'resource:cloud:node:line:detail'
+                },
+                'resource.cloud.node_line:update': {
+                  title: '修改',
+                  priv: 'resource:cloud:node:line:update'
+                }
+              }
+            },
+            {
+              title: '镜像',
+              actions: {
+                'resource.cloud.node_image:search': {
+                  title: '列表/查询',
+                  priv: 'resource:cloud:node:image:list'
+                },
+                'resource.cloud.node_image:create': {
+                  title: '新增',
+                  priv: 'resource:cloud:node:image:create'
+                },
+                'resource.cloud.node_image:detail': {
+                  title: '详情',
+                  priv: 'resource:cloud:node:image:detail'
+                },
+                'resource.cloud.node_image:update': {
+                  title: '修改',
+                  priv: 'resource:cloud:node:image:update'
+                }
+              }
+            },
+            {
+              title: '硬盘类型',
+              actions: {
+                'resource.cloud.node_disktype:search': {
+                  title: '列表/查询',
+                  priv: 'resource:cloud:node:disk_type:list'
+                },
+                'resource.cloud.node_disktype:create': {
+                  title: '新增',
+                  priv: 'resource:cloud:node:disk_type:create'
+                },
+                'resource.cloud.node_disktype:detail': {
+                  title: '详情',
+                  priv: 'resource:cloud:node:disk_type:detail'
+                },
+                'resource.cloud.node_disktype:update': {
+                  title: '修改',
+                  priv: 'resource:cloud:node:disk_type:update'
+                }
+              }
+            },
+            {
+              title: 'CPU内存',
+              actions: {
+                'resource.cloud.node_cpumem:search': {
+                  title: '列表/查询',
+                  priv: 'resource:cloud:node:cpu_mem:list'
+                },
+                'resource.cloud.node_cpumem:create': {
+                  title: '新增',
+                  priv: 'resource:cloud:node:cpu_mem:create'
+                },
+                'resource.cloud.node_cpumem:detail': {
+                  title: '详情',
+                  priv: 'resource:cloud:node:cpu_mem:detail'
+                },
+                'resource.cloud.node_cpumem:update': {
+                  title: '修改',
+                  priv: 'resource:cloud:node:cpu_mem:update'
+                }
+              }
+            },
+            {
+              title: 'IP',
+              actions: {
+                'resource.cloud.ip:search': {
+                  title: '列表/查询',
+                  priv: 'resource:cloud:ip:list'
+                },
+                'resource.cloud.ip:create': {
+                  title: '新增',
+                  priv: 'resource:cloud:ip:create'
+                },
+                'resource.cloud.ip:detail': {
+                  title: '详情',
+                  priv: 'resource:cloud:ip:detail'
+                },
+                'resource.cloud.ip:update': {
+                  title: '修改',
+                  priv: 'resource:cloud:ip:update'
+                }
+              }
+            }]
+        }
+      }
+      // {
+      //   title: 'DDoS资源',
+      //   route: '/resource/ddos/region/list',
+      //   mark: 'resource:ddos',
+      //   priv: 'resource:ddos:region:list',
+      //   tabs: {
+      //     'resource.ddos.region': {
+      //       title: '区域',
+      //       actions: {
+      //         'resource.ddos.region:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:ddos:region:list'
+      //         },
+      //         'resource.ddos.region:create': {
+      //           title: '新增',
+      //           priv: 'resource:ddos:region:create'
+      //         },
+      //         'resource.ddos.region:detail': {
+      //           title: '详情',
+      //           priv: 'resource:ddos:region:detail'
+      //         },
+      //         'resource.ddos.region:update': {
+      //           title: '修改',
+      //           priv: 'resource:ddos:region:update'
+      //         }
+      //       }
+      //     },
+      //     'resource.ddos.region_line': {
+      //       title: '线路',
+      //       actions: {
+      //         'resource.ddos.region_line:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:ddos:region:line:list'
+      //         },
+      //         'resource.ddos.region_line:create': {
+      //           title: '新增',
+      //           priv: 'resource:ddos:region:line:create'
+      //         },
+      //         'resource.ddos.region_line:detail': {
+      //           title: '详情',
+      //           priv: 'resource:ddos:region:line:detail'
+      //         },
+      //         'resource.ddos.region_line:update': {
+      //           title: '修改',
+      //           priv: 'resource:ddos:region:line:update'
+      //         }
+      //       }
+      //     },
+      //     'resource.ddos.ip': {
+      //       title: 'IP',
+      //       actions: {
+      //         'resource.ddos.ip:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:ddos:ip:list'
+      //         },
+      //         'resource.ddos.ip:create': {
+      //           title: '新增',
+      //           priv: 'resource:ddos:ip:create'
+      //         },
+      //         'resource.ddos.ip:detail': {
+      //           title: '详情',
+      //           priv: 'resource:ddos:ip:detail'
+      //         },
+      //         'resource.ddos.ip:update': {
+      //           title: '修改',
+      //           priv: 'resource:ddos:ip:update'
+      //         }
+      //       }
+      //     }
+      //   }
+      // },
+      // {
+      //   title: 'IDC资源',
+      //   route: '/resource/idc/region/list',
+      //   mark: 'resource:idc',
+      //   priv: 'resource:idc:room:list',
+      //   tabs: {
+      //     'resource.idc.region': {
+      //       title: '区域',
+      //       actions: {
+      //         'resource.idc.region:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:region:list'
+      //         },
+      //         'resource.idc.region:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:region:create'
+      //         },
+      //         'resource.idc.region:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:region:detail'
+      //         },
+      //         'resource.idc.region:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:region:update'
+      //         },
+      //         'resource.idc.region:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:region:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.room': {
+      //       title: '机房',
+      //       actions: {
+      //         'resource.idc.room:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:room:list'
+      //         },
+      //         'resource.idc.room:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:room:create'
+      //         },
+      //         'resource.idc.room:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:room:detail'
+      //         },
+      //         'resource.idc.room:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:room:update'
+      //         },
+      //         'resource.idc.room:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:room:delete'
+      //         },
+      //         'resource.idc.room:getRoom': {
+      //           title: '获取机房信息',
+      //           priv: 'resource:idc:room:get_room'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.room_line': {
+      //       title: '机房线路',
+      //       actions: {
+      //         'resource.idc.room_line:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:room_line:list'
+      //         },
+      //         'resource.idc.room_line:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:room_line:create'
+      //         },
+      //         'resource.idc.room_line:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:room_line:detail'
+      //         },
+      //         'resource.idc.room_line:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:room_line:update'
+      //         },
+      //         'resource.idc.room_line:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:room_line:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.ip_zone': {
+      //       title: 'IP分组',
+      //       actions: {
+      //         'resource.idc.ip_zone:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:ip_zone:list'
+      //         },
+      //         'resource.idc.ip_zone:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:ip_zone:create'
+      //         },
+      //         'resource.idc.ip_zone:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:ip_zone:detail'
+      //         },
+      //         'resource.idc.ip_zone:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:ip_zone:update'
+      //         },
+      //         'resource.idc.ip_zone:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:ip_zone:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.ip': {
+      //       title: 'IP',
+      //       actions: {
+      //         'resource.idc.ip:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:ip:list'
+      //         },
+      //         'resource.idc.ip:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:ip:create'
+      //         },
+      //         'resource.idc.ip:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:ip:detail'
+      //         },
+      //         'resource.idc.ip:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:ip:update'
+      //         },
+      //         'resource.idc.ip:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:ip:delete'
+      //         },
+      //         'resource.idc.ip:block': {
+      //           title: '封停',
+      //           priv: 'resource:idc:ip:block'
+      //         },
+      //         'resource.idc.ip:un_block': {
+      //           title: '解封',
+      //           priv: 'resource:idc:ip:un_block'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.cidr': {
+      //       title: 'IP段',
+      //       actions: {
+      //         'resource.idc.cidr:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:cidr:list'
+      //         },
+      //         'resource.idc.cidr:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:cidr:create'
+      //         },
+      //         'resource.idc.cidr:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:cidr:detail'
+      //         },
+      //         'resource.idc.cidr:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:cidr:update'
+      //         },
+      //         'resource.idc.cidr:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:cidr:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.cabinet': {
+      //       title: '机柜',
+      //       actions: {
+      //         'resource.idc.cabinet:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:cabinet:list'
+      //         },
+      //         'resource.idc.cabinet:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:cabinet:create'
+      //         },
+      //         'resource.idc.cabinet:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:cabinet:detail'
+      //         },
+      //         'resource.idc.cabinet:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:cabinet:update'
+      //         },
+      //         'resource.idc.cabinet:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:cabinet:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.device': {
+      //       title: '设备管理',
+      //       actions: {
+      //         'resource.idc.device:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:device:list'
+      //         },
+      //         'resource.idc.device:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:device:create'
+      //         },
+      //         'resource.idc.device:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:device:detail'
+      //         },
+      //         'resource.idc.device:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:device:update'
+      //         },
+      //         'resource.idc.device:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:device:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.device.type': {
+      //       title: '设备类型',
+      //       actions: {
+      //         'resource.idc.device.type:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:device:type:list'
+      //         },
+      //         'resource.idc.device.type:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:device:type:create'
+      //         },
+      //         'resource.idc.device.type:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:device:type:detail'
+      //         },
+      //         'resource.idc.device.type:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:device:type:update'
+      //         },
+      //         'resource.idc.device.type:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:device:type:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.device.spec': {
+      //       title: '设备规格',
+      //       actions: {
+      //         'resource.idc.device.spec:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:device:spec:list'
+      //         },
+      //         'resource.idc.device.spec:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:device:spec:create'
+      //         },
+      //         'resource.idc.device.spec:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:device:spec:detail'
+      //         },
+      //         'resource.idc.device.spec:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:device:spec:update'
+      //         },
+      //         'resource.idc.device.spec:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:device:spec:delete'
+      //         }
+      //       }
+      //     },
+      //     'resource.idc.device.oem': {
+      //       title: '设备品牌',
+      //       actions: {
+      //         'resource.idc.device.oem:search': {
+      //           title: '列表/查询',
+      //           priv: 'resource:idc:device:oem:list'
+      //         },
+      //         'resource.idc.device.oem:create': {
+      //           title: '新增',
+      //           priv: 'resource:idc:device:oem:create'
+      //         },
+      //         'resource.idc.device.oem:detail': {
+      //           title: '详情',
+      //           priv: 'resource:idc:device:oem:detail'
+      //         },
+      //         'resource.idc.device.oem:update': {
+      //           title: '修改',
+      //           priv: 'resource:idc:device:oem:update'
+      //         },
+      //         'resource.idc.device.oem:delete': {
+      //           title: '删除',
+      //           priv: 'resource:idc:device:oem:delete'
+      //         }
+      //       }
+      //     }
+      //   }
+      // },
+      // {
+      //   title: '操作系统',
+      //   route: '/resource/os/version/list',
+      //   mark: 'resource:os',
+      //   priv: 'resource:os:version:list',
+      //   actions: {
+      //     'resource.os:search': {
+      //       title: '列表/查询',
+      //       priv: 'resource:os:version:list'
+      //     },
+      //     'resource.os:create': {
+      //       title: '新增',
+      //       priv: 'resource:os:version:create'
+      //     },
+      //     'resource.os:detail': {
+      //       title: '详情',
+      //       priv: 'resource:os:version:detail'
+      //     },
+      //     'resource.os:update': {
+      //       title: '修改',
+      //       priv: 'resource:os:version:update'
+      //     }
+      //   }
+      // },
+      // {
+      //   title: '线路',
+      //   route: '/resource/idc/line/list',
+      //   mark: 'resource:idc:line',
+      //   priv: 'resource:idc:line:list',
+      //   actions: {
+      //     'resource.line:search': {
+      //       title: '列表/查询',
+      //       priv: 'resource:idc:line:list'
+      //     },
+      //     'resource.line:create': {
+      //       title: '新增',
+      //       priv: 'resource:idc:line:create'
+      //     },
+      //     'resource.line:detail': {
+      //       title: '详情',
+      //       priv: 'resource:idc:line:detail'
+      //     },
+      //     'resource.line:update': {
+      //       title: '修改',
+      //       priv: 'resource:idc:line:update'
+      //     },
+      //     'resource.line:delete': {
+      //       title: '删除',
+      //       priv: 'resource:idc:line:delete'
+      //     }
+      //   }
+      // }
     ]
   },
   {
@@ -1085,7 +1713,7 @@ export const asyncRoutes = [
           priv: 'log:op_log'
         },
         'log.oplog:export': {
-          hidePriv: true,
+          hidden: true,
           title: '导出Excel',
           priv: '_special:export_csv'
         }
@@ -1111,7 +1739,7 @@ export const asyncRoutes = [
           priv: 'log:member_login_log'
         },
         'log.member_login:export': {
-          hidePriv: true,
+          hidden: true,
           title: '导出Excel',
           priv: '_special:export_csv'
         },
@@ -1141,7 +1769,7 @@ export const asyncRoutes = [
           priv: 'log:org_user_login_log'
         },
         'log.org_user_login:export': {
-          hidePriv: true,
+          hidden: true,
           title: '导出Excel',
           priv: '_special:export_csv'
         },
@@ -1171,7 +1799,7 @@ export const asyncRoutes = [
           priv: 'log:error_log'
         },
         'log.error:export': {
-          hidePriv: true,
+          hidden: true,
           title: '导出Excel',
           priv: '_special:export_csv'
         }
@@ -1196,7 +1824,7 @@ export const asyncRoutes = [
           priv: 'log:sys_task'
         },
         'log.task:export': {
-          hidePriv: true,
+          hidden: true,
           title: '导出Excel',
           priv: '_special:export_csv'
         },
