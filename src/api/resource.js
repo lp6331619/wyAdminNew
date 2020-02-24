@@ -354,3 +354,37 @@ export function resourceDDosReginIpCreate(data, schema) {
     data: data
   })
 }
+
+// -------
+// IDC资源 区域列表
+export function resourceIdcRegionList(data, schema) {
+  return request({
+    url: `/resource/idc/region/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 区域详情
+export function resourceIdcRegionDetail(data, schema) {
+  return request({
+    url: `/resource/idc/region/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 区域更新
+export function resourceIdcRegionUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/region/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 区域创建
+export function resourceIdcRegionCreate(data, schema) {
+  return request({
+    url: `/resource/idc/region/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}

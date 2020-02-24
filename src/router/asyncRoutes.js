@@ -714,7 +714,8 @@ export const asyncRoutes = [
         }
       }
     }]
-  }, {
+  },
+  {
     path: '/resource',
     name: 'resource',
     priv: '_menu:resource',
@@ -1026,301 +1027,312 @@ export const asyncRoutes = [
           ]
         }
       },
-      // {
-      //   title: 'IDC资源',
-      //   route: '/resource/idc/region/list',
-      //   mark: 'resource:idc',
-      //   priv: 'resource:idc:room:list',
-      //   tabs: {
-      //     'resource.idc.region': {
-      //       title: '区域',
-      //       actions: {
-      //         'resource.idc.region:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:region:list'
-      //         },
-      //         'resource.idc.region:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:region:create'
-      //         },
-      //         'resource.idc.region:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:region:detail'
-      //         },
-      //         'resource.idc.region:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:region:update'
-      //         },
-      //         'resource.idc.region:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:region:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.room': {
-      //       title: '机房',
-      //       actions: {
-      //         'resource.idc.room:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:room:list'
-      //         },
-      //         'resource.idc.room:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:room:create'
-      //         },
-      //         'resource.idc.room:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:room:detail'
-      //         },
-      //         'resource.idc.room:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:room:update'
-      //         },
-      //         'resource.idc.room:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:room:delete'
-      //         },
-      //         'resource.idc.room:getRoom': {
-      //           title: '获取机房信息',
-      //           priv: 'resource:idc:room:get_room'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.room_line': {
-      //       title: '机房线路',
-      //       actions: {
-      //         'resource.idc.room_line:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:room_line:list'
-      //         },
-      //         'resource.idc.room_line:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:room_line:create'
-      //         },
-      //         'resource.idc.room_line:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:room_line:detail'
-      //         },
-      //         'resource.idc.room_line:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:room_line:update'
-      //         },
-      //         'resource.idc.room_line:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:room_line:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.ip_zone': {
-      //       title: 'IP分组',
-      //       actions: {
-      //         'resource.idc.ip_zone:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:ip_zone:list'
-      //         },
-      //         'resource.idc.ip_zone:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:ip_zone:create'
-      //         },
-      //         'resource.idc.ip_zone:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:ip_zone:detail'
-      //         },
-      //         'resource.idc.ip_zone:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:ip_zone:update'
-      //         },
-      //         'resource.idc.ip_zone:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:ip_zone:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.ip': {
-      //       title: 'IP',
-      //       actions: {
-      //         'resource.idc.ip:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:ip:list'
-      //         },
-      //         'resource.idc.ip:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:ip:create'
-      //         },
-      //         'resource.idc.ip:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:ip:detail'
-      //         },
-      //         'resource.idc.ip:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:ip:update'
-      //         },
-      //         'resource.idc.ip:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:ip:delete'
-      //         },
-      //         'resource.idc.ip:block': {
-      //           title: '封停',
-      //           priv: 'resource:idc:ip:block'
-      //         },
-      //         'resource.idc.ip:un_block': {
-      //           title: '解封',
-      //           priv: 'resource:idc:ip:un_block'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.cidr': {
-      //       title: 'IP段',
-      //       actions: {
-      //         'resource.idc.cidr:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:cidr:list'
-      //         },
-      //         'resource.idc.cidr:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:cidr:create'
-      //         },
-      //         'resource.idc.cidr:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:cidr:detail'
-      //         },
-      //         'resource.idc.cidr:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:cidr:update'
-      //         },
-      //         'resource.idc.cidr:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:cidr:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.cabinet': {
-      //       title: '机柜',
-      //       actions: {
-      //         'resource.idc.cabinet:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:cabinet:list'
-      //         },
-      //         'resource.idc.cabinet:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:cabinet:create'
-      //         },
-      //         'resource.idc.cabinet:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:cabinet:detail'
-      //         },
-      //         'resource.idc.cabinet:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:cabinet:update'
-      //         },
-      //         'resource.idc.cabinet:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:cabinet:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.device': {
-      //       title: '设备管理',
-      //       actions: {
-      //         'resource.idc.device:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:device:list'
-      //         },
-      //         'resource.idc.device:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:device:create'
-      //         },
-      //         'resource.idc.device:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:device:detail'
-      //         },
-      //         'resource.idc.device:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:device:update'
-      //         },
-      //         'resource.idc.device:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:device:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.device.type': {
-      //       title: '设备类型',
-      //       actions: {
-      //         'resource.idc.device.type:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:device:type:list'
-      //         },
-      //         'resource.idc.device.type:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:device:type:create'
-      //         },
-      //         'resource.idc.device.type:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:device:type:detail'
-      //         },
-      //         'resource.idc.device.type:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:device:type:update'
-      //         },
-      //         'resource.idc.device.type:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:device:type:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.device.spec': {
-      //       title: '设备规格',
-      //       actions: {
-      //         'resource.idc.device.spec:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:device:spec:list'
-      //         },
-      //         'resource.idc.device.spec:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:device:spec:create'
-      //         },
-      //         'resource.idc.device.spec:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:device:spec:detail'
-      //         },
-      //         'resource.idc.device.spec:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:device:spec:update'
-      //         },
-      //         'resource.idc.device.spec:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:device:spec:delete'
-      //         }
-      //       }
-      //     },
-      //     'resource.idc.device.oem': {
-      //       title: '设备品牌',
-      //       actions: {
-      //         'resource.idc.device.oem:search': {
-      //           title: '列表/查询',
-      //           priv: 'resource:idc:device:oem:list'
-      //         },
-      //         'resource.idc.device.oem:create': {
-      //           title: '新增',
-      //           priv: 'resource:idc:device:oem:create'
-      //         },
-      //         'resource.idc.device.oem:detail': {
-      //           title: '详情',
-      //           priv: 'resource:idc:device:oem:detail'
-      //         },
-      //         'resource.idc.device.oem:update': {
-      //           title: '修改',
-      //           priv: 'resource:idc:device:oem:update'
-      //         },
-      //         'resource.idc.device.oem:delete': {
-      //           title: '删除',
-      //           priv: 'resource:idc:device:oem:delete'
-      //         }
-      //       }
-      //     }
-      //   }
-      // },
+      {
+        path: 'idc',
+        name: 'resourceIdc',
+        priv: 'resource:idc:region:list',
+        redirect: '/resource/idc/region/list',
+        meta: { title: 'IDC资源', icon: 'example' },
+        component: () => import('@/views/resource/idc/list/list.vue'),
+        children: [{
+          path: 'region/list',
+          hidden: true,
+          name: 'resourceIdcRegion',
+          priv: 'resource:idc:region:list',
+          meta: { title: '区域', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/idc/region/index.vue')
+        }],
+        tabs: {
+          child: [
+            {
+              title: '区域',
+              actions: {
+                'resource.idc.region:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:region:list'
+                },
+                'resource.idc.region:create': {
+                  title: '新增',
+                  priv: 'resource:idc:region:create'
+                },
+                'resource.idc.region:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:region:detail'
+                },
+                'resource.idc.region:update': {
+                  title: '修改',
+                  priv: 'resource:idc:region:update'
+                },
+                'resource.idc.region:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:region:delete'
+                }
+              }
+            },
+            {
+              title: '机房',
+              actions: {
+                'resource.idc.room:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:room:list'
+                },
+                'resource.idc.room:create': {
+                  title: '新增',
+                  priv: 'resource:idc:room:create'
+                },
+                'resource.idc.room:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:room:detail'
+                },
+                'resource.idc.room:update': {
+                  title: '修改',
+                  priv: 'resource:idc:room:update'
+                },
+                'resource.idc.room:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:room:delete'
+                },
+                'resource.idc.room:getRoom': {
+                  title: '获取机房信息',
+                  priv: 'resource:idc:room:get_room'
+                }
+              }
+            },
+            {
+              title: '机房线路',
+              actions: {
+                'resource.idc.room_line:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:room_line:list'
+                },
+                'resource.idc.room_line:create': {
+                  title: '新增',
+                  priv: 'resource:idc:room_line:create'
+                },
+                'resource.idc.room_line:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:room_line:detail'
+                },
+                'resource.idc.room_line:update': {
+                  title: '修改',
+                  priv: 'resource:idc:room_line:update'
+                },
+                'resource.idc.room_line:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:room_line:delete'
+                }
+              }
+            },
+            {
+              title: 'IP分组',
+              actions: {
+                'resource.idc.ip_zone:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:ip_zone:list'
+                },
+                'resource.idc.ip_zone:create': {
+                  title: '新增',
+                  priv: 'resource:idc:ip_zone:create'
+                },
+                'resource.idc.ip_zone:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:ip_zone:detail'
+                },
+                'resource.idc.ip_zone:update': {
+                  title: '修改',
+                  priv: 'resource:idc:ip_zone:update'
+                },
+                'resource.idc.ip_zone:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:ip_zone:delete'
+                }
+              }
+            },
+            {
+              title: 'IP',
+              actions: {
+                'resource.idc.ip:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:ip:list'
+                },
+                'resource.idc.ip:create': {
+                  title: '新增',
+                  priv: 'resource:idc:ip:create'
+                },
+                'resource.idc.ip:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:ip:detail'
+                },
+                'resource.idc.ip:update': {
+                  title: '修改',
+                  priv: 'resource:idc:ip:update'
+                },
+                'resource.idc.ip:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:ip:delete'
+                },
+                'resource.idc.ip:block': {
+                  title: '封停',
+                  priv: 'resource:idc:ip:block'
+                },
+                'resource.idc.ip:un_block': {
+                  title: '解封',
+                  priv: 'resource:idc:ip:un_block'
+                }
+              }
+            },
+            {
+              title: 'IP段',
+              actions: {
+                'resource.idc.cidr:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:cidr:list'
+                },
+                'resource.idc.cidr:create': {
+                  title: '新增',
+                  priv: 'resource:idc:cidr:create'
+                },
+                'resource.idc.cidr:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:cidr:detail'
+                },
+                'resource.idc.cidr:update': {
+                  title: '修改',
+                  priv: 'resource:idc:cidr:update'
+                },
+                'resource.idc.cidr:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:cidr:delete'
+                }
+              }
+            },
+            {
+              title: '机柜',
+              actions: {
+                'resource.idc.cabinet:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:cabinet:list'
+                },
+                'resource.idc.cabinet:create': {
+                  title: '新增',
+                  priv: 'resource:idc:cabinet:create'
+                },
+                'resource.idc.cabinet:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:cabinet:detail'
+                },
+                'resource.idc.cabinet:update': {
+                  title: '修改',
+                  priv: 'resource:idc:cabinet:update'
+                },
+                'resource.idc.cabinet:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:cabinet:delete'
+                }
+              }
+            },
+            {
+              title: '设备管理',
+              actions: {
+                'resource.idc.device:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:device:list'
+                },
+                'resource.idc.device:create': {
+                  title: '新增',
+                  priv: 'resource:idc:device:create'
+                },
+                'resource.idc.device:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:device:detail'
+                },
+                'resource.idc.device:update': {
+                  title: '修改',
+                  priv: 'resource:idc:device:update'
+                },
+                'resource.idc.device:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:device:delete'
+                }
+              }
+            },
+            {
+              title: '设备类型',
+              actions: {
+                'resource.idc.device.type:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:device:type:list'
+                },
+                'resource.idc.device.type:create': {
+                  title: '新增',
+                  priv: 'resource:idc:device:type:create'
+                },
+                'resource.idc.device.type:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:device:type:detail'
+                },
+                'resource.idc.device.type:update': {
+                  title: '修改',
+                  priv: 'resource:idc:device:type:update'
+                },
+                'resource.idc.device.type:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:device:type:delete'
+                }
+              }
+            },
+            {
+              title: '设备规格',
+              actions: {
+                'resource.idc.device.spec:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:device:spec:list'
+                },
+                'resource.idc.device.spec:create': {
+                  title: '新增',
+                  priv: 'resource:idc:device:spec:create'
+                },
+                'resource.idc.device.spec:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:device:spec:detail'
+                },
+                'resource.idc.device.spec:update': {
+                  title: '修改',
+                  priv: 'resource:idc:device:spec:update'
+                },
+                'resource.idc.device.spec:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:device:spec:delete'
+                }
+              }
+            },
+            {
+              title: '设备品牌',
+              actions: {
+                'resource.idc.device.oem:search': {
+                  title: '列表/查询',
+                  priv: 'resource:idc:device:oem:list'
+                },
+                'resource.idc.device.oem:create': {
+                  title: '新增',
+                  priv: 'resource:idc:device:oem:create'
+                },
+                'resource.idc.device.oem:detail': {
+                  title: '详情',
+                  priv: 'resource:idc:device:oem:detail'
+                },
+                'resource.idc.device.oem:update': {
+                  title: '修改',
+                  priv: 'resource:idc:device:oem:update'
+                },
+                'resource.idc.device.oem:delete': {
+                  title: '删除',
+                  priv: 'resource:idc:device:oem:delete'
+                }
+              }
+            }]
+        }
+      },
       {
         path: 'os/version/list',
         name: 'resourceOs',
