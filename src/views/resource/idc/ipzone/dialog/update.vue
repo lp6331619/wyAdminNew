@@ -2,7 +2,7 @@
   <div>
     <!-- 修改详情 -->
     <el-dialog
-      :title="`${scene==='edit'?'修改':'新建'}区域信息`"
+      :title="`${scene==='edit'?'修改':'新建'}IP分组`"
       :visible.sync="setStatusStatus"
       width="500px"
       :before-close="handleClose"
@@ -18,17 +18,23 @@
         label-width="100px"
         label-position="right"
       >
-        <el-form-item v-if="scene==='create'" label="区域标识:" prop="id">
-          <el-input v-model="form.id" type="text" placeholder="请输入区域标识" />
+        <el-form-item v-if="scene==='create'" label="分组标识:" prop="id">
+          <el-input v-model="form.id" type="text" placeholder="请输入分组标识" />
         </el-form-item>
-        <el-form-item label="区域名称:" prop="name">
+        <el-form-item label="分组名称:" prop="name">
           <div v-if="!edit && scene==='edit'">{{ dateBox.name }}</div>
           <template v-if="edit">
-            <el-input v-model="form.name" placeholder="请输入区域名称" />
+            <el-input v-model="form.name" placeholder="请输入分组名称" />
           </template>
         </el-form-item>
-        <el-form-item label="添加时间:">{{ dateBox.stat.createDateTime }}</el-form-item>
-        <el-form-item label="修改时间:">{{ dateBox.stat.updateDateTime }}</el-form-item>
+        <el-form-item label="描述:" prop="description">
+          <div v-if="!edit && scene==='edit'">{{ dateBox.description }}</div>
+          <template v-if="edit ">
+            <el-input v-model="form.description" placeholder="请输入描述" />
+          </template>
+        </el-form-item>
+        <el-form-item v-if="scene==='edit'" label="添加时间">{{ dateBox.stat.createDateTime }}</el-form-item>
+        <el-form-item v-if="scene==='edit'" label="修改时间">{{ dateBox.stat.updateDateTime }}</el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button
@@ -46,9 +52,9 @@
 </template>
 <script>
 import {
-  resourceIdcRegionCreate,
-  resourceIdcRegionDetail,
-  resourceIdcRegionUpdate
+  resourceIdcIpzoneCreate,
+  resourceIdcIpzoneDetail,
+  resourceIdcIpzoneUpdate
 } from '@/api/resource'
 export default {
   name: 'EditUpdate',
@@ -70,12 +76,14 @@ export default {
     return {
       setStatusStatus: false,
       form: {
-        id: '', // "区域标识"
-        name: '' // "区域名称"
+        id: '', // "机房标识"
+        name: '', // "机房名称"
+        description: '' // "description"
       },
       formRules: {
         id: [{ required: true, trigger: 'blur', message: '不能为空!' }],
-        name: [{ required: true, trigger: 'blur', message: '不能为空!' }]
+        name: [{ required: true, trigger: 'blur', message: '不能为空!' }],
+        description: [{ required: true, trigger: 'blur', message: '不能为空!' }]
       },
       loading: false,
       prepare: undefined,
@@ -97,14 +105,14 @@ export default {
   },
   methods: {
     getRuleCreate() {
-      resourceIdcRegionCreate({}, 'prepare').then(res => {
+      resourceIdcIpzoneCreate({}, 'prepare').then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
         }
       })
     },
     getRuleEdit() {
-      resourceIdcRegionUpdate({}, 'prepare').then(res => {
+      resourceIdcIpzoneUpdate({}, 'prepare').then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
           this.edit = true
@@ -113,13 +121,14 @@ export default {
     },
     getDetail() {
       this.loading = true
-      resourceIdcRegionDetail({ id: this.operationId }).then(res => {
+      resourceIdcIpzoneDetail({ id: this.operationId }).then(res => {
         if (res.result.isSuccess) {
           const box = res.data
           this.dateBox = res.data
           this.form = {
-            id: box.id, // "标识"
-            name: box.name // "名称"
+            id: box.id, // "机房标识"
+            name: box.name, // "机房名称"
+            description: box.description // ""
           }
           this.loading = false
         }
@@ -130,7 +139,7 @@ export default {
         if (valid) {
           switch (this.scene) {
             case 'create':
-              resourceIdcRegionCreate(this.form).then(res => {
+              resourceIdcIpzoneCreate(this.form).then(res => {
                 if (res.result.isSuccess) {
                   this.$message.success(res.result.message)
                   this.emitOut()
@@ -139,7 +148,7 @@ export default {
               break
             case 'edit':
               delete this.form.ip
-              resourceIdcRegionUpdate(this.form).then(res => {
+              resourceIdcIpzoneUpdate(this.form).then(res => {
                 if (res.result.isSuccess) {
                   this.$message.success(res.result.message)
                   this.emitOut()

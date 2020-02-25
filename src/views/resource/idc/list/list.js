@@ -15,8 +15,14 @@ export default {
         case 'resourceIdcRegion':
           url = '/resource/idc/region/list'
           break
-        case 'resourceDdosLine':
+        case 'resourceIdcLine':
           url = '/resource/idc/line/list'
+          break
+        case 'resourceIdcRoom':
+          url = '/resource/idc/room/list'
+          break
+        case 'resourceIdcIpzone':
+          url = '/resource/idc/ipzone/list'
           break
       }
       this.$router.push(url)

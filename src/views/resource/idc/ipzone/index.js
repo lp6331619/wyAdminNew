@@ -1,4 +1,4 @@
-import { resourceIdcRegionList, resourceIdcRegionDelete } from '@/api/resource'
+import { resourceIdcIpzoneList, resourceIdcIpzoneDelete } from '@/api/resource'
 import { SearchList } from '@/components/SearchBox'
 import update from './dialog/update.vue'
 export default {
@@ -25,7 +25,7 @@ export default {
       },
       // 权限
       operatePrivBox: {
-        search: 'resource:idc:region:list',
+        search: 'resource:idc:ip_zone:list',
         excel: '_special:export_csv'
       },
       // 导出 excel 链接
@@ -63,14 +63,14 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      resourceIdcRegionList({}, type).then(res => {
+      resourceIdcIpzoneList({}, type).then(res => {
         this.prepare = res.data
       })
     },
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      resourceIdcRegionList(parse, '_withSchema').then(res => {
+      resourceIdcIpzoneList(parse, '_withSchema').then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.schema = res.schema
@@ -138,22 +138,18 @@ export default {
     },
     // 删除
     del(e) {
-      this.$prompt(`确认删除区域 ${e.name}`, '确认删除', {
+      this.$prompt(`确认删除IP分组 ${e.name}`, '确认删除', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPlaceholder: '备注'
       }).then(({ value }) => {
-        resourceIdcRegionDelete({ id: e.id, note: e.value }).then(res => {
+        resourceIdcIpzoneDelete({ id: e.id, note: e.value }).then(res => {
           if (res.result.isSuccess) {
             this.$message.success(res.result.message)
             this.getList()
           }
         })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
       })
     }
   }

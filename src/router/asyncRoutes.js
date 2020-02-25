@@ -1041,6 +1041,27 @@ export const asyncRoutes = [
           priv: 'resource:idc:region:list',
           meta: { title: '区域', activeMenu: '/resource/idc' },
           component: () => import('@/views/resource/idc/region/index.vue')
+        }, {
+          path: 'line/list',
+          hidden: true,
+          name: 'resourceIdcLine',
+          priv: 'resource:idc:line:list',
+          meta: { title: '区域', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/line/index.vue')
+        }, {
+          path: 'room/list',
+          hidden: true,
+          name: 'resourceIdcRoom',
+          priv: 'resource:idc:room:list',
+          meta: { title: '机房', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/idc/room/index.vue')
+        }, {
+          path: 'ipzone/list',
+          hidden: true,
+          name: 'resourceIdcIpzone',
+          priv: 'resource:idc:ip_zone:list',
+          meta: { title: 'IP分组', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/idc/ipzone/index.vue')
         }],
         tabs: {
           child: [
@@ -1357,35 +1378,36 @@ export const asyncRoutes = [
             priv: 'resource:os:version:update'
           }
         }
+      },
+      {
+        path: 'line',
+        name: 'resourceLine',
+        priv: 'resource:idc:line:list',
+        meta: { title: '线路', icon: 'example' },
+        component: () => import('@/views/resource/line/index.vue'),
+        actions: {
+          'resource.line:search': {
+            title: '列表/查询',
+            priv: 'resource:idc:line:list'
+          },
+          'resource.line:create': {
+            title: '新增',
+            priv: 'resource:idc:line:create'
+          },
+          'resource.line:detail': {
+            title: '详情',
+            priv: 'resource:idc:line:detail'
+          },
+          'resource.line:update': {
+            title: '修改',
+            priv: 'resource:idc:line:update'
+          },
+          'resource.line:delete': {
+            title: '删除',
+            priv: 'resource:idc:line:delete'
+          }
+        }
       }
-      // {
-      //   title: '线路',
-      //   route: '/resource/idc/line/list',
-      //   mark: 'resource:idc:line',
-      //   priv: 'resource:idc:line:list',
-      //   actions: {
-      //     'resource.line:search': {
-      //       title: '列表/查询',
-      //       priv: 'resource:idc:line:list'
-      //     },
-      //     'resource.line:create': {
-      //       title: '新增',
-      //       priv: 'resource:idc:line:create'
-      //     },
-      //     'resource.line:detail': {
-      //       title: '详情',
-      //       priv: 'resource:idc:line:detail'
-      //     },
-      //     'resource.line:update': {
-      //       title: '修改',
-      //       priv: 'resource:idc:line:update'
-      //     },
-      //     'resource.line:delete': {
-      //       title: '删除',
-      //       priv: 'resource:idc:line:delete'
-      //     }
-      //   }
-      // }
     ]
   },
   {

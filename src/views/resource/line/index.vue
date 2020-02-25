@@ -15,7 +15,7 @@
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
           <el-button
-            v-operatePriv="{priv:'resource:idc:region:create'}"
+            v-operatePriv="{priv:'resource:idc:line:create'}"
             type="primary"
             size="mini"
             @click="setEditDetail = true;scene = 'create'"
@@ -32,6 +32,8 @@
         >
           <el-table-column prop="id" :label="schema.output.id" sortable="custom" width="140"></el-table-column>
           <el-table-column prop="name" :label="schema.output.name"></el-table-column>
+          <el-table-column prop="type.name" :label="schema.output.type[':title']"></el-table-column>
+          <el-table-column prop="realLines" :label="schema.output.realLines"></el-table-column>
           <el-table-column
             prop="stat.updateDateTime"
             :label="schema.output.stat.updateDateTime"
@@ -42,14 +44,14 @@
             <template slot-scope="scope">
               <el-button-group>
                 <el-button
-                  v-operatePriv="{priv:'resource:idc:region:detail'}"
+                  v-operatePriv="{priv:'resource:idc:line:detail'}"
                   plain
                   type="primary"
                   size="mini"
                   @click="setDialog(scope.row.id,'edit')"
                 >查看</el-button>
                 <el-button
-                  v-operatePriv="{priv:'resource:idc:region:delete'}"
+                  v-operatePriv="{priv:'resource:idc:line:delete'}"
                   plain
                   type="danger"
                   size="mini"

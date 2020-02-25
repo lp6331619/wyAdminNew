@@ -1,4 +1,4 @@
-import { resourceIdcRegionList, resourceIdcRegionDelete } from '@/api/resource'
+import { resourceIdcLineList, resourceIdcLineDelete } from '@/api/resource'
 import { SearchList } from '@/components/SearchBox'
 import update from './dialog/update.vue'
 export default {
@@ -21,11 +21,12 @@ export default {
           field: '',
           search: '',
           strict: '0'
-        }
+        },
+        type: this.$route.query.type ? JSON.parse(this.$route.query.type) : ''
       },
       // 权限
       operatePrivBox: {
-        search: 'resource:idc:region:list',
+        search: 'resource:idc:line:list',
         excel: '_special:export_csv'
       },
       // 导出 excel 链接
@@ -35,6 +36,10 @@ export default {
         typeName: '其他',
         type: 'search',
         mode: 'SearchInput'
+      }, {
+        typeName: '类型',
+        type: 'type',
+        mode: 'SearchSelect'
       }],
       // 其余的数据
       otherData: {
@@ -63,14 +68,14 @@ export default {
   methods: {
     // 获取 schema prepare
     getRule(type) {
-      resourceIdcRegionList({}, type).then(res => {
+      resourceIdcLineList({}, type).then(res => {
         this.prepare = res.data
       })
     },
     getList() {
       this.loading = true
       const parse = Object.assign({}, this.searchForm, this.otherData)
-      resourceIdcRegionList(parse, '_withSchema').then(res => {
+      resourceIdcLineList(parse, '_withSchema').then(res => {
         if (res.result.isSuccess) {
           this.listData = res
           this.schema = res.schema
@@ -138,22 +143,18 @@ export default {
     },
     // 删除
     del(e) {
-      this.$prompt(`确认删除区域 ${e.name}`, '确认删除', {
+      this.$prompt(`确认删除线路 ${e.name}`, '确认删除', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPlaceholder: '备注'
       }).then(({ value }) => {
-        resourceIdcRegionDelete({ id: e.id, note: e.value }).then(res => {
+        resourceIdcLineDelete({ id: e.id, note: e.value }).then(res => {
           if (res.result.isSuccess) {
             this.$message.success(res.result.message)
             this.getList()
           }
         })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
       })
     }
   }

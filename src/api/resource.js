@@ -388,3 +388,134 @@ export function resourceIdcRegionCreate(data, schema) {
     data: data
   })
 }
+// IDC资源 区域创建
+export function resourceIdcRegionDelete(data, schema) {
+  return request({
+    url: `/resource/idc/region/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// IDC资源 线路列表
+export function resourceIdcLineList(data, schema) {
+  return request({
+    url: `/resource/idc/line/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 线路详情
+export function resourceIdcLineDetail(data, schema) {
+  return request({
+    url: `/resource/idc/line/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 线路更新
+export function resourceIdcLineUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/line/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 线路创建
+export function resourceIdcLineCreate(data, schema) {
+  return request({
+    url: `/resource/idc/line/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 线路删除
+export function resourceIdcLineDelete(data, schema) {
+  return request({
+    url: `/resource/idc/line/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// IDC资源 机房列表
+export function resourceIdcRoomList(data, schema) {
+  return request({
+    url: `/resource/idc/room/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房详情
+export function resourceIdcRoomDetail(data, schema) {
+  return request({
+    url: `/resource/idc/room/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房更新
+export function resourceIdcRoomUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/room/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房创建
+export function resourceIdcRoomCreate(data, schema) {
+  return request({
+    url: `/resource/idc/room/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房删除
+export function resourceIdcRoomDelete(data, schema) {
+  return request({
+    url: `/resource/idc/room/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// IDC资源 机房列表
+export function resourceIdcIpzoneList(data, schema) {
+  return request({
+    url: `/resource/idc/ipzone/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房详情
+export function resourceIdcIpzoneDetail(data, schema) {
+  return request({
+    url: `/resource/idc/ipzone/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房更新
+export function resourceIdcIpzoneUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/ipzone/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房创建
+export function resourceIdcIpzoneCreate(data, schema) {
+  return request({
+    url: `/resource/idc/ipzone/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 机房删除
+export function resourceIdcIpzoneDelete(data, schema) {
+  return request({
+    url: `/resource/idc/ipzone/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
