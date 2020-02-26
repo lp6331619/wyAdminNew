@@ -775,7 +775,7 @@ export const asyncRoutes = [
         }, {
           path: 'diskType/list',
           hidden: true,
-          name: 'resourceCloudDiskType',
+          name: 'resourceDiskType',
           priv: 'resource:cloud:node:disk_type:list',
           meta: { title: '磁盘类型', activeMenu: '/resource/cloud' },
           component: () => import('@/views/resource/cloud/diskType/diskType.vue')
@@ -1062,6 +1062,27 @@ export const asyncRoutes = [
           priv: 'resource:idc:ip_zone:list',
           meta: { title: 'IP分组', activeMenu: '/resource/idc' },
           component: () => import('@/views/resource/idc/ipzone/index.vue')
+        }, {
+          path: 'ip/list',
+          hidden: true,
+          name: 'resourceIdcIp',
+          priv: 'resource:idc:ip:list',
+          meta: { title: 'IP分组', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/idc/ip/index.vue')
+        }, {
+          path: 'cidr/list',
+          hidden: true,
+          name: 'resourceIdcCidr',
+          priv: 'resource:idc:cidr:list',
+          meta: { title: 'IP段', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/idc/cidr/index.vue')
+        }, {
+          path: 'cabinet/list',
+          hidden: true,
+          name: 'resourceIdcCabinet',
+          priv: 'resource:idc:cabinet:list',
+          meta: { title: 'IP段', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/idc/cabinet/index.vue')
         }],
         tabs: {
           child: [

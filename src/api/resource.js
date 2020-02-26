@@ -479,7 +479,7 @@ export function resourceIdcRoomDelete(data, schema) {
   })
 }
 // -------
-// IDC资源 机房列表
+// IDC资源 IP分组列表
 export function resourceIdcIpzoneList(data, schema) {
   return request({
     url: `/resource/idc/ipzone/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
@@ -487,7 +487,7 @@ export function resourceIdcIpzoneList(data, schema) {
     data: data
   })
 }
-// IDC资源 机房详情
+// IDC资源 IP分组详情
 export function resourceIdcIpzoneDetail(data, schema) {
   return request({
     url: `/resource/idc/ipzone/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -495,7 +495,7 @@ export function resourceIdcIpzoneDetail(data, schema) {
     data: data
   })
 }
-// IDC资源 机房更新
+// IDC资源 IP分组更新
 export function resourceIdcIpzoneUpdate(data, schema) {
   return request({
     url: `/resource/idc/ipzone/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -503,7 +503,7 @@ export function resourceIdcIpzoneUpdate(data, schema) {
     data: data
   })
 }
-// IDC资源 机房创建
+// IDC资源 IP分组创建
 export function resourceIdcIpzoneCreate(data, schema) {
   return request({
     url: `/resource/idc/ipzone/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -511,10 +511,142 @@ export function resourceIdcIpzoneCreate(data, schema) {
     data: data
   })
 }
-// IDC资源 机房删除
+// IDC资源 IP分组删除
 export function resourceIdcIpzoneDelete(data, schema) {
   return request({
     url: `/resource/idc/ipzone/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// IDC资源 IP列表
+export function resourceIdcIpList(data, schema) {
+  return request({
+    url: `/resource/idc/ip/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP详情
+export function resourceIdcIpDetail(data, schema) {
+  return request({
+    url: `/resource/idc/ip/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP更新
+export function resourceIdcIpUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/ip/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP创建
+export function resourceIdcIpCreate(data, schema) {
+  return request({
+    url: `/resource/idc/ip/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP删除
+export function resourceIdcIpDelete(data, schema) {
+  return request({
+    url: `/resource/idc/ip/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP 封停
+export function resourceIdcIpBlock(data, schema) {
+  return request({
+    url: `/resource/idc/ip/block${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// -------
+// IDC资源 IP段列表
+export function resourceIdcCidrList(data, schema) {
+  return request({
+    url: `/resource/idc/cidr/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段详情
+export function resourceIdcCidrDetail(data, schema) {
+  return request({
+    url: `/resource/idc/cidr/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段更新
+export function resourceIdcCidrUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/cidr/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段创建
+export function resourceIdcCidrCreate(data, schema) {
+  return request({
+    url: `/resource/idc/cidr/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段删除
+export function resourceIdcCidrDelete(data, schema) {
+  return request({
+    url: `/resource/idc/cidr/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// -------
+// IDC资源 IP段列表
+export function resourceIdcCabinetList(data, schema) {
+  return request({
+    url: `/resource/idc/cabinet/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段详情
+export function resourceIdcCabinetDetail(data, schema) {
+  return request({
+    url: `/resource/idc/cabinet/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段更新
+export function resourceIdcCabinetUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/cabinet/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段创建
+export function resourceIdcCabinetCreate(data, schema) {
+  return request({
+    url: `/resource/idc/cabinet/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 IP段删除
+export function resourceIdcCabinetDelete(data, schema) {
+  return request({
+    url: `/resource/idc/cabinet/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
     method: schema ? 'get' : 'post',
     data: data
   })

@@ -23,6 +23,21 @@
             label="IP分组"
             name="resourceIdcIpzone"
           ></el-tab-pane>
+          <el-tab-pane
+            v-operatePriv="{priv:'resource:idc:ip:list'}"
+            label="IP"
+            name="resourceIdcIp"
+          ></el-tab-pane>
+          <el-tab-pane
+            v-operatePriv="{priv:'resource:idc:cidr:list'}"
+            label="IP段"
+            name="resourceIdcCidr"
+          ></el-tab-pane>
+          <el-tab-pane
+            v-operatePriv="{priv:'resource:idc:cabinet:list'}"
+            label="机柜"
+            name="resourceIdcCabinet"
+          ></el-tab-pane>
         </el-tabs>
       </div>
     </div>

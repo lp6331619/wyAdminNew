@@ -24,6 +24,15 @@ export default {
         case 'resourceIdcIpzone':
           url = '/resource/idc/ipzone/list'
           break
+        case 'resourceIdcIp':
+          url = '/resource/idc/ip/list'
+          break
+        case 'resourceIdcCidr':
+          url = '/resource/idc/cidr/list'
+          break
+        case 'resourceIdcCabinet':
+          url = '/resource/idc/cabinet/list'
+          break
       }
       this.$router.push(url)
     }

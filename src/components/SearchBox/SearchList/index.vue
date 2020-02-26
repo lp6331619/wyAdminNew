@@ -27,6 +27,7 @@
                 :filterable="item.selectType"
                 :prepare-data="prepareData"
                 :disabled="item.disabled"
+                :relation="searchData[item.relation]"
                 @emitData="emitData($event)"
               />
             </div>

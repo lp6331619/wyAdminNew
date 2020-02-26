@@ -16,7 +16,7 @@ export default {
         case 'resourceCloudNodeList': case 'node':
           url = '/resource/cloud/node/node/list'
           break
-        case 'resourceCloudDiskType':
+        case 'resourceDiskType':
           url = '/resource/cloud/diskType/list'
           break
         case 'resourceCloudVersion':

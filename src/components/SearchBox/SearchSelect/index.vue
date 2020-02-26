@@ -52,6 +52,11 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    // 关联
+    relation: {
+      type: String,
+      default: 'undefined'
     }
   },
   data() {
@@ -87,13 +92,7 @@ export default {
         (this.searchType || this.prepareType)
       ) {
         let box = []
-        const array = JSON.parse(
-          JSON.stringify(
-            this.prepareData[
-              this.prepareType ? this.prepareType : this.searchType
-            ]
-          )
-        )
+        const array = this.prepareF()
         // 判断是否是数组
         if (Array.isArray(array)) {
           box = array
@@ -107,6 +106,21 @@ export default {
       } else {
         return {}
       }
+    },
+    prepareF() {
+      let box
+      if (this.relation === 'undefined') {
+        box = this.prepareData[
+          this.prepareType ? this.prepareType : this.searchType
+        ]
+      } else {
+        box = this.relation
+          ? this.prepareData[
+              this.prepareType ? this.prepareType : this.searchType
+            ][this.relation]
+          : {}
+      }
+      return box ? JSON.parse(JSON.stringify(box)) : {}
     },
     // 导出数据
     outData() {
