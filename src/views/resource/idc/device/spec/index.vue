@@ -11,11 +11,11 @@
           @emitData="emitData($event)"
         />
       </el-card>
-      <el-card v-if="schema" v-loading="loading" class="box-card pt0">
+      <el-card v-if="schema && listData" v-loading="loading" class="box-card pt0">
         <div slot="header" class="header flex">
           <div>{{ schema.title }} ({{ page.totals }})</div>
           <el-button
-            v-operatePriv="{priv:'resource:idc:cabinet:create'}"
+            v-operatePriv="{priv:'resource:idc:device:spec:create'}"
             type="primary"
             size="mini"
             @click="setEditDetail = true;scene = 'create'"
@@ -31,42 +31,26 @@
           @sort-change="sortTable"
         >
           <el-table-column prop="id" :label="schema.output.id" sortable="custom" width="60"></el-table-column>
-          <el-table-column prop="room.name" :label="schema.output.room[':title']"></el-table-column>
+          <el-table-column prop="type.name" :label="schema.output.type[':title']"></el-table-column>
           <el-table-column prop="spec" :label="schema.output.spec" sortable="custom"></el-table-column>
           <el-table-column prop="name" :label="schema.output.name"></el-table-column>
-          <el-table-column prop="size" :label="schema.output.size" sortable="custom">
-            <template slot-scope="scope">{{ scope.row.size }}U</template>
-          </el-table-column>
-          <el-table-column prop="voltage" :label="schema.output.voltage" sortable="custom">
-            <template slot-scope="scope">{{ scope.row.voltage }}V</template>
-          </el-table-column>
-          <el-table-column prop="power" :label="schema.output.power" sortable="custom">
-            <template slot-scope="scope">{{ scope.row.power }}A</template>
-          </el-table-column>
-          <el-table-column prop="maxNum" :label="schema.output.maxNum" sortable="custom">
-            <template slot-scope="scope">{{ scope.row.maxNum ===0 ? '暂无':scope.row.maxNum }}</template>
-          </el-table-column>
-          <el-table-column prop="useNum" :label="schema.output.useNum" sortable="custom">
-            <template slot-scope="scope">{{ scope.row.useNum === 0 ? '暂无' :scope.row.useNum }}</template>
-          </el-table-column>
-          <el-table-column prop="remainNum" :label="schema.output.remainNum" sortable="custom">
-            <template
-              slot-scope="scope"
-            >{{ scope.row.remainNum === 0 ? '暂无' : scope.row.remainNum }}</template>
-          </el-table-column>
-          <el-table-column prop="enableStatus.name" :label="schema.output.enableStatus[':title']"></el-table-column>
+          <el-table-column
+            prop="stat.updateDateTime"
+            :label="schema.output.stat[':title']"
+            sortable="custom"
+          ></el-table-column>
           <el-table-column fixed="right" label="操作" width="135">
             <template slot-scope="scope">
               <el-button-group>
                 <el-button
-                  v-operatePriv="{priv:'resource:idc:cabinet:detail'}"
+                  v-operatePriv="{priv:'resource:idc:device:spec:detail'}"
                   plain
                   type="primary"
                   size="mini"
                   @click="setDialog(scope.row.id,'edit')"
                 >查看</el-button>
                 <el-button
-                  v-operatePriv="{priv:'resource:idc:cabinet:delete'}"
+                  v-operatePriv="{priv:'resource:idc:device:spec:delete'}"
                   plain
                   type="danger"
                   size="mini"

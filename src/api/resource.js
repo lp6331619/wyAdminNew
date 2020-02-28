@@ -611,7 +611,7 @@ export function resourceIdcCidrDelete(data, schema) {
 }
 
 // -------
-// IDC资源 IP段列表
+// IDC资源 机柜列表
 export function resourceIdcCabinetList(data, schema) {
   return request({
     url: `/resource/idc/cabinet/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
@@ -619,7 +619,7 @@ export function resourceIdcCabinetList(data, schema) {
     data: data
   })
 }
-// IDC资源 IP段详情
+// IDC资源 机柜详情
 export function resourceIdcCabinetDetail(data, schema) {
   return request({
     url: `/resource/idc/cabinet/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -627,7 +627,7 @@ export function resourceIdcCabinetDetail(data, schema) {
     data: data
   })
 }
-// IDC资源 IP段更新
+// IDC资源 机柜更新
 export function resourceIdcCabinetUpdate(data, schema) {
   return request({
     url: `/resource/idc/cabinet/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -635,7 +635,7 @@ export function resourceIdcCabinetUpdate(data, schema) {
     data: data
   })
 }
-// IDC资源 IP段创建
+// IDC资源 机柜创建
 export function resourceIdcCabinetCreate(data, schema) {
   return request({
     url: `/resource/idc/cabinet/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
@@ -643,10 +643,178 @@ export function resourceIdcCabinetCreate(data, schema) {
     data: data
   })
 }
-// IDC资源 IP段删除
+// IDC资源 机柜删除
 export function resourceIdcCabinetDelete(data, schema) {
   return request({
     url: `/resource/idc/cabinet/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// -------
+// IDC资源 设备管理 列表
+export function resourceIdcDeviceList(data, schema) {
+  return request({
+    url: `/resource/idc/device/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备管理 详情
+export function resourceIdcDeviceDetail(data, schema) {
+  return request({
+    url: `/resource/idc/device/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备管理 更新
+export function resourceIdcDeviceUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/device/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备管理 创建
+export function resourceIdcDeviceCreate(data, schema) {
+  return request({
+    url: `/resource/idc/device/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备管理 删除
+export function resourceIdcDeviceDelete(data, schema) {
+  return request({
+    url: `/resource/idc/device/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// -------
+// IDC资源 设备类型 列表
+export function resourceIdcDeviceTypeList(data, schema) {
+  return request({
+    url: `/resource/idc/device/type/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备类型 详情
+export function resourceIdcDeviceTypeDetail(data, schema) {
+  return request({
+    url: `/resource/idc/device/type/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备类型 更新
+export function resourceIdcDeviceTypeUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/device/type/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备类型 创建
+export function resourceIdcDeviceTypeCreate(data, schema) {
+  return request({
+    url: `/resource/idc/device/type/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备类型 删除
+export function resourceIdcDeviceTypeDelete(data, schema) {
+  return request({
+    url: `/resource/idc/device/type/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// -------
+// IDC资源 设备规格 列表
+export function resourceIdcDeviceSpecList(data, schema) {
+  return request({
+    url: `/resource/idc/device/spec/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备规格 详情
+export function resourceIdcDeviceSpecDetail(data, schema) {
+  return request({
+    url: `/resource/idc/device/spec/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备规格 更新
+export function resourceIdcDeviceSpecUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/device/spec/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备规格 创建
+export function resourceIdcDeviceSpecCreate(data, schema) {
+  return request({
+    url: `/resource/idc/device/spec/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备规格 删除
+export function resourceIdcDeviceSpecDelete(data, schema) {
+  return request({
+    url: `/resource/idc/device/spec/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+
+// -------
+// IDC资源 设备品牌 列表
+export function resourceIdcDeviceOemList(data, schema) {
+  return request({
+    url: `/resource/idc/device/oem/list${schema ? schema === 'prepare' ? '?_prepare=1' : '?_withSchema=all' : ''}`,
+    method: schema === 'prepare' ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备品牌 详情
+export function resourceIdcDeviceOemDetail(data, schema) {
+  return request({
+    url: `/resource/idc/device/oem/detail${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备品牌 更新
+export function resourceIdcDeviceOemUpdate(data, schema) {
+  return request({
+    url: `/resource/idc/device/oem/update${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备品牌 创建
+export function resourceIdcDeviceOemCreate(data, schema) {
+  return request({
+    url: `/resource/idc/device/oem/create${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
+    method: schema ? 'get' : 'post',
+    data: data
+  })
+}
+// IDC资源 设备品牌 删除
+export function resourceIdcDeviceOemDelete(data, schema) {
+  return request({
+    url: `/resource/idc/device/oem/delete${schema ? schema === 'prepare' ? '?_prepare=1' : '?_schema=1' : ''}`,
     method: schema ? 'get' : 'post',
     data: data
   })

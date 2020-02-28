@@ -3,7 +3,7 @@ export default {
   },
   data() {
     return {
-      activeName: this.$route.name
+      activeName: this.$route.params.type ? this.$route.params.type : this.$route.name
     }
   },
   created() {
@@ -32,6 +32,9 @@ export default {
           break
         case 'resourceIdcCabinet':
           url = '/resource/idc/cabinet/list'
+          break
+        case 'resourceIdcDevice': case 'device':
+          url = '/resource/idc/device/manage/list'
           break
       }
       this.$router.push(url)

@@ -38,6 +38,7 @@
             label="机柜"
             name="resourceIdcCabinet"
           ></el-tab-pane>
+          <el-tab-pane v-operatePriv="{priv:'resource:idc:device:list'}" label="设备" name="device"></el-tab-pane>
         </el-tabs>
       </div>
     </div>

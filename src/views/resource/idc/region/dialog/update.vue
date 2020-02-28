@@ -11,6 +11,7 @@
       <el-form
         v-if="dateBox || scene==='create'"
         ref="setDetail"
+        :class="{'upDate': !edit}"
         v-loading="loading"
         :model="form"
         :rules="formRules"

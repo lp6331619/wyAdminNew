@@ -152,6 +152,7 @@ export default {
   computed: {},
   mounted() {
     this.maxHeight = this.$refs.searchData.offsetHeight
+    console.log(this.$refs.searchData.offsetHeight, 123)
   },
   methods: {
     emitData(e) {

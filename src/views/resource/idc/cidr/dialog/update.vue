@@ -12,6 +12,7 @@
         v-if="dateBox || scene==='create'"
         ref="setDetail"
         v-loading="loading"
+        :class="{'upDate': !edit}"
         :model="form"
         :rules="formRules"
         auto-complete="on"

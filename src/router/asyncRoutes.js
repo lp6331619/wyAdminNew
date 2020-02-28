@@ -1067,7 +1067,7 @@ export const asyncRoutes = [
           hidden: true,
           name: 'resourceIdcIp',
           priv: 'resource:idc:ip:list',
-          meta: { title: 'IP分组', activeMenu: '/resource/idc' },
+          meta: { title: 'IP', activeMenu: '/resource/idc' },
           component: () => import('@/views/resource/idc/ip/index.vue')
         }, {
           path: 'cidr/list',
@@ -1081,8 +1081,45 @@ export const asyncRoutes = [
           hidden: true,
           name: 'resourceIdcCabinet',
           priv: 'resource:idc:cabinet:list',
-          meta: { title: 'IP段', activeMenu: '/resource/idc' },
+          meta: { title: '机柜', activeMenu: '/resource/idc' },
           component: () => import('@/views/resource/idc/cabinet/index.vue')
+        }, {
+          path: ':type',
+          hidden: true,
+          name: 'resourceIdcDevice',
+          priv: 'resource:idc:device:list',
+          redirect: '/resource/idc/device/manage/list',
+          meta: { title: '机柜', activeMenu: '/resource/idc' },
+          component: () => import('@/views/resource/idc/device/list.vue'),
+          children: [{
+            path: 'manage/list',
+            hidden: true,
+            name: 'resourceIdcDeviceList',
+            priv: 'resource:idc:device:list',
+            meta: { title: '设备管理', activeMenu: '/resource/idc' },
+            component: () => import('@/views/resource/idc/device/manage/index.vue')
+          }, {
+            path: 'type/list',
+            hidden: true,
+            name: 'resourceIdcDeviceType',
+            priv: 'resource:idc:device:type:list',
+            meta: { title: '设备类型', activeMenu: '/resource/idc' },
+            component: () => import('@/views/resource/idc/device/type/index.vue')
+          }, {
+            path: 'spec/list',
+            hidden: true,
+            name: 'resourceIdcDeviceSpec',
+            priv: 'resource:idc:device:spec:list',
+            meta: { title: '设备规格', activeMenu: '/resource/idc' },
+            component: () => import('@/views/resource/idc/device/spec/index.vue')
+          }, {
+            path: 'oem/list',
+            hidden: true,
+            name: 'resourceIdcDeviceOem',
+            priv: 'resource:idc:device:oem:list',
+            meta: { title: '设备品牌', activeMenu: '/resource/idc' },
+            component: () => import('@/views/resource/idc/device/oem/index.vue')
+          }]
         }],
         tabs: {
           child: [

@@ -2,7 +2,7 @@
   <div>
     <!-- 修改详情 -->
     <el-dialog
-      :title="`${scene==='edit'?'修改':'新建'}机柜创建`"
+      :title="`${scene==='edit'?'修改':'新建'}设备`"
       :visible.sync="setStatusStatus"
       width="500px"
       :before-close="handleClose"
@@ -11,15 +11,14 @@
       <el-form
         v-if="dateBox || scene==='create'"
         ref="setDetail"
-        v-loading="loading"
         :class="{'upDate': !edit}"
+        v-loading="loading"
         :model="form"
         :rules="formRules"
         auto-complete="on"
         label-width="100px"
         label-position="right"
       >
-        <el-form-item v-if="scene==='edit'" label="ID:">{{ form.id }}</el-form-item>
         <el-form-item label="机房:" prop="room">
           <div v-if="!edit && scene==='edit'">{{ dateBox.room.name }}</div>
           <template v-if="edit && prepare">
@@ -28,16 +27,40 @@
             </el-select>
           </template>
         </el-form-item>
-        <el-form-item label="标识:" prop="spec">
-          <div v-if="!edit && scene==='edit'">{{ dateBox.spec }}</div>
-          <template v-if="edit">
-            <el-input v-model="form.spec" placeholder="请输入名称" />
-          </template>
-        </el-form-item>
         <el-form-item label="名称:" prop="name">
           <div v-if="!edit && scene==='edit'">{{ dateBox.name }}</div>
           <template v-if="edit">
             <el-input v-model="form.name" placeholder="请输入名称" />
+          </template>
+        </el-form-item>
+
+        <el-form-item label="设备类型:" prop="type">
+          <div v-if="!edit && scene==='edit'">{{ dateBox.type.name }}</div>
+          <template v-if="edit && prepare">
+            <el-select v-model="form.type" placeholder="请选择设备类型" @change="form.spec=''">
+              <el-option v-for="(val,key) in prepare.type" :key="key" :label="val" :value="key"></el-option>
+            </el-select>
+          </template>
+        </el-form-item>
+        <el-form-item label="设备规格:" prop="spec">
+          <div v-if="!edit && scene==='edit'">{{ dateBox.spec.name }}</div>
+          <template v-if="edit && prepare">
+            <el-select v-model="form.spec" placeholder="请选择设备规格">
+              <el-option
+                v-for="(val,key) in prepare.spec[form.type]"
+                :key="key"
+                :label="val"
+                :value="key"
+              ></el-option>
+            </el-select>
+          </template>
+        </el-form-item>
+        <el-form-item label="设备品牌:" prop="oem">
+          <div v-if="!edit && scene==='edit'">{{ dateBox.oem.name }}</div>
+          <template v-if="edit && prepare">
+            <el-select v-model="form.oem" placeholder="请选择设备品牌">
+              <el-option v-for="(val,key) in prepare.oem" :key="key" :label="val" :value="key"></el-option>
+            </el-select>
           </template>
         </el-form-item>
         <el-form-item label="U数:" prop="size">
@@ -46,31 +69,26 @@
             <el-input v-model="form.size" placeholder="请输入U数" />
           </template>
         </el-form-item>
-        <el-form-item label="电压:" prop="voltage">
-          <div v-if="!edit && scene==='edit'">{{ dateBox.voltage }}</div>
+        <el-form-item label="详情:" prop="detail">
+          <div v-if="!edit && scene==='edit'">{{ dateBox.detail }}</div>
           <template v-if="edit ">
-            <el-input v-model="form.voltage" placeholder="请输入电压" />
+            <el-input v-model="form.detail" placeholder="请输入详情" />
           </template>
         </el-form-item>
-        <el-form-item label="电流:" prop="power">
-          <div v-if="!edit && scene==='edit'">{{ dateBox.power }}</div>
-          <template v-if="edit ">
-            <el-input v-model="form.power" placeholder="请输入电流" />
-          </template>
-        </el-form-item>
-        <el-form-item label="数量:" prop="maxNum">
+
+        <el-form-item label="设备数量:" prop="maxNum">
           <div v-if="!edit && scene==='edit'">{{ dateBox.maxNum }}</div>
           <template v-if="edit ">
             <el-input v-model="form.maxNum" placeholder="请输入数量" />
           </template>
         </el-form-item>
-        <el-form-item label="已用:" prop="useNum">
+        <el-form-item label="已用数量:" prop="useNum">
           <div v-if="!edit && scene==='edit'">{{ dateBox.useNum }}</div>
           <template v-if="edit ">
             <el-input v-model="form.useNum" placeholder="请输入已用" />
           </template>
         </el-form-item>
-        <el-form-item label="启用:" prop="isEnable">
+        <el-form-item label="是否启用:" prop="isEnable">
           <div v-if="!edit && scene==='edit'">{{ dateBox.enableStatus.name }}</div>
           <template v-if="edit && prepare">
             <el-select v-model="form.isEnable" placeholder="请选择启用">
@@ -97,9 +115,9 @@
 </template>
 <script>
 import {
-  resourceIdcCabinetCreate,
-  resourceIdcCabinetDetail,
-  resourceIdcCabinetUpdate
+  resourceIdcDeviceCreate,
+  resourceIdcDeviceDetail,
+  resourceIdcDeviceUpdate
 } from '@/api/resource'
 export default {
   name: 'EditUpdate',
@@ -123,11 +141,12 @@ export default {
       form: {
         name: '', // "名称"
         room: '', // "机房"
-        spec: '', // "规格标识"
+        type: '', // "类型"
+        spec: '', // "规格"
+        oem: '', // "品牌"
         size: '', // "U数"
-        voltage: '', // "电压"
-        power: '', // "电流"
-        maxNum: '', // "机柜数量"
+        detail: '', // "明细"
+        maxNum: '', // "设备数量"
         useNum: '', // "已用数量"
         isEnable: '' // "是否启用"
       },
@@ -136,8 +155,9 @@ export default {
         name: [{ required: true, trigger: 'change', message: '不能为空!' }],
         spec: [{ required: true, trigger: 'change', message: '不能为空!' }],
         size: [{ required: true, trigger: 'change', message: '不能为空!' }],
-        voltage: [{ required: true, trigger: 'change', message: '不能为空!' }],
+        detail: [{ required: true, trigger: 'change', message: '不能为空!' }],
         power: [{ required: true, trigger: 'change', message: '不能为空!' }],
+        type: [{ required: true, trigger: 'change', message: '不能为空!' }],
         maxNum: [{ required: true, trigger: 'change', message: '不能为空!' }],
         useNum: [{ required: true, trigger: 'change', message: '不能为空!' }],
         isEnable: [{ required: true, trigger: 'change', message: '不能为空!' }]
@@ -162,14 +182,14 @@ export default {
   },
   methods: {
     getRuleCreate() {
-      resourceIdcCabinetCreate({}, 'prepare').then(res => {
+      resourceIdcDeviceCreate({}, 'prepare').then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
         }
       })
     },
     getRuleEdit() {
-      resourceIdcCabinetUpdate({}, 'prepare').then(res => {
+      resourceIdcDeviceUpdate({}, 'prepare').then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
           this.edit = true
@@ -178,7 +198,7 @@ export default {
     },
     getDetail() {
       this.loading = true
-      resourceIdcCabinetDetail({ id: this.operationId }).then(res => {
+      resourceIdcDeviceDetail({ id: this.operationId }).then(res => {
         if (res.result.isSuccess) {
           const box = res.data
           this.dateBox = res.data
@@ -186,10 +206,11 @@ export default {
             id: box.id, // "id"
             name: box.name, // "名称"
             room: box.room ? box.room.id : '', // "机房"
-            spec: box.spec, // "规格标识"
+            type: box.type ? box.type.id : '', // "机房"
+            spec: box.spec ? box.spec.id : '', // "规格标识"
             size: box.size, // "U数"
-            voltage: box.voltage, // "电压"
-            power: box.power, // "电流"
+            oem: box.oem ? box.oem.id : '',
+            detail: box.detail, // ""
             maxNum: box.maxNum, // "机柜数量"
             useNum: box.useNum, // "已用数量"
             isEnable: box.enableStatus ? box.enableStatus.key : '' // "是否启用"
@@ -203,7 +224,7 @@ export default {
         if (valid) {
           switch (this.scene) {
             case 'create':
-              resourceIdcCabinetCreate(this.form).then(res => {
+              resourceIdcDeviceCreate(this.form).then(res => {
                 if (res.result.isSuccess) {
                   this.$message.success(res.result.message)
                   this.emitOut()
@@ -212,7 +233,7 @@ export default {
               break
             case 'edit':
               delete this.form.ip
-              resourceIdcCabinetUpdate(this.form).then(res => {
+              resourceIdcDeviceUpdate(this.form).then(res => {
                 if (res.result.isSuccess) {
                   this.$message.success(res.result.message)
                   this.emitOut()

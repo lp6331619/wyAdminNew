@@ -2,7 +2,7 @@
   <div>
     <!-- 修改详情 -->
     <el-dialog
-      :title="`${scene==='edit'?'修改':'新建'}区域信息`"
+      :title="`${scene==='edit'?'修改':'新建'}设备`"
       :visible.sync="setStatusStatus"
       width="500px"
       :before-close="handleClose"
@@ -11,55 +11,42 @@
       <el-form
         v-if="dateBox || scene==='create'"
         ref="setDetail"
-        v-loading="loading"
         :class="{'upDate': !edit}"
+        v-loading="loading"
         :model="form"
         :rules="formRules"
         auto-complete="on"
-        label-width="100px"
+        label-width="120px"
         label-position="right"
       >
-        <el-form-item v-if="scene==='create'" label="区域标识:" prop="id">
-          <el-input v-model="form.id" type="text" placeholder="请输入区域标识" />
+        <el-form-item label="设备类型分类:" prop="category">
+          <div v-if="!edit && scene==='edit'">{{ dateBox.category.name }}</div>
+          <template v-if="edit && prepare">
+            <el-select v-model="form.category" placeholder="请选择设备类型分类">
+              <el-option v-for="(val,key) in prepare.category" :key="key" :label="val" :value="key"></el-option>
+            </el-select>
+          </template>
         </el-form-item>
-        <el-form-item label="区域名称:" prop="name">
+        <el-form-item label="设备类型名称:" prop="name">
           <div v-if="!edit && scene==='edit'">{{ dateBox.name }}</div>
           <template v-if="edit">
-            <el-input v-model="form.name" placeholder="请输入区域名称" />
+            <el-input v-model="form.name" placeholder="请输入设备类型名称" />
           </template>
         </el-form-item>
-        <el-form-item label="是否可用:" prop="isEnable">
-          <div v-if="!edit && scene==='edit'">{{ dateBox.enableStatus.name }}</div>
+        <el-form-item label="设备类型标识:" prop="id">
+          <div v-if="!edit && scene==='edit'">{{ dateBox.id }}</div>
           <template v-if="edit && prepare">
-            <el-select v-if="prepare" v-model="form.isEnable" placeholder="请选择是否可用">
-              <el-option
-                v-for="(val,key) in prepare.isEnable"
-                :key="key"
-                :label="val"
-                :value="key"
-              />
-            </el-select>
+            <el-input v-model="form.id" :disabled="scene==='edit'" placeholder="请输入设备类型名称" />
           </template>
         </el-form-item>
-        <el-form-item label="是否可转发:" prop="hasForward">
-          <div v-if="!edit && scene==='edit'">{{ dateBox.forwardStatus.name }}</div>
-          <template v-if="edit && prepare">
-            <el-select v-if="prepare" v-model="form.hasForward" placeholder="请选择是否可转发">
-              <el-option
-                v-for="(val,key) in prepare.forwardStatus"
-                :key="key"
-                :label="val"
-                :value="key"
-              />
-            </el-select>
-          </template>
-        </el-form-item>
+        <el-form-item v-if="scene==='edit'" label="添加时间">{{ dateBox.stat.createDateTime }}</el-form-item>
+        <el-form-item v-if="scene==='edit'" label="修改时间">{{ dateBox.stat.updateDateTime }}</el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button
           v-if="!edit && scene !=='create'"
           v-loading="loading"
-          v-operatePriv="{priv:'resource:ddos:region:update'}"
+          v-operatePriv="{priv:'resource:idc:device:type:update'}"
           type="danger"
           @click="editFun"
         >编辑</el-button>
@@ -71,9 +58,9 @@
 </template>
 <script>
 import {
-  resourceDDosRegionCreate,
-  resourceDDosRegionDetail,
-  resourceDDosRegionUpdate
+  resourceIdcDeviceTypeCreate,
+  resourceIdcDeviceTypeDetail,
+  resourceIdcDeviceTypeUpdate
 } from '@/api/resource'
 export default {
   name: 'EditUpdate',
@@ -95,16 +82,14 @@ export default {
     return {
       setStatusStatus: false,
       form: {
-        id: '', // "区域标识"
-        name: '', // "区域名称"
-        isEnable: '', // "是否启用"
-        hasForward: '' // "是否支持转发"
+        id: '', // "ID"
+        name: '', // "名称"
+        category: '' // "分类"
       },
       formRules: {
-        id: [{ required: true, trigger: 'blur', message: '不能为空!' }],
-        name: [{ required: true, trigger: 'blur', message: '不能为空!' }],
-        isEnable: [{ required: true, trigger: 'blur', message: '不能为空!' }],
-        hasForward: [{ required: true, trigger: 'blur', message: '不能为空!' }]
+        id: [{ required: true, trigger: 'change', message: '不能为空!' }],
+        name: [{ required: true, trigger: 'change', message: '不能为空!' }],
+        category: [{ required: true, trigger: 'change', message: '不能为空!' }]
       },
       loading: false,
       prepare: undefined,
@@ -126,14 +111,14 @@ export default {
   },
   methods: {
     getRuleCreate() {
-      resourceDDosRegionCreate({}, 'prepare').then(res => {
+      resourceIdcDeviceTypeCreate({}, 'prepare').then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
         }
       })
     },
     getRuleEdit() {
-      resourceDDosRegionUpdate({}, 'prepare').then(res => {
+      resourceIdcDeviceTypeUpdate({}, 'prepare').then(res => {
         if (res.result.isSuccess) {
           this.prepare = res.data
           this.edit = true
@@ -142,15 +127,14 @@ export default {
     },
     getDetail() {
       this.loading = true
-      resourceDDosRegionDetail({ id: this.operationId }).then(res => {
+      resourceIdcDeviceTypeDetail({ id: this.operationId }).then(res => {
         if (res.result.isSuccess) {
           const box = res.data
           this.dateBox = res.data
           this.form = {
-            id: box.id, // "标识"
+            id: box.id, // "id"
             name: box.name, // "名称"
-            hasForward: box.forwardStatus ? box.forwardStatus.key : '', // "是否可转发"
-            isEnable: box.enableStatus ? box.enableStatus.key : '' // "是否启用"
+            category: box.category ? box.category.key : '' // "分类"
           }
           this.loading = false
         }
@@ -161,7 +145,7 @@ export default {
         if (valid) {
           switch (this.scene) {
             case 'create':
-              resourceDDosRegionCreate(this.form).then(res => {
+              resourceIdcDeviceTypeCreate(this.form).then(res => {
                 if (res.result.isSuccess) {
                   this.$message.success(res.result.message)
                   this.emitOut()
@@ -170,7 +154,7 @@ export default {
               break
             case 'edit':
               delete this.form.ip
-              resourceDDosRegionUpdate(this.form).then(res => {
+              resourceIdcDeviceTypeUpdate(this.form).then(res => {
                 if (res.result.isSuccess) {
                   this.$message.success(res.result.message)
                   this.emitOut()
